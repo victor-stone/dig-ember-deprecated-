@@ -3,6 +3,10 @@
 
 (function(window) {
 
+    if( typeof window.document === 'undefined' ) {
+        return;
+    }
+        
   /**
    * SoundManager 2: "Bar UI" player
    * http://www.schillmania.com/projects/soundmanager2/

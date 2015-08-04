@@ -1,4 +1,4 @@
-import Store from 'dig7/models/store';
+import Store from 'dig8/models/store';
 
 export default {
     name: 'inject-store',
