@@ -1,52 +1,105 @@
 #!/usr/bin/env node
 
+/*
+    Requirements: 
+        RSVP
+            npm install --save rsvp
+
+    What:           
+       This script replaces the corresponding sources in downloaded
+       sources (e.g. bower_components, node_components) with symlinks
+       to hacked versions here. This allows us to keep version
+       controlled versions of hacks without forking the original
+       libraries.
+   
+    When:
+        - Run as the last step of installing/building the repo
+        - Run again after you update bower and node components
+        
+    Assumptions: 
+        - You have cloned the dig repo
+        - You have otherwise installed all components (npm,bower)
+        - You are running this script in <project_dir>/hacks directory
+        
+   How:
+      - walk the current directory (./hacks) and collect file names 
+        noting the directory structure
+      - DELETE the file in the corresponding dir structure from the
+        project root 
+      - create a symlink from the project's dir to the corresponding
+        file in the ./hacks directory
+        
+   This script is Public Domain. You're welcome.
+*/
 var fs = require('fs');
 var path = require('path');
 var RSVP = require('RSVP');
 var util = require('util');
 
-var sourceDirectory = '.';
-var targetDirectory = '..';
-var thisModule = process.argv[1];
-
 var fs_readdir = RSVP.denodeify(fs.readdir);
-var fs_exists  = RSVP.denodeify(fs.exists);
-var fs_unlink  = RSVP.denodeify(fs.unlink);
 
-var filenames = [ ];
-
-function walk(dir) {    
-    function mapFunc(filename) {
-        return walk( dir + '/' + filename );
-    }
-    function success(filenames) {
-        return RSVP.allSettled( filenames.map( mapFunc ) );
-    }
-    function failure(err) {
-        if( err.code == 'ENOTDIR' ) {
-            filenames.push( path.normalize(err.path) );
-        }
-        else {
-            console.log( err );
-        }
-    }
-    return fs_readdir(dir).then( success, failure );
+function SymlinkBuilder(sourceDirectory,targetDirectory) {
+    this.files = [ ];
+    this.sourceDirectory = sourceDirectory;
+    this.targetDirectory = targetDirectory;
 }
 
-
-function doneFunc() {
-  filenames.forEach( function(filename) {
-    var src  = path.resolve(sourceDirectory + '/' + filename);
-    if( src === thisModule ) {
-        return;
+SymlinkBuilder.prototype.addRelPath = function(filename) {
+    var fullPath = path.resolve(filename);
+    if( fullPath !== __filename ) {
+        this.files.push(filename);
     }
-    var dest = path.resolve(targetDirectory + '/' + filename);
-    console.log( src + ' -> ' + dest );
+}
+
+SymlinkBuilder.prototype.collectFiles = function() {
+    var me = this;
+    function walk(dir) {    
+        function mapFunc(filename) {
+            return walk( dir + '/' + filename );
+        }
+        function success(filenames) {
+            return RSVP.allSettled( filenames.map( mapFunc ) );
+        }
+        function failure(err) {
+            if( err.code == 'ENOTDIR' ) {
+                me.addRelPath( path.normalize(err.path) );
+            }
+            else {
+                util.log( err );
+            }
+        }
+        return fs_readdir(dir).then( success, failure );
+    }
+    
+    return walk(this.sourceDirectory);
+}
+
+SymlinkBuilder.prototype.buildLinks = function() {
+  var me = this;
+  this.files.forEach( function(filename) {
+    var src  = path.resolve(me.sourceDirectory + '/' + filename);
+    var dest = path.resolve(me.targetDirectory + '/' + filename);
+    util.log( dest + " [maps to:]->\n                   " + src );
     fs.unlinkSync(dest);
     fs.symlinkSync( src, dest );
   });  
 }
 
-walk(sourceDirectory).then( doneFunc ).then( null, function(err) {
-    console.log(err);
-});;
+SymlinkBuilder.prototype.run = function() {
+    function errFunc(err) {
+        util.log(err);
+    }
+    function doneFunc() {
+        util.log('Done');
+    }
+    
+    this.collectFiles()
+        .then( this.buildLinks.bind(this) )
+        .then( doneFunc, errFunc );
+}
+
+
+new SymlinkBuilder( '.', '..' ).run();
+
+
+

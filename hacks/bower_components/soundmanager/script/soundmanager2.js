@@ -6079,4 +6079,4 @@ if (typeof window.document === 'undefined' ) {
 
 }
 
-}(typeof window === 'undefined' ? self : window));
+})(typeof window === 'undefined' ? self : window);
