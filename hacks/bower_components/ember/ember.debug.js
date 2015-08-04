@@ -49156,7 +49156,11 @@ enifed('router/router', ['exports', 'route-recognizer', 'rsvp/promise', './utils
 
     // Abort and usurp any previously active transition.
     if (this.activeTransition) {
-        this.activeTransition.abort();
+        // VICTOR
+        if( typeof FastBoot === 'undefined' )
+        {
+            this.activeTransition.abort();
+        }
     }
     this.activeTransition = newTransition;
 
