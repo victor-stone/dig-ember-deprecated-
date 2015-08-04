@@ -1,7 +1,7 @@
 {
-  "name": "dig8",
+  "name": "dig7",
   "version": "0.0.0",
-  "description": "Small description for dig8 goes here",
+  "description": "Small description for dig7 goes here",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -21,6 +21,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
     "ember-cli": "1.13.1",
+    "ember-cli-fastboot": "ArtisTechMedia/ember-cli-fastboot.git#master",
     "ember-cli-app-version": "0.4.0",
     "ember-cli-babel": "^5.0.0",
     "ember-cli-content-security-policy": "0.4.0",
@@ -32,7 +33,6 @@
     "ember-cli-qunit": "0.3.15",
     "ember-cli-release": "0.2.3",
     "ember-cli-uglify": "^1.0.1",
-    "ember-data": "1.13.5",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.2"
   }

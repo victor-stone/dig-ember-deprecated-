@@ -6,6 +6,10 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('uploads', { path: '/files/:upload_id' } );
+  this.route('users', { path: '/user/:user_id' } );
+  this.route('tags', { path: '/tags/:tags' } );
+  this.route('query');
 });
 
 export default Router;

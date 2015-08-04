@@ -1,3 +1,14 @@
-<h2 id="title">Welcome to Ember.js</h2>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href>[{{title}}]</a>
+    </div>
+    <ul class="nav navbar-nav">
+        {{#each menu as |item|}}
+        <li>{{#link-to 'query' (query-params tags=item.tags)}}{{item.name}}{{/link-to}}</li>
+        {{/each}}
+    </ul>
+  </div>
+</nav>
 
 {{outlet}}

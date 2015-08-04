@@ -6,18 +6,24 @@ module.exports = function(defaults) {
     // Add options here
   });
 
-  // Use `app.import` to add additional libraries to the generated
-  // output files.
-  //
-  // If you need to use different assets in different
-  // environments, specify an object as the first parameter. That
-  // object's keys should be the environment name and the values
-  // should be the asset to use in that environment.
-  //
-  // If the library that you are including contains AMD or ES6
-  // modules that you would like to import into your application
-  // please specify an object with the list of modules as keys
-  // along with the exports of each module as its value.
+    app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 
+    app.import({
+            development: 'bower_components/soundmanager/swf/soundmanager2_debug.swf',
+            production: 'bower_components/soundmanager/swf/soundmanager2.swf'
+        });
+    app.import({
+            development: 'bower_components/soundmanager/script/soundmanager2.js',
+            production: 'bower_components/soundmanager/script/soundmanager2-nodebug-jsmin.js'
+        });
+    app.import('bower_components/ember-cli-soundmanager-shim/soundmanager2-shim.js', {
+            exports: {
+              soundManager: ['default']
+            }
+        });
+
+    app.import('bower_components/soundmanager/demo/bar-ui/script/bar-ui.js');
+    app.import('bower_components/soundmanager/demo/bar-ui/css/bar-ui.css');
+    
   return app.toTree();
 };
