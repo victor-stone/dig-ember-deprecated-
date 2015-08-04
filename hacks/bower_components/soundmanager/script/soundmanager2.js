@@ -32,6 +32,10 @@
 
 (function(window, _undefined) {
 
+var SM2_DEFER = SM2_DEFER || (typeof window.document === 'undefined');
+
+console.log( '===> SM2_DEFER is: ' + SM2_DEFER );
+
 "use strict";
 
 if (!window || !window.document) {
@@ -39,7 +43,7 @@ if (!window || !window.document) {
   // Don't cross the [environment] streams. SM2 expects to be running in a browser, not under node.js etc.
   // Additionally, if a browser somehow manages to fail this test, as Egon said: "It would be bad."
 
-  throw new Error('SoundManager requires a browser with window and document objects.');
+  //throw new Error('SoundManager requires a browser with window and document objects.');
 
 }
 
@@ -6027,7 +6031,8 @@ featureCheck = function() {
 
 // SM2_DEFER details: http://www.schillmania.com/projects/soundmanager2/doc/getstarted/#lazy-loading
 
-if (window.SM2_DEFER === undefined || !SM2_DEFER) {
+if (window.SM2_DEFER === undefined && !SM2_DEFER) {
+ console.log('INSTANTIATING SOUNDMANAGER ------> defer: ' + SM2_DEFER);
   soundManager = new SoundManager();
 }
 
@@ -6036,7 +6041,12 @@ if (window.SM2_DEFER === undefined || !SM2_DEFER) {
  * ------------------------------
  */
 
-if (typeof module === 'object' && module && typeof module.exports === 'object') {
+if (typeof window.document === 'undefined' ) {
+
+  window.SoundManager = module.exports.SoundManager = {};
+  window.soundManager = module.exports.soundManager = {}
+  
+} else if (typeof module === 'object' && module && typeof module.exports === 'object') {
 
   /**
    * commonJS module
@@ -6069,4 +6079,4 @@ if (typeof module === 'object' && module && typeof module.exports === 'object') 
 
 }
 
-}(window));
+}(typeof window === 'undefined' ? self : window));
