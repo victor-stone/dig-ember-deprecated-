@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = require('path');
+var RSVP = require('RSVP');
+var util = require('util');
+
+var sourceDirectory = '.';
+var targetDirectory = '..';
+var thisModule = process.argv[1];
+
+var fs_readdir = RSVP.denodeify(fs.readdir);
+var fs_exists  = RSVP.denodeify(fs.exists);
+var fs_unlink  = RSVP.denodeify(fs.unlink);
+
+var filenames = [ ];
+
+function walk(dir) {    
+    function mapFunc(filename) {
+        return walk( dir + '/' + filename );
+    }
+    function success(filenames) {
+        return RSVP.allSettled( filenames.map( mapFunc ) );
+    }
+    function failure(err) {
+        if( err.code == 'ENOTDIR' ) {
+            filenames.push( path.normalize(err.path) );
+        }
+        else {
+            console.log( err );
+        }
+    }
+    return fs_readdir(dir).then( success, failure );
+}
+
+
+function doneFunc() {
+  filenames.forEach( function(filename) {
+    var src  = path.resolve(sourceDirectory + '/' + filename);
+    if( src === thisModule ) {
+        return;
+    }
+    var dest = path.resolve(targetDirectory + '/' + filename);
+    console.log( src + ' -> ' + dest );
+    fs.unlinkSync(dest);
+    fs.symlinkSync( src, dest );
+  });  
+}
+
+walk(sourceDirectory).then( doneFunc ).then( null, function(err) {
+    console.log(err);
+});;
