@@ -1,0 +1,17 @@
+.dig-search-button {
+    height: 22px;
+    width: 22px;
+    background-image: url(../dig-images/glyphs2.png);
+    background-position:  -115px -106px;
+    background-color: transparent;
+    border: 0px;
+    margin-left: 3px;
+}
+.dig-search-input {
+    border-radius: 7px;
+}
+
+.navbar-nav > li > input, .navbar-nav > li > button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

@@ -10,6 +10,7 @@ export default Ember.Route.extend({
     search: { refreshModel: true },
     limit: { refreshModel: true },
     offset: { refreshModel: true },
+    title: { refreshModel: true },
   },
 
   model: function(params) {  

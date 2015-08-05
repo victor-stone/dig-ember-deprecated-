@@ -4,8 +4,12 @@
       <a class="navbar-brand" href><img src="dig-images/logo.png" title="{{title}}" /></a>
     </div>
     <ul class="nav navbar-nav">
-        {{#each menu as |item|}}
-        <li>{{#link-to 'query' (query-params tags=item.tags)}}{{item.name}}{{/link-to}}</li>
+        {{#each menu.queries as |item|}}
+            <li>{{#link-to 'query' (query-params tags=item.tags)}}{{item.name}}{{/link-to}}</li>
+        {{/each}}
+        <li>{{input type="text" class="dig-search-input" value=searchText size="30" placeholder=searchPlaceHolder}}<button class="dig-search-button" {{action "search"}}></button></li>
+        {{#each menu.hashrefs as |item|}}
+            <li><a href="{{item.hash}}">{{item.name}}</a></li>
         {{/each}}
     </ul>
   </div>
