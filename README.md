@@ -8,9 +8,8 @@ N.B. Whenever prompted to resolve conflicts always pick the 'canary' version
 * change into the new directory
 * `npm install`
 * `bower install`
-* `ln -s public/image ../bower_components/soundmanager/demo/bar-ui/image
 * change directory ./hacks
-* `./setup_hacks'
+* `./setup_hacks`
 
 ## Running / Development
 
