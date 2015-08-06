@@ -7,6 +7,11 @@ module.exports = function(defaults) {
   });
 
     app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+    app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
+    app.import('bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg',{
+            destDir: 'fonts'
+       });
+    app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 
     app.import({
             development: 'bower_components/soundmanager/swf/soundmanager2_debug.swf',

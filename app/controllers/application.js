@@ -1,5 +1,13 @@
 import Ember from 'ember';
 
+/*
+            {{view "select"
+                   content=licenseOptions
+                   optionValuePath="content.id"
+                   optionLabelPath="content.text"
+                   selection=selectedLicense}}
+                   
+*/
 export default Ember.Controller.extend({
     title: 'dig -> ccMixter',
     menu: {
@@ -23,18 +31,21 @@ export default Ember.Controller.extend({
     searchText: '',
     searchPlaceHolder: "genre, style, instrument, etc.",
     
-    isExpanded: false,
+    freeLicense: false,
+
+    lic: function() {
+            return this.freeLicense ? 'open' : '';
+            }.property('freeLicense'),
+    
+    optionsOpen: true,
 
     actions: {
         search: function() {
             this.transitionToRoute('/query?search=' + this.searchText);
         },
-        expand: function() {
-            this.set('isExpanded', true);
+        toggleOptions: function() {
+            this.toggleProperty('optionsOpen');
         },
-        contract: function() {
-            this.set('isExpanded', false);
-        }
     }    
     
         

@@ -490,7 +490,7 @@
 	      // shuffledIndex: [],
 
 	      // selection
-	      selectedIndex: 0,
+	      selectedIndex: null,
 
 	      // shuffleMode: false,
 

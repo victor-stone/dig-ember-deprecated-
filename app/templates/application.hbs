@@ -7,12 +7,22 @@
         {{#each menu.queries as |item|}}
             <li>{{#link-to 'query' (query-params tags=item.tags)}}{{item.name}}{{/link-to}}</li>
         {{/each}}
-        <li>{{input type="text" class="dig-search-input" value=searchText size="30" placeholder=searchPlaceHolder}}<button class="dig-search-button" {{action "search"}}></button></li>
+        <li>{{input type="text" class="dig-search-input" value=searchText size="30" placeholder=searchPlaceHolder}}
+           <button type="button" class="btn btn-sm" aria-label="Left Align" {{action "search"}}>
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button></li>
+        <li><button class="btn btn-primary" {{action 'toggleOptions'}}>Options</button></li>
         {{#each menu.hashrefs as |item|}}
             <li><a href="{{item.hash}}">{{item.name}}</a></li>
         {{/each}}
     </ul>
   </div>
+        {{#if optionsOpen}}
+  <div class="container-fluid">
+    {{input type="checkbox" checked=freeLicense}} Free for commercial use
+    </div>
+            
+        {{/if}}
 </nav>
 
 {{outlet}}
