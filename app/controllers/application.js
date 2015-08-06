@@ -10,8 +10,7 @@ import Ember from 'ember';
 */
 export default Ember.Controller.extend({
     title: 'dig -> ccMixter',
-    menu: {
-        queries: [ 
+    menu: [
                 { name: 'free',
                   tags: 'attribution',
                   title: 'Free as in Beer' }, 
@@ -20,14 +19,11 @@ export default Ember.Controller.extend({
                   title: 'Music for Film and Video'}, 
                 { name:'music for games',
                   tags: 'ccplus,instrumental',
-                  title: 'Music for Video Games'}
-            ],
-        hashrefs: [
+                  title: 'Music for Video Games'},
                 { name: 'How it Works',
                   hash: '#howitworks',
                   title: 'How it Works' }
-            ]
-        },
+            ],
     searchText: '',
     searchPlaceHolder: "genre, style, instrument, etc.",
     
@@ -37,7 +33,7 @@ export default Ember.Controller.extend({
             return this.freeLicense ? 'open' : '';
             }.property('freeLicense'),
     
-    optionsOpen: true,
+    optionsOpen: false,
 
     actions: {
         search: function() {
