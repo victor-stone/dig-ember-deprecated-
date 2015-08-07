@@ -1,3 +1,16 @@
+.navbar-default,
+.sm2-bar-ui .sm2-main-controls,
+.sm2-bar-ui .sm2-playlist-drawer,
+.sm2-bar-ui .sm2-inline-texture {
+ background: #141414;
+}
+
+.dig-search {
+    float: right;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    
+}
 .dig-search-button {
     background-color: transparent;
     border: 0px;
@@ -7,26 +20,60 @@
 .dig-search-input {
     border-radius: 7px;
 }
+.dig-search-options {
+    padding-top: 12px;
+    padding-bottom: 18px;
+    color: white;
+    margin:0 auto; 
+    width: 85%;
+}
 
-.navbar-default {
- background: #666;    
+.dig-search-options > ul > li > div {
+    display: inline;
 }
+
+.dig-search-options > ul > li  {
+    margin-right: 12px;
+}
+
+.dig-search-options select {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 0px;
+}
+
+.navbar {
+    margin-bottom: 0px;
+    border: 0px;
+}
+
 .navbar-default .navbar-nav > li > a {
-    color: #FFF;
+    color: #BBB;
 }
-.navbar-nav > li > input, 
-.navbar-nav > li > button {
-    margin-top: 15px;
-    margin-bottom: 15px;
+
+.dig-license-help-button {
+    background: transparent;
+    border: 0px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:focus {
+    color: #FFF;    
+    /*
+    background: url(../dig-images/menu-highlight.png) no-repeat center center fixed;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    */
+}
+
+.navbar-nav > li > a {
+    padding-top: 18px;
 }
 
 .sm2-bar-ui {
  font-size: 16px;
 }
-.sm2-bar-ui .sm2-main-controls,
-.sm2-bar-ui .sm2-playlist-drawer {
- background-color: #666;
-}
-.sm2-bar-ui .sm2-inline-texture {
- background: #666;
-}
+

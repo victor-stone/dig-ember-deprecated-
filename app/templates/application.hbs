@@ -3,35 +3,46 @@
     <div class="navbar-header">
       <a class="navbar-brand" href><img src="dig-images/logo.png" title="{{title}}" /></a>
     </div>
-    <ul class="nav navbar-nav">
-        {{#each menu as |item|}}
-            {{#if item.tags}}
-            <li>{{#link-to 'query' (query-params tags=item.tags)}}{{item.name}}{{/link-to}}</li>
-            {{else}}
-                {{#if item.hash}}
-                    <li><a href="{{item.hash}}">{{item.name}}</a></li>
+        {{link-menu menu=menu classSelector="nav navbar-nav"}}
+        <div class="dig-search">
+                {{input type="text" 
+                          class="dig-search-input" 
+                          value=searchText 
+                          size="30" 
+                          placeholder=searchPlaceHolder}}
+                 <button type="button" class="dig-search-button" {{action "search"}}>
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                 </button>
+               <button class="btn btn-primary" {{action 'toggleOptions'}}>Options 
+                {{#if optionsOpen}}
+                  <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                {{else}}
+                  <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
                 {{/if}}
-            {{/if}}                
-        {{/each}}
-        <li>{{input type="text" class="dig-search-input" value=searchText size="30" placeholder=searchPlaceHolder}}
-           <button type="button" class="dig-search-button" {{action "search"}}>
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </button></li>
-        <li><button class="btn btn-primary" {{action 'toggleOptions'}}>Options 
-                    {{#if optionsOpen}}
-              <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                    {{else}}
-              <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                   {{/if}}
-            </button></li>
-    </ul>
-  </div>
-        {{#if optionsOpen}}
-  <div class="container-fluid">
-    {{input type="checkbox" checked=freeLicense}} Free for commercial use
+                </button>
+            </div>
+   </div>
+  {{#if optionsOpen}}
+    <div class="container-fluid">
+        <div class="dig-search-options">
+            <ul class="nav navbar-nav">
+                <li>
+            {{at-select content=licenses action=(action (mut currentLicense))}}
+                <button type="button" class="dig-license-help-button" {{action "search"}}>
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                 </button>
+            </li>
+            <li>
+                <label for="instrumentalOnly">{{instrumentalOnlyText}}</label> 
+                {{input type="checkbox" checked=instrumentalOnly name="instrumentalOnly"}} 
+            </li>
+            <li>
+                <label>{{limitLabelText}}</label> {{at-select content=limits action=(action (mut currentLimit))}}
+            </li>
+             </ul>
+        </div>
     </div>
-            
-        {{/if}}
+   {{/if}}
 </nav>
 
 {{outlet}}

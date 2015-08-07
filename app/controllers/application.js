@@ -27,17 +27,34 @@ export default Ember.Controller.extend({
     searchText: '',
     searchPlaceHolder: "genre, style, instrument, etc.",
     
-    freeLicense: false,
+    currentLicense: '',
+    licenses: [
+        { title: 'All licenses', id: 'all' },
+        { title: 'Free for commercial use', id: 'open' }
+    ],
 
-    lic: function() {
-            return this.freeLicense ? 'open' : '';
-            }.property('freeLicense'),
+    instrumentalOnlyText: 'Instrument Only',
+    instrumentalOnly: false,
+    
+    limitLabelText: 'Results',
+    limits: [ 10, 20, 50, 100 ],
+    currentLimit: 10,
     
     optionsOpen: false,
 
     actions: {
         search: function() {
-            this.transitionToRoute('/query?search=' + this.searchText);
+            var q = '/query?search=' + this.searchText;
+            if( this.optionsOpen ) {
+                q += '&limit=' + this.currentLimit;
+                if( this.instrumentalOnly ) {
+                    q += '&tags=instrumental';
+                }
+                if( this.currentLicense !== 'all' ) {
+                    q += '&lic=' + this.currentLicense;
+                }
+            }
+            this.transitionToRoute(q);
         },
         toggleOptions: function() {
             this.toggleProperty('optionsOpen');
