@@ -34,7 +34,7 @@
             </li>
             <li>
                 <label for="instrumentalOnly">{{instrumentalOnlyText}}</label> 
-                {{input type="checkbox" checked=instrumentalOnly name="instrumentalOnly"}} 
+                {{input type="checkbox" checked=instrumentalOnly name="queryParams.limit"}} 
             </li>
             <li>
                 <label>{{limitLabelText}}</label> {{at-select content=limits action=(action (mut currentLimit))}}

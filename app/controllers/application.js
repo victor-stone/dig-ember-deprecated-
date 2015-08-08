@@ -1,3 +1,4 @@
+/* global URL */
 import Ember from 'ember';
 
 /*
@@ -38,15 +39,23 @@ export default Ember.Controller.extend({
     
     limitLabelText: 'Results',
     limits: [ 10, 20, 50, 100 ],
-    currentLimit: 10,
     
     optionsOpen: false,
 
+    queryParams: {
+        limit: 10, 
+        tags: function() { return this.instrumentalOnly ? 'instrumental' : '' }.property('instrumentalOnly'),
+        lic: function() { return this.currentLicense == 'all' ? '' : this.currentLicense; }.property('currentLicense'),
+    },
+    
     actions: {
         search: function() {
+            var qp = { path: '/query', query: this.queryParams };
+            var url = URL.format(qp);
+            console.log( "transitionToRoute: " + url ");            
             var q = '/query?search=' + this.searchText;
             if( this.optionsOpen ) {
-                q += '&limit=' + this.currentLimit;
+                q += '&limit=' + this.queryParams.limit;
                 if( this.instrumentalOnly ) {
                     q += '&tags=instrumental';
                 }
