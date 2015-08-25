@@ -1,10 +1,5 @@
-import PageableController from './pageable';
+import Ember from 'ember';
 
-export default PageableController.extend({
-    tags: '',
-    sort: '',
-    ord: '',
-    title: '',
-    sinced: '',
-    search: '',
+export default Ember.Controller.extend({
+
 });

@@ -1,13 +1,13 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href><img src="dig-images/logo.png" title="{{title}}" /></a>
+      <a class="navbar-brand" href><img src="dig-images/logo.png" title="{{app_title}}" /></a>
     </div>
         {{link-menu menu=menu classSelector="nav navbar-nav"}}
         <div class="dig-search">
                 {{input type="text" 
                           class="dig-search-input" 
-                          value=searchText 
+                          value=search
                           size="30" 
                           placeholder=searchPlaceHolder}}
                  <button type="button" class="dig-search-button" {{action "search"}}>
@@ -27,17 +27,18 @@
         <div class="dig-search-options">
             <ul class="nav navbar-nav">
                 <li>
-            {{at-select content=licenses action=(action (mut currentLicense))}}
+            {{at-select content=licenses action=(action "queryParam" "lic")}}
                 <button type="button" class="dig-license-help-button" {{action "search"}}>
                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
                  </button>
             </li>
             <li>
                 <label for="instrumentalOnly">{{instrumentalOnlyText}}</label> 
-                {{input type="checkbox" checked=instrumentalOnly name="queryParams.limit"}} 
+                {{input type="checkbox" checked=instrumentalOnly name="instrumentalOnly"}} 
             </li>
             <li>
-                <label>{{limitLabelText}}</label> {{at-select content=limits action=(action (mut currentLimit))}}
+                <label>{{limitLabelText}}</label> 
+                {{at-select content=limits action=(action "queryParam" "limit")}}
             </li>
              </ul>
         </div>

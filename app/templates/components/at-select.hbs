@@ -5,11 +5,16 @@
       {{prompt}}
     </option>
   {{/if}}
-  
-  {{#each content key="@identity" as |item|}}
-    <option value="{{get item optionValuePath}}"
-            selected={{is-equal item selection}}>
-      {{get item optionLabelPath}}
-     </option>
+
+  {{#each content as |item|}}
+    {{#if (get item optionValuePath) }}
+        <option value="{{get item optionValuePath}}" selected={{is-equal item selection}}>
+            {{get item optionLabelPath}}
+        </option>
+    {{else}}
+        <option selected={{is-equal item selection}}>
+            {{item}}
+        </option>
+    {{/if}}  
   {{/each}}
 </select>
