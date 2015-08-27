@@ -2,9 +2,26 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 
-  model: function(params,transition) {  
-    var qparams = transition && transition.queryParams || params;
-    return this.store.query(qparams);
+  queryParams: {
+  
+    // pageable
+    limit:  { refreshModel: true },
+    offset: { refreshModel: true },
+    
+    // query
+    tags:   { refreshModel: true },
+    sinced: { refreshModel: true },
+    search: { refreshModel: true },
+    title:  { refreshModel: true },
+    lic:    { refreshModel: true },
   },
+  
+  model: function(params,transition) {  
+    return this.store.query(transition.queryParams);
+  },
+  
+  resetController: function (controller, isExiting, transition) {
+    console.log('query reset controller ' + isExiting);
+    }
   
 });

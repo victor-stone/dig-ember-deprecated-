@@ -5,40 +5,43 @@
     </div>
         {{link-menu menu=menu classSelector="nav navbar-nav"}}
         <div class="dig-search">
-                {{input type="text" 
-                          class="dig-search-input" 
-                          value=search
-                          size="30" 
-                          placeholder=searchPlaceHolder}}
-                 <button type="button" class="dig-search-button" {{action "search"}}>
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                 </button>
-               <button class="btn btn-primary" {{action 'toggleOptions'}}>Options 
+            {{input type="text" 
+                      class="dig-search-input" 
+                      value=searchText
+                      size="30" 
+                      placeholder=searchPlaceHolder}}
+             <button type="button" class="dig-search-button" {{action "search"}}>
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+             </button>
+           <button class="btn btn-primary" {{action 'toggleOptions'}}>Options 
                 {{#if optionsOpen}}
                   <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
                 {{else}}
                   <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
                 {{/if}}
-                </button>
-            </div>
+            </button>
+        </div>
    </div>
   {{#if optionsOpen}}
     <div class="container-fluid">
         <div class="dig-search-options">
             <ul class="nav navbar-nav">
-                <li>
-            {{at-select content=licenses action=(action "queryParam" "lic")}}
+            <li>
+                {{at-select content=licenses selection=licenseScheme action=(action (mut licenseScheme))}}
                 <button type="button" class="dig-license-help-button" {{action "search"}}>
                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
                  </button>
             </li>
             <li>
                 <label for="instrumentalOnly">{{instrumentalOnlyText}}</label> 
-                {{input type="checkbox" checked=instrumentalOnly name="instrumentalOnly"}} 
+                {{input type="checkbox" id="instrumentalOnly" checked=instrumentalOnly name="instrumentalOnly"}} 
             </li>
             <li>
                 <label>{{limitLabelText}}</label> 
-                {{at-select content=limits action=(action "queryParam" "limit")}}
+                {{at-select content=limits selection=limit action=(action (mut limit))}}
+            </li>
+            <li>
+                {{at-select content=genres selection=genre action=(action (mut genre))}}
             </li>
              </ul>
         </div>

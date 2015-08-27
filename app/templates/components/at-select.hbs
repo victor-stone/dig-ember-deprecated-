@@ -8,7 +8,7 @@
 
   {{#each content as |item|}}
     {{#if (get item optionValuePath) }}
-        <option value="{{get item optionValuePath}}" selected={{is-equal item selection}}>
+        <option value="{{get item optionValuePath}}" selected={{is-equal (get item optionValuePath) selection}}>
             {{get item optionLabelPath}}
         </option>
     {{else}}

@@ -3,6 +3,7 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend( {
+
     params: {},
     _makeQ: function(qparams) {
         var q = '';
@@ -13,12 +14,13 @@ export default Ember.Object.extend( {
         }
         return q;
     },
-    _query: function(q) {
-        var url = 'http://ccmixter.org/api/query?' + q;
+    _query: function(qString) {
+        var url = 'http://ccmixter.org/api/query?' + qString;
         function success( json ) {
             var arr = eval(json);
             return arr;
         }        
+        
         if (typeof FastBoot !== 'undefined') {        
             FastBoot.debug('Using NodeJS for AJAX');
             var ajax = this.container.lookup('ajax:node');
@@ -33,14 +35,18 @@ export default Ember.Object.extend( {
         }
     },
     query: function(params) {
-        var qparams = params || this.params;
-        qparams['f'] = qparams['f'] || qparams['format'] || 'json';
-        qparams['limit'] = qparams['limit'] || 10;
-        var q = this._makeQ(qparams);
-        return this._query(q);
+        var qparams = {
+            limit: 10,
+            sort: 'rank',
+            ord: 'desc',
+            f: 'json'
+        };
+        Ember.merge(qparams,params || this.params);
+        var qString = this._makeQ(qparams);
+        return this._query(qString);
     },
     find: function(name,params) {
-        if( typeof params === 'string' ) {    
+        if( Ember.typeof(params) === 'string' ) {    
             return this._query(params);
         }
         return this.query(params);
