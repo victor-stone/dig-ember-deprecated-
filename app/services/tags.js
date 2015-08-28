@@ -1,42 +1,56 @@
 import Ember from 'ember';
 
+var _tagsArray = [ ];
+
 export default Ember.Service.extend({
-    _tagsArray: [ ],
+        
+    _arrayFromTagStr: function(str) {
+            return str.replace(/^\s+|\s+$/, '').replace(/[^_\w]/g, ' ').replace(/\s+/g,',').split(',');
+        },
     
     setFromString: function(str) {
-            this._tagsArray = str.replace(/^\s+|\s+$/, '').replace(/\s+$/, ',').split(',');
+            _tagsArray = this._arrayFromTagStr(str);
+        },
+        
+    addFromString: function(str) {
+            if( str ) {
+                var arr = this._arrayFromTagStr(str);
+                arr.forEach( this.addTag, this );
+            }
+            return this;
         },
         
     convertToString: function() {
-            var tagArr = this.get('_tagsArray');
-            if( tagArr.length === 0 ) {
-                return; // sic
+            var tagArr = _tagsArray;
+            if( tagArr.length > 0 ) {
+                return tagArr.join(',');
             }
-            tagArr = tagArr.filter( function(value, index, self) { 
-                    return self.indexOf(value) === index;
-                });
-            return tagArr.join(',');
         },    
+        
     addTag: function(tag) {
             if( tag !== '-' && !this.hasTag(tag) ) {
-                this._tagsArray.push(tag);
+                _tagsArray.push(tag);
             }
         },
+        
     replaceTagFrom: function(withTag,from) {
-            this._tagsArray = this._tagsArray.filter( function(tag) { return from.indexOf(tag) === -1; } );
+            _tagsArray = _tagsArray.filter( function(tag) { return from.indexOf(tag) === -1; } );
             if( withTag ) {
                 this.addTag(withTag);
             }
         },
+        
     removeTag: function(tag) {
-            var index = this._tagsArray.indexOf(tag);
+            var index = _tagsArray.indexOf(tag);
             if( index > -1 ) {
-                this._tagsArray.splice(index,1);
+                _tagsArray.splice(index,1);
             }
         },    
+        
     removeAll: function() {
-            this._tagsArray = [ ];
+            _tagsArray = [ ];
         },
+        
     toggleTag: function(tag,flag) {
             if( flag ) {
                 this.addTag(tag);
@@ -44,11 +58,13 @@ export default Ember.Service.extend({
                 this.removeTag(tag);
             }
         },
+        
     hasTag: function(tag) {
-            return this._tagsArray.indexOf(tag) !== -1;
+            return _tagsArray.indexOf(tag) !== -1;
         },
+        
     whichTag: function(arr) {
-            var match = this._tagsArray.filter( function(tag) { 
+            var match = _tagsArray.filter( function(tag) { 
                 return arr.indexOf(tag) !== -1; 
             } );
             if( match.length > 0 ) {

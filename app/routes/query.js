@@ -20,8 +20,4 @@ export default Ember.Route.extend({
     return this.store.query(transition.queryParams);
   },
   
-  resetController: function (controller, isExiting, transition) {
-    console.log('query reset controller ' + isExiting);
-    }
-  
 });

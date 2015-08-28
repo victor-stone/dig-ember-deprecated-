@@ -46,9 +46,6 @@ export default Ember.Object.extend( {
         return this._query(qString);
     },
     find: function(name,params) {
-        if( Ember.typeof(params) === 'string' ) {    
-            return this._query(params);
-        }
         return this.query(params);
     }
 });

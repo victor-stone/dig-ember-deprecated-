@@ -7,7 +7,7 @@
         <div class="dig-search">
             {{input type="text" 
                       class="dig-search-input" 
-                      value=searchText
+                      value=queryOptions.searchText
                       size="30" 
                       placeholder=searchPlaceHolder}}
              <button type="button" class="dig-search-button" {{action "search"}}>
@@ -27,21 +27,37 @@
         <div class="dig-search-options">
             <ul class="nav navbar-nav">
             <li>
-                {{at-select content=licenses selection=licenseScheme action=(action (mut licenseScheme))}}
+                {{at-select content=licenses 
+                            selection=queryOptions.licenseScheme 
+                            action=(action (mut queryOptions.licenseScheme))}}
                 <button type="button" class="dig-license-help-button" {{action "search"}}>
                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
                  </button>
             </li>
             <li>
                 <label for="instrumentalOnly">{{instrumentalOnlyText}}</label> 
-                {{input type="checkbox" id="instrumentalOnly" checked=instrumentalOnly name="instrumentalOnly"}} 
+                {{input type="checkbox" 
+                        id="instrumentalOnly" 
+                        checked=queryOptions.instrumentalOnly 
+                        name="instrumentalOnly"}} 
             </li>
             <li>
                 <label>{{limitLabelText}}</label> 
-                {{at-select content=limits selection=limit action=(action (mut limit))}}
+                {{at-select content=limits 
+                            selection=queryOptions.limit 
+                            action=(action (mut queryOptions.limit))}}
             </li>
             <li>
-                {{at-select content=genres selection=genre action=(action (mut genre))}}
+                {{at-select content=genres 
+                            selection=queryOptions.genre 
+                            action=(action (mut queryOptions.genre))}}
+            </li>
+            <li>
+                <label for="recent">{{recentText}}</label> 
+                {{input type="checkbox" 
+                        id="recent" 
+                        checked=queryOptions.recent 
+                        name="recent"}} 
             </li>
              </ul>
         </div>

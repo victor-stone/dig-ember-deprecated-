@@ -2,14 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    tagService: Ember.inject.service('tags'),
-    
-    // search state
-    searchText: '',    
-    licenseScheme: 'all',
-    genre: '-',
-    instrumentalOnly: false ,
-    limit: 10,
+    queryOptions: Ember.inject.service('query-options'),
     
     // UI model
     app_title: 'dig -> ccMixter',
@@ -44,31 +37,23 @@ export default Ember.Controller.extend({
     limitLabelText: 'Results',
     limits: [ 10, 20, 50, 100 ],
     searchPlaceHolder: "genre, style, instrument, etc.",
+    recentText: 'Recent',
     
     // UI state
     optionsOpen: false,
-
-    _computeTags: function() {
-        var ts = this.get('tagService');
-        var genreIds = this.genres.map( function(obj) { return obj.id; } );
-        ts.replaceTagFrom( this.get('genre'), genreIds );        
-        ts.toggleTag('instrumental',this.get('instrumentalOnly'));
-        return ts.convertToString();
+    
+    init: function() {
+        this._super.apply(this,arguments);
+        this.get('queryOptions').set('genres', this.get('genres'));
     },
     
     actions: {
         search: function() {
-            var qparams = { };
-            qparams.tags = this._computeTags();
-            qparams.limit = this.get('limit');
-            qparams.lic = this.get('licenseScheme');
-            var searchText = this.get('searchText');
-            if( searchText ) {
-                qparams.title = 'Search results for "' + searchText + '"';
-            } else {
-                qparams.title = 'Listing';
-            }
-            this.transitionToRoute('query', { queryParams: qparams } );
+            var qo = this.get('queryOptions');
+            var qparams = Ember.merge( {}, qo.queryParams );
+            qparams.search = qo.get('searchText');
+            qparams.title = 'Search results for "' + qparams.search + '"';
+            this.transitionToRoute('search', { queryParams: qparams } );
         },
         toggleOptions: function() {
             this.toggleProperty('optionsOpen');
