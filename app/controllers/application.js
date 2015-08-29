@@ -8,10 +8,10 @@ export default Ember.Controller.extend({
     app_title: 'dig -> ccMixter',
     menu: [
             { name: 'free',
-              lic: 'open',
+              linkto:  'free',
               title: 'Free for Commercial Use' }, 
             { name:'music for film',
-              tags: 'instrumental',
+              linkto: 'video',
               title: 'Music for Film and Video'}, 
             { name:'music for games',
               tags: 'ccplus,instrumental',
@@ -22,7 +22,8 @@ export default Ember.Controller.extend({
         ],
     licenses: [
             { title: 'All licenses', id: 'all' },
-            { title: 'Free for commercial use', id: 'open' }
+            { title: 'Free for commercial use', id: 'open' },
+            { title: 'Royalty free license', id: 'ccplus' },
         ],
     genres: [
             { title: 'All genres', id: '-' },            
@@ -39,21 +40,22 @@ export default Ember.Controller.extend({
     searchPlaceHolder: "genre, style, instrument, etc.",
     recentText: 'Recent',
     
+    searchCollector: '',
+    
     // UI state
     optionsOpen: false,
     
     init: function() {
         this._super.apply(this,arguments);
-        this.get('queryOptions').set('genres', this.get('genres'));
+        var qo = this.get('queryOptions');
+        qo.setOptionModel( 'genre', this.get('genres') );
+        qo.setOptionModel( 'recent', '6 weeks ago' );
     },
     
     actions: {
         search: function() {
-            var qo = this.get('queryOptions');
-            var qparams = Ember.merge( {}, qo.queryParams );
-            qparams.search = qo.get('searchText');
-            qparams.title = 'Search results for "' + qparams.search + '"';
-            this.transitionToRoute('search', { queryParams: qparams } );
+            this.set('queryOptions.searchText', this.searchCollector);
+            this.transitionToRoute('search');
         },
         toggleOptions: function() {
             this.toggleProperty('optionsOpen');

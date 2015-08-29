@@ -10,6 +10,8 @@ Router.map(function() {
   this.route('users', { path: '/user/:user_id' } );
   this.route('query');
   this.route('search');
+  this.route('free');
+  this.route('video');
 });
 
 export default Router;

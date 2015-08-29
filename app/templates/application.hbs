@@ -7,7 +7,8 @@
         <div class="dig-search">
             {{input type="text" 
                       class="dig-search-input" 
-                      value=queryOptions.searchText
+                      value=searchCollector
+                      enter="search"
                       size="30" 
                       placeholder=searchPlaceHolder}}
              <button type="button" class="dig-search-button" {{action "search"}}>

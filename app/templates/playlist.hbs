@@ -3,3 +3,10 @@
         <li>{{#link-to 'uploads' item.upload_id}}{{item.upload_name}}{{/link-to}} by {{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</li>
     {{/each}}
 </ul>
+    <p> Paging: </p>
+  {{#if offsetValue}}
+    <li>{{link-to '← Previous' (query-params offset=previousOffset)}}</li>
+  {{/if}}
+  {{#if nextOffset}}
+    <li>{{link-to 'Next →' (query-params offset=nextOffset)}}</li>
+  {{/if}}
