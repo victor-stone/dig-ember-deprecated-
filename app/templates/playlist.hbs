@@ -10,7 +10,11 @@
 
 <ul>
     {{#each model.playlist as |item|}}
-        <li>{{#link-to 'uploads' item.upload_id}}{{item.upload_name}}{{/link-to}} by {{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</li>
+        <li>{{#link-to 'uploads' item.upload_id}}{{item.upload_name}}{{/link-to}} 
+            {{#unless skipUserListing}}
+                by {{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}
+            {{/unless}}
+        </li>
     {{/each}}
 </ul>
 

@@ -10,7 +10,7 @@ var QueryOption = Ember.Object.extend({
     value: undefined,
     model: undefined,
     defaultValue: '',
-    observeChange: true,
+    updatesParams: true,
     queryParam: '',
     type: '',
 
@@ -18,35 +18,35 @@ var QueryOption = Ember.Object.extend({
     types: { },
     convertToQueryParam: function(qparams,service) { 
             if( this.type ) {
-                this.types[ this.type ](qparams,this,service);
+                this.types[ this.type ].apply(this,[qparams,service]);
             }
         },
     init: function() {
             this.set('value',this.get('defaultValue'));
-            this.types[QUERYOPTION_TYPE_VALUE] = function(qparams,opt) {
-                    qparams[opt.queryParam] = opt.get('value');
+            this.types[QUERYOPTION_TYPE_VALUE] = function(qparams) {
+                    qparams[this.queryParam] = this.get('value');
                 };
-            this.types[QUERYOPTION_TYPE_ENUM] = function(qparams,opt,service) {
-                    var value = opt.get('value');
-                    if( opt.queryParam === 'tags' ) {
+            this.types[QUERYOPTION_TYPE_ENUM] = function(qparams,service) {
+                    var value = this.get('value');
+                    if( this.queryParam === 'tags' ) {
                         var ts = service.tagUtils;
-                        ts.replaceTagWithTag( opt._prevEnumValue, value );
-                        opt._prevEnumValue = value;
+                        ts.replaceTagWithTag( this._prevEnumValue, value );
+                        this._prevEnumValue = value;
                         value = ts.convertToString();
                     } else { 
                         // don't know what this means
                         // don't have to
                     }
-                    qparams[opt.queryParam] = value;
+                    qparams[this.queryParam] = value;
                 };
-            this.types[QUERYOPTION_TYPE_BOOLEAN] = function(qparams,opt,service) {
-                    if( opt.queryParam === 'tags' ) {
+            this.types[QUERYOPTION_TYPE_BOOLEAN] = function(qparams,service) {
+                    if( this.queryParam === 'tags' ) {
                         var ts = service.tagUtils;
-                        ts.toggleTag(opt.get('model'),opt.get('value'));
+                        ts.toggleTag(this.get('model'),this.get('value'));
                         qparams.tags = ts.convertToString();
                     } else {
-                        if( opt.get('value') ) {
-                            qparams[opt.queryParam] = opt.get('model');
+                        if( this.get('value') ) {
+                            qparams[this.queryParam] = this.get('model');
                         }
                     }
                 };
@@ -55,7 +55,7 @@ var QueryOption = Ember.Object.extend({
 
 var optionsMeta = [
         QueryOption.create( { name: 'searchText' ,
-                              observeChange: false } ),
+                              updatesParams: false } ),
         QueryOption.create( { name: 'licenseScheme',
                               type: QUERYOPTION_TYPE_VALUE,
                               defaultValue: 'all',
@@ -83,49 +83,62 @@ var optionsMeta = [
 export default Ember.Service.extend({
     _optionsMeta: { },
         
-    tagUtils: TagsUtil.create({}),
+    tagUtils: TagsUtil.create(),
 
     init: function() {
         this._super.apply(this,arguments);
 
         var me = this;
         function optionWatcher() {
-            if( me.autoUpdate ) {
-                me.updateOptions();
-            }
+            me.updateOptions();
         }
-
+        
         optionsMeta.forEach( function(optMeta) {
             var name = optMeta.get('name');
             me._optionsMeta[name] = optMeta;
             me.set(name, Ember.computed.alias('_optionsMeta.'+name+'.value'));
-            if( optMeta.observeChange ) {
+            if( optMeta.updatesParams ) {
                 optMeta.addObserver('value',optionWatcher);
             }
         });
     },
     
-    autoUpdate: true,
-        
     queryParams: { },     
 
     meta: Ember.computed.alias('_optionsMeta'),
 
     updateOptions: function() {
-        var qparams = { };
-        for( var key in this._optionsMeta ) {
-            this._optionsMeta[key].convertToQueryParam(qparams,this);
-        }
-        this.set('queryParams', qparams);
-    },
+            Ember.debug('updating query options');
+            var qparams = { };
+            this._forEachUpdatingOption( function(opt) {
+                opt.convertToQueryParam(qparams,this);
+            });
+            if( this._killNotify ) {
+                for( var k in qparams ) {
+                    this.queryParams[k] = qparams[k];
+                }
+            } else {
+                this.set('queryParams', qparams );
+            }
+        },
         
+    _killNotify: false,
+    
     setBatch: function(options) {
-        this.autoUpdate = false;
-        for( var k in options ) {
-            this.set(k,options[k]);
-        }
-        this.autoUpdate = false;
-        this.updateOptions();
-    }
+            this._killNotify = true;
+            this._forEachUpdatingOption( function(opt) {
+                this.set(opt.name, options[opt.name] || opt.get('defaultValue') );
+            });
+            this._killNotify = false;
+        },
 
+    _forEachUpdatingOption: function( callback ) {            
+            var meta = this._optionsMeta;
+            for( var k in meta ) {
+                if( meta[k].updatesParams ) {
+                    callback.call(this,meta[k]);
+                }
+            }
+        },
+        
 });

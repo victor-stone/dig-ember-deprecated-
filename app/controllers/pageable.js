@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    queryParams: [ 'limit', 'offset' ],
+    queryParams: [ 'offset' ],
     queryOptions: Ember.inject.service('query-options'),
     offset: 0,
     
@@ -12,10 +12,12 @@ export default Ember.Controller.extend({
     },
 
     applyQueryOptions: function() {
+        Ember.debug('Options changed controller: ' + this.toString() );
         Ember.run.once(this,'onOptionsChanged');
     }.observes('queryOptions.queryParams'),
       
     onOptionsChanged: function() {
+        Ember.debug('Setting offset in ' + this.toString());
         this.set('offset',0);
     },                  
 
@@ -25,7 +27,7 @@ export default Ember.Controller.extend({
         
     showNext: function() {
         return  this.get('offset') + this.get('queryOptions.limit') < this.get('model.total');
-    }.property('offset','queryOptions.limit'),
+    }.property('offset'),
     
     prevValue: function() {
         var val = this.get('offset') - this.get('queryOptions.limit');
@@ -33,11 +35,11 @@ export default Ember.Controller.extend({
             val = 0;
         }
         return val;
-    }.property('offset','queryOptions.limit'),
+    }.property('offset'),
     
     nextValue: function() {
         return this.get('offset') + this.get('queryOptions.limit');
-    }.property('offset', 'queryOptions.limit'),
+    }.property('offset'),
 
 
 });
