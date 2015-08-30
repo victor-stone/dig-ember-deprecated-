@@ -1,4 +1,7 @@
 import PageableRoute from './pageable';
+import TagUtils from '../lib/tags';
+
+var tagUtils = TagUtils.create();
 
 export default PageableRoute.extend({
 
@@ -10,6 +13,8 @@ export default PageableRoute.extend({
             genre: '-',
             recent: false
         });
-        this._super(params);        
+        this._super(params);
+        params.tags = tagUtils.combineStrings(params.tags,'loops'); // haha
+        return params;
     },
 });

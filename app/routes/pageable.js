@@ -1,4 +1,7 @@
 import Ember from 'ember';
+import TagUtils from '../lib/tags';
+
+var tagUtils = TagUtils.create();
 
 export default Ember.Route.extend({
     queryOptions: Ember.inject.service('query-options'),
@@ -15,32 +18,69 @@ export default Ember.Route.extend({
     },
 
     _optionsWatcher: function() {
-        Ember.run.once( this, 'onOptionsChange' );
+        Ember.run.once( this, 'onOptionsChanged' );
     }.observes('queryOptions.queryParams'),
     
-    onOptionsChange: function() {
-        this.refresh();
+    onOptionsChanged: function() {
+        if( this.router.currentRouteName === this.routeName ) {
+            this.refresh();
+        }
     },
-    
-    mergeOptions: function(params) {
-        var obj = { };
-        Ember.merge(obj,params);
-        var options = this.get('queryOptions.queryParams');
-        for( var k in options ) {
-            var val = options[k];
+
+    safeMergeParameters: function(obj1,obj2) {
+        var target = {};
+        Ember.merge(target,obj1);
+        var hasTags = target.hasOwnProperty('tags');
+        for( var k in obj2 ) {
+            var val = obj2[k];
             if( typeof(val) !== 'undefined' ) {
-                obj[k] = val;
+                if( hasTags && k === 'tags' ) {
+                    target[k] = tagUtils.combineStrings(target.tags,val);
+                } else {
+                    target[k] = val;
+                }
             }
         }
-        var qo = this.get('queryOptions');
+        return target;
+    },
         
-        qo.set('instrumentalOnly', true );
-        
-        return obj;
+    mergeOptions: function(obj /*, params */) {
+        var options = this.get('queryOptions.queryParams');
+        return this.safeMergeParameters(obj,options);
     },
     
     model: function(params,transition) {  
-        var qparams = this.mergeOptions(transition.queryParams);
-        return this.store.query(qparams);
+
+        var sysDefaults = { tags: 'remix', 
+                            dataview: 'links_by',
+                            limit: 10,
+                            sort: 'rank',
+                            ord: 'desc',
+                            f: 'json',
+                            _cache_bust: (new Date()).getTime(),                     
+                        };
+                        
+        // merge query parameters (?foo=bar&offset=20) into sys defaults
+        var qparams = this.safeMergeParameters( sysDefaults, transition.queryParams );
+
+        // merge user query settings (limit, genre, etc) 
+        // pass ember url params (/files/:_id) as a reference for derivations
+        qparams = this.mergeOptions(qparams, params);
+
+        var retModel = {
+            playlist: [ ],
+            total: 0
+        };
+        
+        var store = this.store;
+        return store.query(qparams)
+            .then( function(arr) {
+                retModel.playlist = arr;
+                qparams.f = 'count';
+                return store.query(qparams); })
+            .then( function(arr) {
+                retModel.total = arr[0];
+                return retModel;
+            });
     },
 });

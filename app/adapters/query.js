@@ -7,7 +7,6 @@ export default Ember.Object.extend( {
     params: {},
     _makeQ: function(qparams) {
         var q = '';
-        qparams._cache_bust = (new Date()).getTime();
         for( var p in qparams ) {
             if( q !== '' ) { q += '&'; }
             if( qparams[q] !== '' ) { q += p + '=' + qparams[p]; }
@@ -35,14 +34,7 @@ export default Ember.Object.extend( {
         }
     },
     query: function(params) {
-        var qparams = {
-            limit: 10,
-            sort: 'rank',
-            ord: 'desc',
-            f: 'json'
-        };
-        Ember.merge(qparams,params || this.params);
-        var qString = this._makeQ(qparams);
+        var qString = this._makeQ(params);
         return this._query(qString);
     },
     find: function(name,params) {

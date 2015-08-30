@@ -1,12 +1,16 @@
+    <div class="paging">Paging: 
+    prevValue: {{prevValue}} - nextValue: {{nextValue}}
+  {{#if showPrev}}
+    {{link-to '← Previous' (query-params offset=prevValue)}}
+  {{/if}}
+  {{#if showNext}}
+    {{link-to 'Next →' (query-params offset=nextValue)}}
+  {{/if}}
+    </div>
+
 <ul>
-    {{#each model as |item|}}
+    {{#each model.playlist as |item|}}
         <li>{{#link-to 'uploads' item.upload_id}}{{item.upload_name}}{{/link-to}} by {{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</li>
     {{/each}}
 </ul>
-    <p> Paging: </p>
-  {{#if offsetValue}}
-    <li>{{link-to '← Previous' (query-params offset=previousOffset)}}</li>
-  {{/if}}
-  {{#if nextOffset}}
-    <li>{{link-to 'Next →' (query-params offset=nextOffset)}}</li>
-  {{/if}}
+

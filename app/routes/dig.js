@@ -8,7 +8,7 @@ export default PageableRoute.extend({
     },
     
     _searchTextWatcher: function() {
-        this.onOptionsChange();
+        this.onOptionsChanged();
     }.observes('queryOptions.searchText'),
 
 });

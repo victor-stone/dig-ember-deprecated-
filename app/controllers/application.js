@@ -10,11 +10,14 @@ export default Ember.Controller.extend({
             { name: 'free',
               linkto:  'free',
               title: 'Free for Commercial Use' }, 
+            { name: 'licensed',
+              linkto:  'ccplus',
+              title: 'Royalty Free Licensed' }, 
             { name:'music for film',
               linkto: 'video',
               title: 'Music for Film and Video'}, 
             { name:'music for games',
-              tags: 'ccplus,instrumental',
+              linkto: 'games',
               title: 'Music for Video Games'},
             { name: 'How it Works',
               url: '/#howitworks',
@@ -47,15 +50,13 @@ export default Ember.Controller.extend({
     
     init: function() {
         this._super.apply(this,arguments);
-        var qo = this.get('queryOptions');
-        qo.setOptionModel( 'genre', this.get('genres') );
-        qo.setOptionModel( 'recent', '6 weeks ago' );
+        this.set('queryOptions.meta.recent.model', '6 weeks ago');
     },
     
     actions: {
         search: function() {
             this.set('queryOptions.searchText', this.searchCollector);
-            this.transitionToRoute('search');
+            this.transitionToRoute('dig');
         },
         toggleOptions: function() {
             this.toggleProperty('optionsOpen');

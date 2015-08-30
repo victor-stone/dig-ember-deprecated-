@@ -7,7 +7,12 @@ export default PageableController.extend({
         if( str.length > 20 ) {
             str = str.substr(20) + '...';
         }
-        return 'Search results for "' + str + '"';
+        if( str ) {
+            str = 'Search results for "' + str + '"';
+        } else {
+            str = 'Dig the Music';
+        }
+        return str;
     }.property('queryOptions.searchText')
 
 });

@@ -1,5 +1,5 @@
 import LicenseRoute from './license';
 
 export default LicenseRoute.extend({
-    scheme: 'open'
+    scheme: 'ccplus'
 });

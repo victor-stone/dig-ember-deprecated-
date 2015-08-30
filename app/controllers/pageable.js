@@ -4,7 +4,8 @@ export default Ember.Controller.extend({
 
     queryParams: [ 'limit', 'offset' ],
     queryOptions: Ember.inject.service('query-options'),
-
+    offset: 0,
+    
     init: function() {
         this._super.apply(this,arguments);
         this.get('queryOptions'); // observers don't hook up if you never do a get()
@@ -15,41 +16,28 @@ export default Ember.Controller.extend({
     }.observes('queryOptions.queryParams'),
       
     onOptionsChanged: function() {
-        this.set('offset',undefined);
+        this.set('offset',0);
     },                  
-    
-    _safeLimit: function() {
-            var limit = this.get('limit');
-            if( !limit ) {
-                limit = this.get('queryOptions.limit');
-            }
-            return Number(limit);
-        },
 
-    _safeOffset: function() {
-            var offset = Number(this.get('offset'));
-            if( isNaN(offset) ) {
-                offset = 0;
-            }
-            return offset;
-        },
-    
-    offsetValue: function() {
-        return this.get('offset') > 0;
+    showPrev: function() {
+        return this.get('offset') > 0;        
     }.property('offset'),
+        
+    showNext: function() {
+        return  this.get('offset') + this.get('queryOptions.limit') < this.get('model.total');
+    }.property('offset','queryOptions.limit'),
     
-    nextOffset: function() {
-        var limit = this._safeLimit();
-        if (this.get('model.length') >= limit) {
-            return limit + this._safeOffset();
+    prevValue: function() {
+        var val = this.get('offset') - this.get('queryOptions.limit');
+        if(  val < 0 ) {
+            val = 0;
         }
-    }.property('offset', 'limit'),
+        return val;
+    }.property('offset','queryOptions.limit'),
+    
+    nextValue: function() {
+        return this.get('offset') + this.get('queryOptions.limit');
+    }.property('offset', 'queryOptions.limit'),
 
-    previousOffset: function() {
-        var offset = this._safeOffset() - this._safeLimit();
-        if (offset > 0) {
-            return offset;
-        }
-    }.property('offset', 'limit')    
 
 });
