@@ -1,11 +1,11 @@
-    <div class="paging">Paging: 
-    prevValue: {{prevValue}} - nextValue: {{nextValue}}
+    <div class="paging">
+        Showing {{model.playlist.length}} of {{model.total}} 
   {{#if showPrev}}
     {{link-to '← Previous' (query-params offset=prevValue)}}
   {{/if}}
   {{#if showNext}}
     {{link-to 'Next →' (query-params offset=nextValue)}}
-  {{/if}}
+  {{/if}}            
     </div>
 
 <ul>

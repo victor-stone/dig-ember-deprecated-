@@ -13,7 +13,10 @@ export default Ember.Controller.extend({
 
     applyQueryOptions: function() {
         Ember.debug('Options changed controller: ' + this.toString() );
-        Ember.run.once(this,'onOptionsChanged');
+        var m = ':' + this.target.currentRouteName + ':';
+        if( this.toString().match(m) !== null ) {
+            Ember.run.once(this,'onOptionsChanged');
+        }
     }.observes('queryOptions.queryParams'),
       
     onOptionsChanged: function() {
@@ -27,7 +30,7 @@ export default Ember.Controller.extend({
         
     showNext: function() {
         return  this.get('offset') + this.get('queryOptions.limit') < this.get('model.total');
-    }.property('offset'),
+    }.property('offset', 'model.total', 'queryOptions.limit' ),
     
     prevValue: function() {
         var val = this.get('offset') - this.get('queryOptions.limit');
@@ -35,11 +38,11 @@ export default Ember.Controller.extend({
             val = 0;
         }
         return val;
-    }.property('offset'),
+    }.property('offset', 'queryOptions.limit' ),
     
     nextValue: function() {
         return this.get('offset') + this.get('queryOptions.limit');
-    }.property('offset'),
+    }.property('offset', 'queryOptions.limit' ),
 
 
 });

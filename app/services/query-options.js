@@ -127,7 +127,7 @@ export default Ember.Service.extend({
     setBatch: function(options) {
             this._killNotify = true;
             this._forEachUpdatingOption( function(opt) {
-                this.set(opt.name, options[opt.name] || opt.get('defaultValue') );
+                this.set(opt.name, options[opt.name] || opt.get('value') );
             });
             this._killNotify = false;
         },
