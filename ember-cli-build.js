@@ -33,12 +33,13 @@ module.exports = function(defaults) {
             }
         });
 
+    /*
     app.import('bower_components/soundmanager/demo/bar-ui/script/bar-ui.js');
     app.import('bower_components/soundmanager/demo/bar-ui/css/bar-ui.css');
     var smImages = new Funnel('bower_components/soundmanager/demo/bar-ui/image', {
                 destDir: 'image'
                 });
+    */
     
-    
-  return app.toTree( [ bootstrapFonts, smImages ] );
+  return app.toTree( [ bootstrapFonts, /* smImages */] );
 };

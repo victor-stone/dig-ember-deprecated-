@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import TagsUtil from '../lib/tags';
+import TagUtils from '../lib/tags';
 
 var QUERYOPTION_TYPE_VALUE = 'qotValue';
 var QUERYOPTION_TYPE_BOOLEAN = 'qotBoolValue';
@@ -22,17 +22,16 @@ var QueryOption = Ember.Object.extend({
             }
         },
     init: function() {
-            this.set('value',this.get('defaultValue'));
+            this.set('value',this.get('defaultValue')); // computed.defaultTo is deprecated
             this.types[QUERYOPTION_TYPE_VALUE] = function(qparams) {
                     qparams[this.queryParam] = this.get('value');
                 };
             this.types[QUERYOPTION_TYPE_ENUM] = function(qparams,service) {
                     var value = this.get('value');
                     if( this.queryParam === 'tags' ) {
-                        var ts = service.tagUtils;
-                        ts.replaceTagWithTag( this._prevEnumValue, value );
+                        service._tags.replace( this._prevEnumValue, value );
                         this._prevEnumValue = value;
-                        value = ts.convertToString();
+                        value = service._tags.tagString();
                     } else { 
                         // don't know what this means
                         // don't have to
@@ -41,9 +40,8 @@ var QueryOption = Ember.Object.extend({
                 };
             this.types[QUERYOPTION_TYPE_BOOLEAN] = function(qparams,service) {
                     if( this.queryParam === 'tags' ) {
-                        var ts = service.tagUtils;
-                        ts.toggleTag(this.get('model'),this.get('value'));
-                        qparams.tags = ts.convertToString();
+                        service._tags.toggle(this.get('model'),this.get('value'));
+                        qparams.tags = service._tags.tagString();
                     } else {
                         if( this.get('value') ) {
                             qparams[this.queryParam] = this.get('model');
@@ -83,7 +81,7 @@ var optionsMeta = [
 export default Ember.Service.extend({
     _optionsMeta: { },
         
-    tagUtils: TagsUtil.create(),
+    _tags: TagUtils.create(),
 
     init: function() {
         this._super.apply(this,arguments);

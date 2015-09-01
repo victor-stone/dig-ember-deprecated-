@@ -1,113 +1,144 @@
 import Ember from 'ember';
+/**
+    Manipulate tags with ccHost policies in mind
 
-export default Ember.Object.extend({
+    tag              := ascii alphanumeric and underscore
+    tag string       := tags is separated by commas possibly with commas at the
+                         start and end of string   
+    tag parameter    := can be any one of: 
+                            tag string
+                            array
+                            instance of TagUtils
+
+    Class ensure unique (unordered) values.
+
+    Examples:     
+    
+        var tags1 = TagUtils.create( { source: 'foo,bar' } );
+        
+        var tags2 = TagUtils.create( { source: [ 'fee', 'fie' ] } );
+        
+        var tags3 = TagUtils.create( { source: tags2 } );
+        
+        tags2.add(tags1);  // fee,fie,foo,bar
+        tags2.toggle( ['fie','foo'], false ); // fee,bar
+        tags3.remove('fee'); // fie
+        
+        var tags = TagUtils.combine(tags1, 'hip_hop,remix'); // 'foo,bar,hip_hop,remix'
+*/
+var TagUtils = Ember.Object.extend({
 
     _tagsArray: [ ],
 
-        
-    _arrayFromTagStr: function(str) {
-            return str.replace(/^\s+|\s+$/, '').replace(/[^_\w]/g, ' ').replace(/\s+/g,',').split(',');
-        },
-    
-    setFromString: function(str) {
-            this._tagsArray = this._arrayFromTagStr(str);
+    init: function() {
+        this._super.apply(this,arguments);
+        this.set('_tagsArray', TagUtils.toArray(this.get('source')));
+    },
+
+    add: function(tag) {
+            function safeAddTag(tag) {
+                if( tag && tag.match(/[^a-zA-Z0-9_]/) === null && !this.contains(tag) ) {
+                    this.get('_tagsArray').pushObject(tag);
+                }
+            }
+            
+            TagUtils.forEach( tag, safeAddTag, this );
             return this;
         },
         
-    setFromOther: function(other) {
-            this._tagsArray = other._tagsArray.slice();
+    remove: function(tag) {
+            function safeRemove(tag) {
+                var index = this.get('_tagsArray').indexOf(tag);
+                if( index > -1 ) {
+                    this.get('_tagsArray').removeObject(tag);
+                }
+            }
+            TagUtils.forEach( tag, safeRemove, this);
+            return this;
+        },    
+        
+    replace: function(replaceThisSource,withThisSource) {
+            if( replaceThisSource && (replaceThisSource !== withThisSource) ) {
+                this.remove(replaceThisSource);
+            }
+            this.add(withThisSource);
             return this;
         },
         
-    addFromString: function(str) {
-            if( str ) {
-                this._arrayFromTagStr(str).forEach( function(str) { this.addTag(str); }, this );
+    removeAll: function() {
+            this.set('_tagsArray',[ ]);
+            return this;
+        },
+        
+    toggle: function(tag,flag) {
+            if( flag ) {
+                this.add(tag);
+            } else {
+                this.remove(tag);
             }
             return this;
         },
         
-    combineStrings: function(tags1,tags2) {
+    contains: function(tag) {            
+            return this.get('_tagsArray').indexOf(tag) !== -1;
+        },
+        
+    tagString: function() {
+            var tagArr = this.get('_tagsArray');
+            if( tagArr.length > 0 ) {
+                return tagArr.join(',');
+            }
+            return '';
+        },
+
+    forEach: function(callback,context) {
+        TagUtils.toArray(this).forEach(callback,context);
+        return this;
+    },
+        
+});
+
+TagUtils.reopenClass({
+
+    combine: function(tags1,tags2) {
             if( !tags1 ) {
                 return tags2;
             }
             if( tags2 ) {
-                this.setFromString(tags1);
-                this.addFromString(tags2);
-                return this.convertToString();
+                return TagUtils.create({ source: tags1 }).add(tags2).tagString();
             }
             return tags1;
         },
-        
-    convertToString: function() {
-            var tagArr = this._tagsArray;
-            if( tagArr.length > 0 ) {
-                return tagArr.join(',');
-            }
-        },    
-        
-    addTag: function(tag) {
-            if( tag && typeof(tag) === 'string' ) {
-                if( tag.indexOf(',') !== -1 ) {
-                    this.addFromString(tag);
-                } else {
-                    if( tag.match(/[^a-zA-Z0-9_]/) === null && !this.hasTag(tag) ) {
-                        this._tagsArray.push(tag);
-                    }
-                }
-            }
-            return this;
-        },
-        
-    replaceTagFrom: function(withTag,from) {
-            this._tagsArray = this._tagsArray.filter( function(tag) { return from.indexOf(tag) === -1; } );
-            if( withTag ) {
-                this.addTag(withTag);
-            }
-            return this;
-        },
-        
-    replaceTagWithTag: function(replaceThis,withThis) {
-            if( replaceThis && (replaceThis !== withThis) ) {
-                this.removeTag(replaceThis);
-            }
-            this.addTag(withThis);
-            return this;
-        },
-        
-    removeTag: function(tag) {
-            var index = this._tagsArray.indexOf(tag);
-            if( index > -1 ) {
-                this._tagsArray.splice(index,1);
-            }
-            return this;
-        },    
-        
-    removeAll: function() {
-            this._tagsArray = [ ];
-            return this;
-        },
-        
-    toggleTag: function(tag,flag) {
-            if( flag ) {
-                this.addTag(tag);
-            } else {
-                this.removeTag(tag);
-            }
-            return this;
-        },
-        
-    hasTag: function(tag) {
-            return this._tagsArray.indexOf(tag) !== -1;
-        },
-        
-    whichTag: function(arr) {
-            var match = this._tagsArray.filter( function(tag) { 
-                return arr.indexOf(tag) !== -1; 
-            } );
-            if( match.length > 0 ) {
-                return match[0];
-            }
-            // return undefined
-        }
+
+    contains: function(source,tag) {
+        return TagUtils.toArray(source).indexOf(tag) !== -1;
+    },        
     
+    toArray: function(source) {
+            if( !source || source === '-' ) {
+                return [ ];
+            }
+            var arr = null;
+            if( typeof(source) === 'string' ) {
+                arr = source.replace(/^[^_\w]+|[^_\w]+$/g, '') 
+                            .replace(/[^_\w]/g, ' ') 
+                            .replace(/\s+/g,',')
+                            .split(',')
+                            .reject( function(tag) {
+                                return !tag;
+                            });          
+            } else if( Ember.isArray(source) ) {
+                arr = source.slice();                
+            } else if( source && source.hasOwnProperty('_tagsArray') ) {
+                arr = source.get('_tagsArray').slice();                
+            } else {
+                arr = [ ];
+            }
+            return arr;
+    },
+    
+    forEach: function(source,callback,context) {
+        TagUtils.toArray(source).forEach(callback,context);
+    }
 });
+export default TagUtils;

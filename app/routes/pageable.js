@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import TagUtils from '../lib/tags';
 
-var tagUtils = TagUtils.create();
-
 export default Ember.Route.extend({
     
     queryOptions: Ember.inject.service('query-options'),
@@ -42,7 +40,7 @@ export default Ember.Route.extend({
                 var val = obj[k];
                 if( typeof(val) !== 'undefined' ) {
                     if( k === 'tags' ) {                    
-                        target[k] = tagUtils.combineStrings(target.tags,val);
+                        target[k] = TagUtils.combine(target.tags,val);
                     } else {
                         target[k] = val;
                     }

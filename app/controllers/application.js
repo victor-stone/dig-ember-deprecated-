@@ -61,6 +61,11 @@ export default Ember.Controller.extend({
         toggleOptions: function() {
             this.toggleProperty('optionsOpen');
         },
+        togglePlay: function(item) {
+            if (item) {
+                item.get('media').togglePlay();
+            }
+        },
     },
 });
 
