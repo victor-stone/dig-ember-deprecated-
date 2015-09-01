@@ -7,14 +7,17 @@
     {{link-to 'Next →' (query-params offset=nextValue)}}
   {{/if}}            
     </div>
-
+<div class="playlist clear-both">
 <ul>
     {{#each model.playlist as |item|}}
-        <li>{{#link-to 'uploads' item.upload_id}}{{item.upload_name}}{{/link-to}} 
+        <li class="playlist-line clear-both">
+            <span class="sprite3 play-sprite"> </span>
+            <span class="sprite3 download-sprite"> </span>
+            <span class="song-title">{{#link-to 'uploads' item.upload_id}}{{item.upload_name}}{{/link-to}}</span> 
             {{#unless skipUserListing}}
-                by {{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}
+                <span class="artist-name">{{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</span>
             {{/unless}}
         </li>
     {{/each}}
 </ul>
-
+</div>

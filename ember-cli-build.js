@@ -4,7 +4,6 @@ var Funnel = require('broccoli-funnel');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
-    // Add options here
   });
 
     /** bootstrap **/

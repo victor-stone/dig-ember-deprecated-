@@ -77,6 +77,70 @@
  font-size: 16px;
 }
 
-.playlist {
-    overflow: scroll;
+.clear-both {
+    clear: both;
+}
+
+.playlist-line {
+    list-style-type: none;
+    font-family: Open Sans Condensed;
+    font-size: 28px;
+    padding: 5px;
+}
+
+li.playlist-line a {
+    color: black;
+}
+
+li.playlist-line a:hover,
+li.playlist-line .artist-name a:hover {
+    color: blue;
+    text-decoration: none;
+}
+
+li.playlist-line .artist-name a {
+    color: #999;
+    font-size: 18px;
+}
+
+.song-title {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.sprite3 {
+  background-image: url('../dig-images/glyphs3.png');
+  background-repeat: no-repeat;
+  width: 51px;
+  height: 48px;
+}
+.play-sprite {
+    background-position: -99px 0px;
+    display: block;
+    float: left;
+}
+.download-sprite {
+    background-position: 0px 0px;
+    display: block;
+    float: left;
+}
+
+.tag-list {
+    list-style: none;
+}
+.tag-container {
+    background-image: url('../dig-images/tag.png');
+    background-size: cover;
+    margin: 4px;
+    padding: 5px;
+    padding-left: 20px;
+    
+    float: left;
+    position: relative;
+    display: block;    
+}
+.tag-button {
+    background-color: transparent;
+    border: 0;
 }

@@ -14,9 +14,19 @@ var UploadModel = Ember.Object.extend( {
         return TagUtils.create( { source: this.get('upload_tags') } );
     }.property('upload_tags'),
     
-    /*
-    streamUrl: Ember.computed.filterBy('files.file_format_info', 'media-type','audio').get('firstObject.download_url'),
-    */
+    userTags: function() {
+        return TagUtils.create( { source: this.get('upload_extra.usertags') } );
+    }.property('upload_extra'),
+    
+    streamUrl: function() {
+        var files = this.get('files');
+        for( var i = 0; i < files.length; i++ ) {
+            if( files[i].file_format_info["format-name"] === "audio-mp3-mp3" ) {
+                return files[i].download_url;
+            }
+        }
+        return null;
+    }.property('files'),
     
     hasTag: function(tag) {
         return this.get('tags').contains(tag);

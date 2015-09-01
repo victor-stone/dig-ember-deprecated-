@@ -32,7 +32,7 @@ var TagUtils = Ember.Object.extend({
 
     init: function() {
         this._super.apply(this,arguments);
-        this.set('_tagsArray', TagUtils.toArray(this.get('source')));
+        this.set('_tagsArray', TagUtils.toArray(this.get('source') || [ ] ));
     },
 
     add: function(tag) {

@@ -2,6 +2,17 @@
 <h2>NAME {{model.upload_name}}</h2>
 
 <p>ID: {{model.upload_id}}</p>
-<p>by {{model.uploader}}</p>
+<p>by {{#link-to 'users' model.user_name}}{{model.user_real_name}}{{/link-to}}</p>
+<p>Download <a href="{{model.streamUrl}}">here</a></p>
+<p>
+    <ul class="tag-list">
+    {{#each model.userTags as |tag|}}             
+    <li class="tag-container"><button type="button" class="tag-button" {{action "search" tag}}>
+            {{tag}}
+    </button>
+    </li>
+    {{/each}}
+    </ul>
+</p>
 {{outlet}}
 {{audio-player}}
