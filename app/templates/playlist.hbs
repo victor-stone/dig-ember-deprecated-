@@ -1,11 +1,13 @@
     <div class="paging">
         Showing {{model.playlist.length}} of {{model.total}} 
+        <ul class="pagination">
   {{#if showPrev}}
-    {{link-to (t 'pagination.prev') (query-params offset=prevValue)}}
+    <li>{{link-to (t 'pagination.prev') (query-params offset=prevValue)}}</li>
   {{/if}}
   {{#if showNext}}
-    {{link-to (t 'pagination.next') (query-params offset=nextValue)}}
+    <li>{{link-to (t 'pagination.next') (query-params offset=nextValue)}}</li>
   {{/if}}            
+    </ul>
     </div>
 {{download-popup upload=uploadForDownloadPopup}}    
 <div class="playlist clear-both sani-trixie">

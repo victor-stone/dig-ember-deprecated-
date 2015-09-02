@@ -112,7 +112,7 @@ TagUtils.reopenClass({
 
     contains: function(source,tag) {
         var srcArr = TagUtils.toArray(source);
-        return TagUtils.toArray(tag).every( function(tag) {
+        return TagUtils.toArray(tag).find( function(tag) {
                 return srcArr.contains(tag);
             });
     },        

@@ -1,8 +1,9 @@
 {{download-popup upload=model}}    
-
+{{trackback-popup upload=model trackback=poolItemForTrackbackPopup}}
+{{trackback-form upload=model}}    
 <div class="container sani-trixie">
 <div class="row">
-    <div class="col-md-2 col-md-offset-2">
+    <div class="col-md-2 col-md-offset-1">
         <ul class="upload-action-buttons list-unstyled"> 
             <li>
                 Play
@@ -20,21 +21,27 @@
             </li>
         </ul>
     </div>
-    <div class="col-md-6">
-        <h2>{{model.upload_name}}</h2>
+    <div class="col-md-8">
         <div class="row">
-            <div class="col-md-6">
-                <p>{{link-to model.user_real_name 'users' model.user_name}}</p>
-                <p>Featuring eiejiaef jij</p>
-            </div>
-            <div class="col-md-4">
-                <a href="{{model.license_url}}"><img class="download-license" src="{{model.license_logo_url}}" /></a><br />
-                <button>More by {{model.user_real_name}}</button><br />
-                <button>More like this</button>
+            <div class="col-md-12">
+                <h2>{{model.upload_name}}</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
+                <p>{{link-to model.user_real_name 'users' model.user_name}}</p>
+                {{#if model.featuring}}
+                    Featuring: {{model.featuring}}
+                {{/if}}
+            </div>
+            <div class="col-md-4">
+                <a href="{{model.license_url}}"><img class="download-license" src="{{model.license_logo_url}}" /></a><br />
+                <button>{{t 'upload.moreBy' artist=model.user_real_name}}</button><br />
+                <button>{{t 'upload.moreLikeThis'}}</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7">
                 <ul class="tag-list">
                     {{#each model.userTags as |tag|}}             
                         <li class="tag-container">
@@ -49,10 +56,20 @@
 <div class="row">
     <div class="col-md-5 col-md-offset-1">
 {{#if model.poolProjects}}
-        <h3>Trackback Projects</h3>
-        <ul class="list-unstyled">
+        <div class="add-button-container">
+            <a href="#" {{action 'doTrackbackForm'}} class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
+        </div>
+        <h3>{{t 'upload.trackbacks'}}</h3>
+        <ul class="list-group remix-list">
         {{#each model.poolProjects as |poolItem|}}
-            <li>{{poolItem.pool_item_extra.ttype}} {{poolItem.upload_name}} <small>{{poolItem.user_real_name}}</small></li>
+            <li class="list-group-item">{{#if (is-embeddable poolItem.pool_item_extra.embed)}}
+                    <a href="#" class="video-button" {{action 'doTrackbackPopup' poolItem}}>
+                        <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+                    </a>
+                {{else}}
+                    <strong>{{poolItem.pool_item_extra.ttype}}</strong>
+                {{/if}}
+            {{poolItem.upload_name}} <small>{{poolItem.user_real_name}}</small></li>
         {{/each}}
         </ul>
 {{else}}
@@ -61,10 +78,10 @@
     </div>
     <div class="col-md-5">
 {{#if model.remixes}}
-        <h3>Remixes at ccMixter</h3>
-        <ul class="list-unstyled">
+        <h3>{{t 'upload.remixes'}}</h3>
+        <ul class="list-group remix-list">
         {{#each model.remixes as |remix|}}
-            <li>{{link-to remix.upload_name 'uploads' remix.upload_id}} <small>{{remix.user_real_name}}</small></li>
+            <li class="list-group-item"><a href="{{remix.file_page_url}}">{{remix.upload_name}}</a> <small>{{remix.user_real_name}}</small></li>
         {{/each}}
         </ul>
 {{else}}

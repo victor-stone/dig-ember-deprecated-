@@ -35,6 +35,8 @@ var UploadModel = Ember.Object.extend( {
         return this.get('tags').contains(tag);
     },
     
+    featuring: Ember.computed.alias('upload_extra.featuring'),
+    
     isCCPlus: function() {
         return this.hasTag('ccplus');
     }.property('upload_tags'),

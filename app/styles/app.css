@@ -1,3 +1,21 @@
+.clear-both {
+    clear: both;
+}
+
+.open-sans-condensed {
+    font-family: Open Sans Condensed;
+}
+
+.sani-trixie {
+    font-family: SaniTrixieSansRegular;
+}
+
+.light-color, 
+span.light-color a {
+    color: #999;
+}
+
+
 .navbar-default,
 .sm2-bar-ui .sm2-main-controls,
 .sm2-bar-ui .sm2-playlist-drawer,
@@ -77,18 +95,6 @@
  font-size: 16px;
 }
 
-.clear-both {
-    clear: both;
-}
-
-.open-sans-condensed {
-    font-family: Open Sans Condensed;
-}
-
-.sani-trixie {
-    font-family: SaniTrixieSansRegular;
-}
-
 .playlist-line {
     list-style-type: none;
     font-size: 28px;
@@ -107,11 +113,6 @@ li.playlist-line .artist-name a:hover {
 
 li.playlist-line .artist-name a {
     font-size: 18px;
-}
-
-.light-color, 
-span.light-color a {
-    color: #999;
 }
 
 .song-title {
@@ -157,7 +158,7 @@ span.light-color a {
 }
 
 .upload-action-buttons {
-    list-style: none;
+    margin-top: 50px;
 }
 
 .upload-action-buttons li {
@@ -166,4 +167,8 @@ span.light-color a {
     text-align: center;
     vertical-align: middle;
     background-color: #CCC;
+}
+
+.remix-list li {
+    margin-top: 4px;
 }
