@@ -10,5 +10,8 @@ export default Ember.Controller.extend({
             this.set('queryOptions.searchText', text);
             this.transitionToRoute('dig');
         },
+        doDownloadPopup: function() {
+            Ember.$('#downloadPopupTriggerLink').click();
+        }
     },
 });

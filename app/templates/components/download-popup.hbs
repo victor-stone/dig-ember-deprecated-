@@ -1,0 +1,53 @@
+{{yield}}
+  <a data-toggle="modal" href="#downloadPopup" id="downloadPopupTriggerLink" class=""></a>
+  <div class="modal fade sani-trixie" id="downloadPopup" tabindex="-1" role="dialog" aria-labelledby="downloadPopupLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><span class="light-color">{{t 'dlPopup.download'}}</span> {{upload.upload_name}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="download-text">{{{t 'dlPopup.toUseThisMusic'}}}</div>
+                    <div>
+                        <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a href="#" {{action 'selectFormat' 'plain'}}>{{t 'dlPopup.plainText'}}</a></li>
+                        <li role="presentation"><a href="#" {{action 'selectFormat' 'html'}}>{{t 'dlPopup.HTML'}}</a></li>
+                        </ul>
+                        {{#if plainSelected}}
+                        <textarea id="attributionText" readonly="1" cols="40" rows="3">{{t 'dlPopup.licenseTextPlain' songTitle=upload.upload_name artistName=upload.user_real_name year=upload.licenseYear licenseName=upload.license_name filePageUrl=upload.file_page_url}}</textarea>
+                        {{else}}
+                        <textarea  id="attributionText" readonly="1" cols="40" rows="3">{{{t 'dlPopup.licenseTextHTML' songTitle=upload.upload_name artistName=upload.user_real_name year=upload.licenseYear licenseName=upload.license_name filePageUrl=upload.file_page_url licenseUrl=upload.license_url}}}</textarea>
+                        {{/if}}
+                        <button class="btn btn-sm" {{action 'copyToClip'}}>{{t 'dlPopup.copyToClip'}}</button>
+                    </div>
+                    {{#if upload.isCCPlus}}
+                        <div class="download-text ccPlus">
+                        <a href="{{upload.purchaseLicenseUrl}}" class="btn">{{t 'dlPopup.buyALicense'}}</a>
+                        {{t 'dlPopup.toRemoveThese'}}
+                        </div>
+                    {{/if}}
+                </div>
+                <div class="col-md-6">
+                    <a class="download-link" href="{{upload.streamUrl}}" download>{{t 'dlPopup.downloadButtonText'}}</a>
+                    <div class="download-size">{{downloadSize}}</div>
+                    <a href="{{upload.license_url}}"><img class="download-license" src="{{upload.license_logo_url}}" /></a>
+                    <div class="download-text license-info">
+                        {{#if upload.isOpen}} 
+                            {{t 'dlPopup.freeToUse'}}
+                        {{else}}
+                            {{t 'dlPopup.forNonComm'}}
+                        {{/if}}
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+

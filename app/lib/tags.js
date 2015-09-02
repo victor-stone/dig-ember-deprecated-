@@ -37,7 +37,7 @@ var TagUtils = Ember.Object.extend({
 
     add: function(tag) {
             function safeAddTag(tag) {
-                if( tag && tag.match(/[^a-zA-Z0-9_]/) === null && !this.contains(tag) ) {
+                if( tag && tag.match(/[^a-zA-Z0-9_]/) === null && !this.get('_tagsArray').contains(tag) ) {
                     this.get('_tagsArray').pushObject(tag);
                 }
             }
@@ -47,10 +47,10 @@ var TagUtils = Ember.Object.extend({
         },
         
     remove: function(tag) {
+            var arr = this.get('_tagsArray');
             function safeRemove(tag) {
-                var index = this.get('_tagsArray').indexOf(tag);
-                if( index > -1 ) {
-                    this.get('_tagsArray').removeObject(tag);
+                if( arr.contains(tag) ) {
+                    arr.removeObject(tag);
                 }
             }
             TagUtils.forEach( tag, safeRemove, this);
@@ -79,8 +79,8 @@ var TagUtils = Ember.Object.extend({
             return this;
         },
         
-    contains: function(tag) {            
-            return this.get('_tagsArray').indexOf(tag) !== -1;
+    contains: function(tag) {      
+            return TagUtils.contains(this,tag);
         },
         
     tagString: function() {
@@ -111,7 +111,10 @@ TagUtils.reopenClass({
         },
 
     contains: function(source,tag) {
-        return TagUtils.toArray(source).indexOf(tag) !== -1;
+        var srcArr = TagUtils.toArray(source);
+        return TagUtils.toArray(tag).every( function(tag) {
+                return srcArr.contains(tag);
+            });
     },        
     
     toArray: function(source) {

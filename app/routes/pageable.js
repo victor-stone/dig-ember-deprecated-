@@ -103,22 +103,19 @@ export default Ember.Route.extend({
 
         var qparams = this.safeMergeParameters(sysDefaults,routeParams,userOptions,dynParams,urlParams);
         
-        var retModel = {
-            playlist: [ ],
-            total: 0
-        };
-        
         this.isOptionsChangeRefresh = false;
         
         var store = this.store;
-        return store.query(qparams)
-            .then( function(arr) {
-                retModel.playlist = arr;
-                qparams.f = 'count';
-                return store.query(qparams); })
-            .then( function(arr) {
-                retModel.total = arr[0];
-                return retModel;
-            });
+        
+        var countParams = { };
+        Ember.merge(countParams,qparams);
+        countParams.f = 'count';
+        
+        var retModel = {
+            playlist: store.query(qparams),
+            total:    store.query(countParams)
+        };
+        
+        return Ember.RSVP.hash(retModel);
     },
 });

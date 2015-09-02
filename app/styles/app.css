@@ -81,9 +81,16 @@
     clear: both;
 }
 
+.open-sans-condensed {
+    font-family: Open Sans Condensed;
+}
+
+.sani-trixie {
+    font-family: SaniTrixieSansRegular;
+}
+
 .playlist-line {
     list-style-type: none;
-    font-family: Open Sans Condensed;
     font-size: 28px;
     padding: 5px;
 }
@@ -99,8 +106,12 @@ li.playlist-line .artist-name a:hover {
 }
 
 li.playlist-line .artist-name a {
-    color: #999;
     font-size: 18px;
+}
+
+.light-color, 
+span.light-color a {
+    color: #999;
 }
 
 .song-title {
@@ -143,4 +154,16 @@ li.playlist-line .artist-name a {
 .tag-button {
     background-color: transparent;
     border: 0;
+}
+
+.upload-action-buttons {
+    list-style: none;
+}
+
+.upload-action-buttons li {
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #CCC;
 }

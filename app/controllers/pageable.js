@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
         
     showNext: function() {
         return  this.get('offset') + this.get('queryOptions.limit') < this.get('model.total');
-    }.property('offset', 'model.total', 'queryOptions.limit' ),
+    }.property('offset', 'model.total' /*, 'queryOptions.limit' */ ),
     
     prevValue: function() {
         var val = this.get('offset') - this.get('queryOptions.limit');
@@ -38,11 +38,23 @@ export default Ember.Controller.extend({
             val = 0;
         }
         return val;
-    }.property('offset', 'queryOptions.limit' ),
+    }.property('offset', 'model' /*,'queryOptions.limit' */),
     
     nextValue: function() {
         return this.get('offset') + this.get('queryOptions.limit');
-    }.property('offset', 'queryOptions.limit' ),
+    }.property('offset', 'model' /* ,'queryOptions.limit' */),
 
-
+    uploadForDownloadPopup: { upload_name: '(no upload selected)' },
+    
+    actions: {
+        doDownloadPopup: function(upload) {
+            var store = this.container.lookup('store:uploads');
+            var me = this;
+            store.find('uploads',upload.upload_id)
+                .then( function(details) {
+                    me.set('uploadForDownloadPopup',details);
+                    Ember.$('#downloadPopupTriggerLink').click();
+                });
+        },
+    },
 });

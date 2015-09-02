@@ -16,7 +16,8 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    
   };
 
   if (environment === 'development') {
@@ -42,6 +43,13 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
   }
+
+    ENV.i18n = {
+      defaultLocale: 'en'
+    };
+    
+    ENV.licenseBaseURL = 'http://tunetrack.net/license/';
+    ENV.queryBaseURL = 'http://ccmixter.org/api/query?';
 
   return ENV;
 };

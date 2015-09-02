@@ -1,18 +1,78 @@
+{{download-popup upload=model}}    
 
-<h2>NAME {{model.upload_name}}</h2>
+<div class="container sani-trixie">
+<div class="row">
+    <div class="col-md-2 col-md-offset-2">
+        <ul class="upload-action-buttons list-unstyled"> 
+            <li>
+                Play
+            </li>
+            <li>                
+                <a href="#" {{action "doDownloadPopup" item}}>
+                <span class="sprite3 download-sprite"> </span>
+                </a>
+            </li>
+            <li>
+                Share
+            </li>
+            <li>
+                <a href="{{model.file_page_url}}">'See at ccM'</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h2>{{model.upload_name}}</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <p>{{link-to model.user_real_name 'users' model.user_name}}</p>
+                <p>Featuring eiejiaef jij</p>
+            </div>
+            <div class="col-md-4">
+                <a href="{{model.license_url}}"><img class="download-license" src="{{model.license_logo_url}}" /></a><br />
+                <button>More by {{model.user_real_name}}</button><br />
+                <button>More like this</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="tag-list">
+                    {{#each model.userTags as |tag|}}             
+                        <li class="tag-container">
+                            <button type="button" class="tag-button" {{action "search" tag}}>{{tag}}</button>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>    
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 col-md-offset-1">
+{{#if model.poolProjects}}
+        <h3>Trackback Projects</h3>
+        <ul class="list-unstyled">
+        {{#each model.poolProjects as |poolItem|}}
+            <li>{{poolItem.pool_item_extra.ttype}} {{poolItem.upload_name}} <small>{{poolItem.user_real_name}}</small></li>
+        {{/each}}
+        </ul>
+{{else}}
+&nbsp;        
+{{/if}}
+    </div>
+    <div class="col-md-5">
+{{#if model.remixes}}
+        <h3>Remixes at ccMixter</h3>
+        <ul class="list-unstyled">
+        {{#each model.remixes as |remix|}}
+            <li>{{link-to remix.upload_name 'uploads' remix.upload_id}} <small>{{remix.user_real_name}}</small></li>
+        {{/each}}
+        </ul>
+{{else}}
+&nbsp;        
+{{/if}}
+    </div>
+</div>
 
-<p>ID: {{model.upload_id}}</p>
-<p>by {{#link-to 'users' model.user_name}}{{model.user_real_name}}{{/link-to}}</p>
-<p>Download <a href="{{model.streamUrl}}">here</a></p>
-<p>
-    <ul class="tag-list">
-    {{#each model.userTags as |tag|}}             
-    <li class="tag-container"><button type="button" class="tag-button" {{action "search" tag}}>
-            {{tag}}
-    </button>
-    </li>
-    {{/each}}
-    </ul>
-</p>
+</div>
 {{outlet}}
 {{audio-player}}

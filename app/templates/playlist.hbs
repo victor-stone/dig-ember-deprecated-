@@ -1,21 +1,24 @@
     <div class="paging">
         Showing {{model.playlist.length}} of {{model.total}} 
   {{#if showPrev}}
-    {{link-to '← Previous' (query-params offset=prevValue)}}
+    {{link-to (t 'pagination.prev') (query-params offset=prevValue)}}
   {{/if}}
   {{#if showNext}}
-    {{link-to 'Next →' (query-params offset=nextValue)}}
+    {{link-to (t 'pagination.next') (query-params offset=nextValue)}}
   {{/if}}            
     </div>
-<div class="playlist clear-both">
+{{download-popup upload=uploadForDownloadPopup}}    
+<div class="playlist clear-both sani-trixie">
 <ul>
     {{#each model.playlist as |item|}}
         <li class="playlist-line clear-both">
             <span class="sprite3 play-sprite"> </span>
-            <span class="sprite3 download-sprite"> </span>
+                <a href="#" {{action "doDownloadPopup" item}}>
+                <span class="sprite3 download-sprite"> </span>
+                </a>
             <span class="song-title">{{#link-to 'uploads' item.upload_id}}{{item.upload_name}}{{/link-to}}</span> 
             {{#unless skipUserListing}}
-                <span class="artist-name">{{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</span>
+                <span class="artist-name light-color">{{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</span>
             {{/unless}}
         </li>
     {{/each}}

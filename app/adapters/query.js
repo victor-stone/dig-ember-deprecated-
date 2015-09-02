@@ -14,7 +14,7 @@ function _makeQ(qparams) {
 export default Ember.Object.extend( {
     queryHost: 'http://ccmixter.org/api/query?',
     
-    _query: function(qString) {
+    _query: function(qString,isSingleton) {
         var url = this.queryHost + qString;
 
         if (typeof FastBoot !== 'undefined') {        
@@ -22,6 +22,9 @@ export default Ember.Object.extend( {
             var ajax = this.container.lookup('ajax:node');
             return ajax( url, 'GET', {} ).then( function( json ) {
                         var arr = eval(json);
+                        if( isSingleton ) {
+                            arr = arr[0];
+                        }
                         return arr;
                     } );
         } else {
@@ -31,12 +34,22 @@ export default Ember.Object.extend( {
                   method: 'GET',
                   dataType: 'json'
                 };
-            return Ember.RSVP.resolve(Ember.$.ajax(args));      
+            return Ember.RSVP.resolve(Ember.$.ajax(args))
+                .then( function(r) { 
+                    if( isSingleton ) {
+                        r = r[0];
+                    }
+                    return r;
+                });
         }
     },
 
     query: function(params) {
-        return this._query(_makeQ(params));
+        return this._query(_makeQ(params),false);
+    },
+    
+    queryOne: function(params) {
+        return this._query(_makeQ(params),true);
     },
   
     // this is not very functional and assumes the caller

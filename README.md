@@ -6,6 +6,8 @@ N.B. Whenever prompted to resolve conflicts always pick the 'canary' version
 
 * `git clone <repository-url>` this repository
 * change into the new directory
+* `npm cache clean`
+* `bower cache clean`
 * `npm install`
 * `bower install`
 * change directory ./hacks
