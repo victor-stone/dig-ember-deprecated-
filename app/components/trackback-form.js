@@ -22,30 +22,54 @@ export default Ember.Component.extend({
         };
     }.property( 'link', 'yourName', 'name', 'artist', 'embed' ),
 
-    postResult: '',
-
+    message: '',
+    messageType: '',
+    
     typeIsVideo: function() {
         return this.get('type') === 'video';
     }.property('type'),
     
+    validate: function() {
+        return this.email.length && this.link.length;
+    },
+    
     actions: {
         post: function() {
-                var url = 'http://ccmixter.org/track/' + this.get('type') + '/' + this.get('upload.id');
+                this.showValidationMessage = false;
+                if( !this.validate() ) {
+                    this.set('messageType','warning');
+                    this.set('message','tbForm.missingFields');
+                    return;
+                }
+                var host = 'http://ccmixter.org';
+                var url = host + '/track/' + this.get('type') + '/' + this.get('upload.id');
                 var args = {
                       url: url,
                       method: 'POST',
-                      data: this.postData,
+                      data: this.get('postData'),
                       dataType: 'text',
     //                contentType: 'application/x-www-form-urlencoded',
                     };
                 var me = this;
                 return Ember.RSVP.resolve(Ember.$.ajax(args))
                     .then( function(r) { 
-                        me.postResult = r;
+                        if( r === 'ok' ) {
+                            me.set('messageType','success');
+                            me.set('message','tbForm.success');
+                        } else {
+                            me.set('messageType','danger');
+                            me.set('message','tbForm.wups');
+                        }
                         return r === 'ok';
                     });
         },
+        typeChange: function() {
+            var i = this.$('#mtype')[0].selectedIndex;
+            this.set( 'type', [ 'video', 'podcast', 'album', 'web'][i] );
+        },
+        
         cancel: function() {
+            return true;
         }
     },
 });

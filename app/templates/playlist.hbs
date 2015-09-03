@@ -1,28 +1,52 @@
-    <div class="paging">
-        Showing {{model.playlist.length}} of {{model.total}} 
-        <ul class="pagination">
-  {{#if showPrev}}
-    <li>{{link-to (t 'pagination.prev') (query-params offset=prevValue)}}</li>
-  {{/if}}
-  {{#if showNext}}
-    <li>{{link-to (t 'pagination.next') (query-params offset=nextValue)}}</li>
-  {{/if}}            
-    </ul>
-    </div>
+
 {{download-popup upload=uploadForDownloadPopup}}    
-<div class="playlist clear-both sani-trixie">
-<ul>
-    {{#each model.playlist as |item|}}
-        <li class="playlist-line clear-both">
-            <span class="sprite3 play-sprite"> </span>
-                <a href="#" {{action "doDownloadPopup" item}}>
-                <span class="sprite3 download-sprite"> </span>
-                </a>
-            <span class="song-title">{{#link-to 'uploads' item.upload_id}}{{item.upload_name}}{{/link-to}}</span> 
-            {{#unless skipUserListing}}
-                <span class="artist-name light-color">{{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</span>
-            {{/unless}}
-        </li>
-    {{/each}}
-</ul>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="centered">{{title}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset=3 col-md-sm-12">
+            <ul>
+                {{#each model.playlist as |item|}}
+                    <li>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-1 g1">
+                                    <span class="sprite3 play-sprite"> </span>
+                                </div>
+                                <div class="col-md-1 g2">
+                                    <a href="#" {{action "doDownloadPopup" item}}>
+                                         <span class="sprite3 download-sprite"> </span>
+                                    </a>
+                                </div>
+                                <div class="col-md-10">                                        
+                                    <span class="song-title">{{#link-to 'uploads' item.user_name item.upload_id}}{{item.upload_name}}{{/link-to}}</span> 
+                                    {{#unless skipUserListing}}
+                                        <span class="artist-name light-color">{{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</span>
+                                    {{/unless}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="pagination">
+            {{#if showPrev}}
+                <li>{{link-to (t 'pagination.prev') (query-params offset=prevValue)}}</li>
+            {{/if}}
+            {{#if showNext}}
+                <li>{{link-to (t 'pagination.next') (query-params offset=nextValue)}}</li>
+            {{/if}}            
+            </ul>
+            <p>Showing {{model.playlist.length}} of {{model.total}}</p>
+        </div>
+    </div>
+
 </div>

@@ -6,10 +6,12 @@ export default Ember.Controller.extend({
     queryOptions: Ember.inject.service('query-options'),
     offset: 0,
     
+    /*
     init: function() {
         this._super.apply(this,arguments);
         this.get('queryOptions'); // observers don't hook up if you never do a get()
     },
+    */
 
     applyQueryOptions: function() {
         Ember.debug('Options changed controller: ' + this.toString() );

@@ -9,11 +9,11 @@
   {{#each content as |item|}}
     {{#if (get item optionValuePath) }}
         <option value="{{get item optionValuePath}}" selected={{is-equal (get item optionValuePath) selection}}>
-            {{get item optionLabelPath}}
+            {{t (get item optionLabelPath)}}
         </option>
     {{else}}
         <option selected={{is-equal item selection}}>
-            {{item}}
+            {{if translate (t item) item}}
         </option>
     {{/if}}  
   {{/each}}

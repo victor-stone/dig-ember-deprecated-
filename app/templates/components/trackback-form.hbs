@@ -9,6 +9,11 @@
         </div>
         <div class="modal-body">
 <form class="form-horizontal">
+{{#if message}}
+<div class="centered">
+<span class="label label-{{messageType}}">{{t message}}</span>
+</div>
+{{/if}}
 <fieldset>
 
 <!-- Text input-->
@@ -24,16 +29,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="email">{{t "tbForm.youEmail"}}</label>  
   <div class="col-md-6">
-  <input id="email" name="email" type="text" placeholder="{{t "tbForm.weMayCon"}}" class="form-control input-md">
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="link">{{t "tbForm.URL"}}</label>  
-  <div class="col-md-6">
-  <input id="link" name="link" type="text" placeholder="{{t "tbForm.exURL"}}" class="form-control input-md" required="">
+  {{input value=email id="email" name="email" type="text" placeholder=(t "tbForm.weMayCon") class="form-control input-md"}}
     
   </div>
 </div>
@@ -41,7 +37,14 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="artist">{{t "tbForm.artist"}}</label>  
   <div class="col-md-6">
-  <input id="artist" name="artist" type="text" placeholder="{{t "tbForm.whoMade"}}" class="form-control input-md">
+  {{input value=artist id="artist" name="artist" type="text" placeholder=(t "tbForm.whoMade") class="form-control input-md" required=""}}
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="link">{{t "tbForm.URL"}}</label>  
+  <div class="col-md-6">
+  {{input value=link id="link" name="link" type="text" placeholder=(t "tbForm.exURL") class="form-control input-md" required=""}}
     
   </div>
 </div>
@@ -51,7 +54,7 @@
     {{t "tbForm.medType"}}
  </label>
   <div class="col-md-5">
-    <select id="mtype" name="mtype" class="form-control">
+    <select id="mtype" name="mtype" class="form-control" {{action 'typeChange' on='change'}}>
       <option value="video">{{t "tbForm.types.video"}}</option>
       <option value="podcast">{{t "tbForm.types.podcast"}}</option>
       <option value="album">{{t "tbForm.types.album"}}</option>
@@ -74,7 +77,9 @@
         </div>
         <div class="modal-footer">
         <a href="#" class="btn btn-primary btn-success" {{action "post"}}><span class="glyphicon glyphicon-share-alt"></span> {{t "tbForm.submit"}}</a>
-        <a href="#" class="btn btn-default btn-warning" {{action "cancel"}}><span class="glyphicon glyphicon-remove"></span> {{t "tbForm.cancel"}}</a>
+        <!-- a href="#" class="btn btn-default btn-warning" {{action "cancel"}}><span class="glyphicon glyphicon-remove"></span> {{t "tbForm.cancel"}}</a !-->
+                  <button type="button" class="btn btn-default btn-warning" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> {{t 'dlPopup.close'}}</button>
+
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

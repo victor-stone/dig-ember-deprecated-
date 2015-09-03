@@ -1,6 +1,7 @@
 {{download-popup upload=model}}    
 {{trackback-popup upload=model trackback=poolItemForTrackbackPopup}}
 {{trackback-form upload=model}}    
+{{share-popup upload=model}}    
 <div class="container sani-trixie">
 <div class="row">
     <div class="col-md-2 col-md-offset-1">
@@ -14,7 +15,7 @@
                 </a>
             </li>
             <li>
-                Share
+                <a href="#" {{action "dosharePopup" item}}>Share</a>
             </li>
             <li>
                 <a href="{{model.file_page_url}}">'See at ccM'</a>
@@ -65,11 +66,13 @@
             <li class="list-group-item">{{#if (is-embeddable poolItem.pool_item_extra.embed)}}
                     <a href="#" class="video-button" {{action 'doTrackbackPopup' poolItem}}>
                         <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+                        {{poolItem.pool_item_name}}
                     </a>
                 {{else}}
                     <strong>{{poolItem.pool_item_extra.ttype}}</strong>
+                    <a href="{{poolItem.pool_item_url}}">{{poolItem.pool_item_name}}</a> 
                 {{/if}}
-            {{poolItem.upload_name}} <small>{{poolItem.user_real_name}}</small></li>
+                <small>{{poolItem.pool_item_artist}}</small></li>
         {{/each}}
         </ul>
 {{else}}

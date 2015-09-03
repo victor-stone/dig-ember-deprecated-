@@ -1,14 +1,1 @@
 {{yield}}
-<ul class={{classSelector}}>
-    {{#each menu as |item|}}
-        <li>
-        {{#if item.url}}
-            <a href="{{item.url}}">{{item.name}}</a>
-        {{else if item.linkto }}
-            {{link-to item.name item.linkto}}
-        {{else}}
-            {{#link-to 'query' (query-params lic=item.lic tags=item.tags title=item.title)}}{{item.name}}{{/link-to}}
-        {{/if}}
-        </li>
-    {{/each}}
-</ul>

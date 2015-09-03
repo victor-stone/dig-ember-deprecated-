@@ -12,10 +12,12 @@ export default Ember.Route.extend({
 
     isOptionsChangeRefresh: false,
     
+    /*
     init: function() {
         this._super.apply(this,arguments);
         this.get('queryOptions'); // observers don't hook up if you never do a get()
     },
+    */
 
     _optionsWatcher: function() {
         Ember.debug('Signalled option change in curr route: ' + this.router.currentRouteName + ' while in ' + this.toString());

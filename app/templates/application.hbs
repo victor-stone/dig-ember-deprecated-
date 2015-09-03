@@ -1,69 +1,79 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href><img src="dig-images/logo.png" title="{{app_title}}" /></a>
+      <a class="navbar-brand" href="/"><img src="dig-images/logo.png" title="{{app_title}}" /></a>
     </div>
-        {{link-menu menu=menu classSelector="nav navbar-nav"}}
-        <div class="dig-search">
-            {{input type="text" 
-                      class="dig-search-input" 
-                      value=searchCollector
-                      enter="search"
-                      size="30" 
-                      placeholder=searchPlaceHolder}}
-             <button type="button" class="dig-search-button" {{action "search"}}>
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-             </button>
-           <button class="btn btn-primary" {{action 'toggleOptions'}}>Options 
-                {{#if optionsOpen}}
-                  <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                {{else}}
-                  <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                {{/if}}
-            </button>
+    <ul class="nav navbar-nav search-options">
+    {{#each menu as |item|}}
+        <li>
+        {{#if item.url}}
+            <a href="{{item.url}}">{{t item.name}}</a>
+        {{else if item.linkto }}
+            {{link-to (t item.name) item.linkto title=(t item.title)}}
+        {{else}}
+            {{#link-to 'query' (query-params lic=item.lic tags=item.tags title=item.title) title=(t item.title)}}{{t item.name}}{{/link-to}}
+        {{/if}}
+        </li>
+    {{/each}}
+        <li>
+            <div class="nav-form-element">
+        {{input type="text" 
+                  class="dig-search-input" 
+                  value=searchCollector
+                  enter="search"
+                  size="20" 
+                  placeholder=(t 'navbar.searchPlaceHolder')}}
+         <button type="button" class="dig-glyph-button" {{action "search"}}>
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+         </button>
+            </div>
+         </li>
+         <li class="pad-to-right">
+            <div class="nav-form-element">
+       <button class="btn btn-default btn-sm" {{action 'toggleOptions'}}>{{t 'navbar.options'}} 
+          <span class="glyphicon glyphicon-chevron-{{if optionsOpen 'down' 'up'}}" aria-hidden="true"></span>
+        </button>
         </div>
-   </div>
-  {{#if optionsOpen}}
-    <div class="container-fluid">
-        <div class="dig-search-options">
-            <ul class="nav navbar-nav">
-            <li>
+        </li>
+    </ul>
+  </div>
+</nav>
+{{#if optionsOpen}}
+    <ul class="nav navbar-nav query-options">
+        <li>
                 {{at-select content=licenses 
                             selection=queryOptions.licenseScheme 
                             action=(action (mut queryOptions.licenseScheme))}}
-                <button type="button" class="dig-license-help-button" {{action "search"}}>
+                <button type="button" class="dig-glyph-button" {{action "search"}}>
                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
                  </button>
-            </li>
-            <li>
-                <label for="instrumentalOnly">{{instrumentalOnlyText}}</label> 
+        </li>
+        <li>
+                <label for="instrumentalOnly">{{t 'queryOptions.instrumental'}}</label> 
                 {{input type="checkbox" 
                         id="instrumentalOnly" 
                         checked=queryOptions.instrumentalOnly 
                         name="instrumentalOnly"}} 
-            </li>
-            <li>
-                <label>{{limitLabelText}}</label> 
+        </li>
+        <li>
+                <span>{{t 'queryOptions.limit'}}</span> 
                 {{at-select content=limits 
                             selection=queryOptions.limit 
                             action=(action (mut queryOptions.limit))}}
-            </li>
-            <li>
+        </li>
+        <li>
                 {{at-select content=genres 
                             selection=queryOptions.genre 
                             action=(action (mut queryOptions.genre))}}
-            </li>
-            <li>
-                <label for="recent">{{recentText}}</label> 
+        </li>
+        <li>
+                <label for="recent">{{t 'queryOptions.recent'}}</label> 
                 {{input type="checkbox" 
                         id="recent" 
                         checked=queryOptions.recent 
                         name="recent"}} 
-            </li>
-             </ul>
-        </div>
-    </div>
-   {{/if}}
-</nav>
+        </li>
+    </ul>
+{{/if}}
 
 {{outlet}}

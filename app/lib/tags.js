@@ -32,12 +32,22 @@ var TagUtils = Ember.Object.extend({
 
     init: function() {
         this._super.apply(this,arguments);
-        this.set('_tagsArray', TagUtils.toArray(this.get('source') || [ ] ));
+        var src = this.get('source');
+        var arr = [ ];
+        if( src ) {
+            arr = TagUtils.toArray(src);
+        }
+        this.set( '_tagsArray', arr );
     },
+
 
     add: function(tag) {
             function safeAddTag(tag) {
-                if( tag && tag.match(/[^a-zA-Z0-9_]/) === null && !this.get('_tagsArray').contains(tag) ) {
+                if( tag && 
+                    tag.match(TagUtils.ignore) !== null &&
+                    tag.match(TagUtils.invalid) === null && 
+                    !this.get('_tagsArray').contains(tag) ) 
+                {
                     this.get('_tagsArray').pushObject(tag);
                 }
             }
@@ -100,6 +110,9 @@ var TagUtils = Ember.Object.extend({
 
 TagUtils.reopenClass({
 
+    ignore: /^(-|\*|all)$/,
+    invalid: /[^a-zA-Z0-9_]/,
+    
     combine: function(tags1,tags2) {
             if( !tags1 ) {
                 return tags2;
@@ -118,11 +131,15 @@ TagUtils.reopenClass({
     },        
     
     toArray: function(source) {
-            if( !source || source === '-' ) {
+            if( !source ) {
                 return [ ];
             }
             var arr = null;
             if( typeof(source) === 'string' ) {
+                if( source.match(TagUtils.ignore) ) {
+                    return [ ];
+                }
+                // wups
                 arr = source.replace(/^[^_\w]+|[^_\w]+$/g, '') 
                             .replace(/[^_\w]/g, ' ') 
                             .replace(/\s+/g,',')

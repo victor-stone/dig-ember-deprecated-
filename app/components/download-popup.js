@@ -11,10 +11,6 @@ export default Ember.Component.extend({
 
     plainSelected: true,
     
-    init: function() {
-        this._super.apply(this,arguments);
-    },
-    
     actions: {
         selectFormat: function(format) {
             this.set('plainSelected', format==='plain');

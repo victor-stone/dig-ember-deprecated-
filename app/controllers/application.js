@@ -7,51 +7,41 @@ export default Ember.Controller.extend({
     // UI model
     app_title: 'dig -> ccMixter',
     menu: [
-            { name: 'free',
+            { name: 'navbar.links.free',
               linkto:  'free',
-              title: 'Free for Commercial Use' }, 
-            { name: 'licensed',
+              title: 'navbar.links.freetitle' }, 
+            { name: 'navbar.links.ccplus',
               linkto:  'ccplus',
-              title: 'Royalty Free Licensed' }, 
-            { name:'music for film',
+              title: 'navbar.links.ccplustitle' }, 
+            { name:'navbar.links.film',
               linkto: 'video',
-              title: 'Music for Film and Video'}, 
-            { name:'music for games',
+              title: 'navbar.links.filmtitle'}, 
+            { name: 'navbar.links.games',
               linkto: 'games',
-              title: 'Music for Video Games'},
-            { name: 'How it Works',
+              title: 'navbar.links.gamestitle'},
+            { name: 'navbar.links.how',
               url: '/#howitworks',
-              title: 'How it Works' }
+              title: 'navbar.links.howtitle' }
         ],
     licenses: [
-            { title: 'All licenses', id: 'all' },
-            { title: 'Free for commercial use', id: 'open' },
-            { title: 'Royalty free license', id: 'ccplus' },
+            { title: 'queryOptions.licenses.all', id: 'all' },
+            { title: 'queryOptions.licenses.free', id: 'open' },
+            { title: 'queryOptions.licenses.ccplus', id: 'ccplus' },
         ],
-    genres: [
-            { title: 'All genres', id: '-' },            
-            { title: 'Hip Hop', id: 'hip_hop' },
-            { title: 'Electronica', id: 'electronica' },
-            { title: 'Rock', id: 'rock' },
-            { title: 'Ambient', id: 'ambient' },
-            { title: 'Dance', id: 'dance' },
-            { title: 'Jazz', id: 'jazz' }
-        ],    
-    instrumentalOnlyText: 'Instrumentals Only',
-    limitLabelText: 'Results',
+    genres: [ 'all', 'hip_hop', 'electronica', 'rock', 'ambient', 'dance', 'country', 'jazz' ],
     limits: [ 10, 20, 50, 100 ],
-    searchPlaceHolder: "genre, style, instrument, etc.",
-    recentText: 'Recent',
     
     searchCollector: '',
     
     // UI state
     optionsOpen: false,
     
+    /*
     init: function() {
         this._super.apply(this,arguments);
         this.set('queryOptions.meta.recent.model', '6 weeks ago');
     },
+    */
     
     actions: {
         search: function() {

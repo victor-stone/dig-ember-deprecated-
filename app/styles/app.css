@@ -1,13 +1,12 @@
-.clear-both {
-    clear: both;
+
+body {
+    font-family: Avenir Next, Verdana;
+    font-size: 11pt;
+    line-height: 1;
 }
 
-.open-sans-condensed {
-    font-family: Open Sans Condensed;
-}
-
-.sani-trixie {
-    font-family: SaniTrixieSansRegular;
+ul {
+    list-style: none;
 }
 
 .light-color, 
@@ -15,110 +14,68 @@ span.light-color a {
     color: #999;
 }
 
-
-.navbar-default,
-.sm2-bar-ui .sm2-main-controls,
-.sm2-bar-ui .sm2-playlist-drawer,
-.sm2-bar-ui .sm2-inline-texture {
- background: #141414;
+.centered {
+    text-align: center;
 }
 
-.dig-search {
-    float: right;
+.navbar { /* override bootstrap */
+    margin-bottom: 0;
+}
+
+.nav-form-element {
+    padding-top: 12px;
+}
+
+.search-options[input],
+.search-options[button] {
+    font-size: 10px;
+}
+
+.query-options {
+    padding-left: 20%;
+    margin: 0;
+    width: 100%;
+    background-color: #222;
+    color: #9d9d9d;
+}
+
+.query-options label {
+    font-weight: normal;
+}
+
+.query-options label:hover {
+    color:white;
+}
+
+.query-options li,
+.search-options li {
     padding-top: 15px;
     padding-bottom: 15px;
-    
-}
-.dig-search-button {
-    background-color: transparent;
-    border: 0px;
-    margin-right: 7px;
-    color: #DDD;
-}
-.dig-search-input {
-    border-radius: 7px;
-}
-.dig-search-options {
-    padding-top: 12px;
-    padding-bottom: 18px;
-    color: white;
-    margin:0 auto; 
-    width: 85%;
+    padding-right: 22px;
 }
 
-.dig-search-options > ul > li > div {
+.query-options li > div {
     display: inline;
 }
 
-.dig-search-options > ul > li  {
-    margin-right: 12px;
-}
-
-.dig-search-options select {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
-    border-radius: 0px;
-}
-
-.navbar {
-    margin-bottom: 0px;
-    border: 0px;
-}
-
-.navbar-default .navbar-nav > li > a {
-    color: #BBB;
-}
-
-.dig-license-help-button {
+.dig-glyph-button {
     background: transparent;
-    border: 0px;
+    border: 0;
+    color: #DDD;
 }
 
-.navbar-default .navbar-nav > li > a:hover, 
-.navbar-default .navbar-nav > li > a:focus {
-    color: #FFF;    
-    /*
-    background: url(../dig-images/menu-highlight.png) no-repeat center center fixed;
-    -webkit-background-size: contain;
-    -moz-background-size: contain;
-    -o-background-size: contain;
-    background-size: contain;
-    */
+.navbar input[type=text],
+.navbar select {
+    border-radius: 4px;
 }
 
-.navbar-nav > li > a {
-    padding-top: 18px;
+.g1 {
+    padding: 0px;
+    width: 53px;
 }
 
-.sm2-bar-ui {
- font-size: 16px;
-}
-
-.playlist-line {
-    list-style-type: none;
-    font-size: 28px;
-    padding: 5px;
-}
-
-li.playlist-line a {
-    color: black;
-}
-
-li.playlist-line a:hover,
-li.playlist-line .artist-name a:hover {
-    color: blue;
-    text-decoration: none;
-}
-
-li.playlist-line .artist-name a {
-    font-size: 18px;
-}
-
-.song-title {
-    margin-left: 10px;
-    margin-right: 10px;
-    font-weight: bold;
+.g2 {
+    padding: 0px;
 }
 
 .sprite3 {
@@ -127,6 +84,8 @@ li.playlist-line .artist-name a {
   width: 51px;
   height: 48px;
 }
+
+
 .play-sprite {
     background-position: -99px 0px;
     display: block;
@@ -138,9 +97,6 @@ li.playlist-line .artist-name a {
     float: left;
 }
 
-.tag-list {
-    list-style: none;
-}
 .tag-container {
     background-image: url('../dig-images/tag.png');
     background-size: cover;
@@ -171,4 +127,12 @@ li.playlist-line .artist-name a {
 
 .remix-list li {
     margin-top: 4px;
+}
+
+.add-button-container {
+    float: right;
+}
+
+#sharePopup .modal-body > div {
+    margin-bottom: 20px;
 }
