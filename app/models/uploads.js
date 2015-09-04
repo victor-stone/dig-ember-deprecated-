@@ -53,22 +53,6 @@ var UploadModel = Ember.Object.extend( {
         var baseUrl = 'http://tunetrack.net/license/';
         return baseUrl + this.get('file_page_url').replace('http://', '');
     }.property('file_page_url'),
-
-    children: function() {
-        return this.get('remix_children') || [ ];
-    }.property('remix_children'),
-    
-    poolProjects: function() {
-        return this.get('children').filter( function(child) {
-            return child.hasOwnProperty('pool_item_id');
-        });
-    }.property('remix_children'),
-
-    remixes: function() {
-        return this.get('children').filter( function(child) {
-            return !child.hasOwnProperty('pool_item_id');
-        });
-    }.property('remix_children'),
         
     // this stuff really should be on the controller
     player: Ember.inject.service(),
@@ -89,10 +73,45 @@ export default Store.extend({
     find: function(name,id) {
         Ember.debug('UPLOADS Store: Looking for adapter: ' + name + ' (using :query)');
         var adapter = this.container.lookup('adapter:query');
-        return adapter.queryOne( { ids: id, f: 'json', t: 'list_file' } )
+        var uploadQ = {
+            ids: id,
+            f: 'json',
+            // use default dataview
+        };
+        var remixesQ = {
+            remixes: id,
+            f: 'json',
+            dataview: 'links_u'
+        };
+        var trackbacksQ = {
+            trackbacksof: id,
+            f: 'json',
+            dataview: 'trackbacks'
+        };
+        var queries = {
+            upload: adapter.queryOne(uploadQ),
+            remixes: adapter.query(remixesQ),
+            trackbacks: adapter.query(trackbacksQ)
+        };
+        return Ember.RSVP.hash(queries)
             .then( function(record) {
-                return UploadModel.create(record);
+                record.upload.remixes = record.remixes || [ ];
+                record.upload.trackbacks = record.trackbacks || [ ];
+                return UploadModel.create(record.upload);
             });
     },
+    
+    info: function(id) {
+        var adapter = this.container.lookup('adapter:query');
+        var uploadQ = {
+            ids: id,
+            f: 'json',
+            // use default dataview
+        };
+        return adapter.queryOne(uploadQ)
+                .then( function(upload) {
+                    return UploadModel.create(upload);
+                });
+    }
   
 });

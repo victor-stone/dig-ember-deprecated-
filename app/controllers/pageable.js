@@ -52,7 +52,7 @@ export default Ember.Controller.extend({
         doDownloadPopup: function(upload) {
             var store = this.container.lookup('store:uploads');
             var me = this;
-            store.find('uploads',upload.upload_id)
+            store.info(upload.upload_id)
                 .then( function(details) {
                     me.set('uploadForDownloadPopup',details);
                     Ember.$('#downloadPopupTriggerLink').click();

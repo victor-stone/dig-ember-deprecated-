@@ -44,12 +44,13 @@ export default {
     },
     tbPopup: {
         trackback: 'Trackback',
-        title: '{{name}} by {{artist}}',
-        featuring: 'Includes: {{name}} by {{artist}}',
+        title: '{{name}} <span>by</span> {{artist}}',
+        featuring: '<span>Includes</span> {{name}} <span>by</span> {{artist}}',
+        original: 'Original',
         close: 'Close'
     },
     tbForm: {
-       title: 'Submit a Trackback for {{upload.upload_name}}',
+       title: '<span>Submit a Trackback for</span> {{name}}',
        yourName: 'Your Name',
        tellUs: 'let us know who you are',
        youEmail: 'Your email',

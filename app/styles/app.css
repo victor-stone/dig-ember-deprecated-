@@ -10,8 +10,10 @@ ul {
 }
 
 .light-color, 
-span.light-color a {
+span.light-color a,
+.modal-header span {
     color: #999;
+    font-weight: 300;
 }
 
 .centered {
@@ -43,6 +45,7 @@ span.light-color a {
     font-weight: normal;
 }
 
+.query-options span:hover,
 .query-options label:hover {
     color:white;
 }

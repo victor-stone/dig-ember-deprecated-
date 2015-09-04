@@ -2,7 +2,7 @@
 {{trackback-popup upload=model trackback=poolItemForTrackbackPopup}}
 {{trackback-form upload=model}}    
 {{share-popup upload=model}}    
-<div class="container sani-trixie">
+<div class="container">
 <div class="row">
     <div class="col-md-2 col-md-offset-1">
         <ul class="upload-action-buttons list-unstyled"> 
@@ -56,13 +56,14 @@
 </div>
 <div class="row">
     <div class="col-md-5 col-md-offset-1">
-{{#if model.poolProjects}}
-        <div class="add-button-container">
-            <a href="#" {{action 'doTrackbackForm'}} class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
-        </div>
-        <h3>{{t 'upload.trackbacks'}}</h3>
+        <h3>
+            <div class="add-button-container">
+                <a href="#" {{action 'doTrackbackForm'}} class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
+            </div>
+            {{t 'upload.trackbacks'}}
+        </h3>
         <ul class="list-group remix-list">
-        {{#each model.poolProjects as |poolItem|}}
+        {{#each model.trackbacks as |poolItem|}}
             <li class="list-group-item">{{#if (is-embeddable poolItem.pool_item_extra.embed)}}
                     <a href="#" class="video-button" {{action 'doTrackbackPopup' poolItem}}>
                         <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
@@ -75,21 +76,16 @@
                 <small>{{poolItem.pool_item_artist}}</small></li>
         {{/each}}
         </ul>
-{{else}}
-&nbsp;        
-{{/if}}
     </div>
     <div class="col-md-5">
-{{#if model.remixes}}
         <h3>{{t 'upload.remixes'}}</h3>
         <ul class="list-group remix-list">
         {{#each model.remixes as |remix|}}
             <li class="list-group-item"><a href="{{remix.file_page_url}}">{{remix.upload_name}}</a> <small>{{remix.user_real_name}}</small></li>
+        {{else}}
+            <li><span class="light-color">(no remixes yet!)</span></li>
         {{/each}}
         </ul>
-{{else}}
-&nbsp;        
-{{/if}}
     </div>
 </div>
 

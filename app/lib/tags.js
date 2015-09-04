@@ -44,7 +44,7 @@ var TagUtils = Ember.Object.extend({
     add: function(tag) {
             function safeAddTag(tag) {
                 if( tag && 
-                    tag.match(TagUtils.ignore) !== null &&
+                    tag.match(TagUtils.ignore) === null &&
                     tag.match(TagUtils.invalid) === null && 
                     !this.get('_tagsArray').contains(tag) ) 
                 {
