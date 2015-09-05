@@ -34,14 +34,7 @@ export default Ember.Controller.extend({
     searchCollector: '',
     
     // UI state
-    optionsOpen: false,
-    
-    /*
-    init: function() {
-        this._super.apply(this,arguments);
-        this.set('queryOptions.meta.recent.model', '6 weeks ago');
-    },
-    */
+    optionsOpen: Ember.computed.alias('queryOptions.userEditing'),
     
     actions: {
         search: function() {

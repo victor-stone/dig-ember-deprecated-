@@ -68,11 +68,12 @@ export default Ember.Route.extend({
         }.on('activate'),
         
     sysDefaultQueryArgs: function() {
-        return {    tags: 'remix', 
+        return {    tags: '', 
                     dataview: 'links_by',
                     limit: 10,
                     sort: 'rank',
                     ord: 'desc',
+                    reqtags: 'remix',
                     f: 'json',
                     _cache_bust: (new Date()).getTime(),                     
                 };
@@ -80,8 +81,13 @@ export default Ember.Route.extend({
     
     translateDynamicParamsToQuery: function( /* params */ ) {
         },
-    
+
     model: function(params,transition) {  
+        return this._model(params,transition);
+    },
+    
+    // _super is broken for async calls (was fixed, borked again, etc.)
+    _model: function(params,transition) {  
         Ember.debug('Getting model for ' + this.toString() + ' isOptionsChangeRefresh('+this.isOptionsChangeRefresh+')');
         
         // app defaults
@@ -120,4 +126,5 @@ export default Ember.Route.extend({
         
         return Ember.RSVP.hash(retModel);
     },
+    
 });

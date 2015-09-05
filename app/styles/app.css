@@ -11,7 +11,8 @@ ul {
 
 .light-color, 
 span.light-color a,
-.modal-header span {
+.modal-header span,
+.playlist-title span {
     color: #999;
     font-weight: 300;
 }

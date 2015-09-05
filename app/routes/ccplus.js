@@ -2,6 +2,6 @@ import LicenseRoute from './license';
 
 export default LicenseRoute.extend({
     routeQueryOptions: {
-        licenseScheme: 'ccplus'
+        licenseScheme: 'ccplus',
     },
 });

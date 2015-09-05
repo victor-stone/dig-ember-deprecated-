@@ -1,18 +1,18 @@
+/* globals Ember */
 import PageableController from './pageable';
+import { translationMacro as t } from "ember-i18n";
 
 export default PageableController.extend({
+    i18n: Ember.inject.service(),
 
+    _titleWithStr: t( 'dig.titleWithStr', { str: 'queryOptions.searchText' } ).property('queryOptions.searchText'),
+    _title: t('dig.title'),
+        
     title: function() {
-        var str = this.get('queryOptions.searchText');
-        if( str.length > 20 ) {
-            str = str.substr(20) + '...';
+        if( this.get('queryOptions.searchText') ) {
+            return this.get('_titleWithStr');
         }
-        if( str ) {
-            str = 'Search results for "' + str + '"';
-        } else {
-            str = 'Dig the Music';
-        }
-        return str;
+        return this.get( '_title' );
     }.property('queryOptions.searchText')
 
 });

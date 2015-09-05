@@ -37,8 +37,8 @@
             </div>
             <div class="col-md-4">
                 <a href="{{model.license_url}}"><img class="download-license" src="{{model.license_logo_url}}" /></a><br />
-                <button>{{t 'upload.moreBy' artist=model.user_real_name}}</button><br />
-                <button>{{t 'upload.moreLikeThis'}}</button>
+                {{link-to (t 'upload.moreBy' artist=model.user_real_name) 'users' model.user_name class="btn btn-default"}} <br />
+                {{link-to (t 'upload.moreLikeThis') 'morelike' model.upload_id  class="btn btn-default"}}
             </div>
         </div>
         <div class="row">

@@ -31,7 +31,7 @@ var QueryOption = Ember.Object.extend({
                     if( this.queryParam === 'tags' ) {
                         service._tags.replace( this._prevEnumValue, value );
                         this._prevEnumValue = value;
-                        value = service._tags.tagString();
+                        value = service._tags.toString();
                     } else { 
                         // don't know what this means
                         // don't have to
@@ -41,7 +41,7 @@ var QueryOption = Ember.Object.extend({
             this.types[QUERYOPTION_TYPE_BOOLEAN] = function(qparams,service) {
                     if( this.queryParam === 'tags' ) {
                         service._tags.toggle(this.get('model'),this.get('value'));
-                        qparams.tags = service._tags.tagString();
+                        qparams.tags = service._tags.toString();
                     } else {
                         if( this.get('value') ) {
                             qparams[this.queryParam] = this.get('model');
@@ -122,10 +122,13 @@ export default Ember.Service.extend({
         
     _killNotify: false,
     
+    userEditing: false,
+    
     setBatch: function(options) {
             this._killNotify = true;
+            var valueProp = this.get('userEditing') ? 'value' : 'default';
             this._forEachUpdatingOption( function(opt) {
-                this.set(opt.name, options[opt.name] || opt.get('value') );
+                this.set(opt.name, options[opt.name] || opt.get(valueProp) );
             });
             this._killNotify = false;
         },

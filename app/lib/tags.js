@@ -12,6 +12,23 @@ import Ember from 'ember';
 
     Class ensure unique (unordered) values.
 
+    All (most?) parameters are flexible enough to accept strings, arrays or 
+    instances of TagUtils. HOWEVER note that all methods assume that the 
+    instance running the method vs.the parameter(s) passed in use the exact
+    same rules for invalid, ignoring tags and separator.
+    
+    If you need to combine or operate with two different set of rules then
+    only use instances of TagUtils and then assume that the instance running
+    the methods owns the final outcome.
+    
+    Creation options are:
+        - source     initial tags
+        - ignore:    a RegExp of tags to ignore. By default the tag 'all' 
+        - invalid:   a RegExp of characters that are not allowed in tags. By 
+                     default [^a-zA-Z0-9_]
+        - separator: for when splitting incoming strings and building
+                     serialized strings. Default is comma ','
+                      
     Examples:     
     
         var tags1 = TagUtils.create( { source: 'foo,bar' } );
@@ -24,35 +41,42 @@ import Ember from 'ember';
         tags2.toggle( ['fie','foo'], false ); // fee,bar
         tags3.remove('fee'); // fie
         
+        
         var tags = TagUtils.combine(tags1, 'hip_hop,remix'); // 'foo,bar,hip_hop,remix'
 */
 var TagUtils = Ember.Object.extend({
 
     _tagsArray: [ ],
-
+    ignore: /^(-|\*|all)$/,
+    invalid: /[^a-zA-Z0-9_]/,
+    separator: ',',
+    
     init: function() {
         this._super.apply(this,arguments);
         var src = this.get('source');
         var arr = [ ];
         if( src ) {
-            arr = TagUtils.toArray(src);
+            arr = this.toArray(src);
         }
         this.set( '_tagsArray', arr );
     },
 
 
     add: function(tag) {
+            var ignore = this.get('ignore');
+            var invalid = this.get('invalid');
+            var arr = this.get('_tagsArray');
             function safeAddTag(tag) {
                 if( tag && 
-                    tag.match(TagUtils.ignore) === null &&
-                    tag.match(TagUtils.invalid) === null && 
-                    !this.get('_tagsArray').contains(tag) ) 
+                    tag.match(ignore) === null &&
+                    tag.match(invalid) === null && 
+                    !arr.contains(tag) ) 
                 {
-                    this.get('_tagsArray').pushObject(tag);
+                    arr.pushObject(tag);
                 }
             }
             
-            TagUtils.forEach( tag, safeAddTag, this );
+            this.toArray(tag).forEach( safeAddTag );
             return this;
         },
         
@@ -63,7 +87,7 @@ var TagUtils = Ember.Object.extend({
                     arr.removeObject(tag);
                 }
             }
-            TagUtils.forEach( tag, safeRemove, this);
+            this.toArray(tag).forEach( safeRemove );
             return this;
         },    
         
@@ -90,60 +114,72 @@ var TagUtils = Ember.Object.extend({
         },
         
     contains: function(tag) {      
-            return TagUtils.contains(this,tag);
+        var srcArr = this.get('_tagsArray');
+        return this.toArray(tag).find( function(tag) {
+                return srcArr.contains(tag);
+            });
         },
         
-    tagString: function() {
+    intersection: function(other) {
+        function getIntersect(arr1, arr2) {
+            var r = [], o = {}, l = arr2.length, i, v;
+            for (i = 0; i < l; i++) {
+                    o[arr2[i]] = true;
+                }
+            l = arr1.length;
+            for (i = 0; i < l; i++) {
+                v = arr1[i];
+                if (v in o) {
+                    r.push(v);
+                }
+            }
+            return r;
+        }    
+        var opts = this.get('options');
+        opts.source = getIntersect(this.get('_tagsArray').slice(),this.toArray(other));
+        return TagUtils.create(opts);
+    },
+
+    options: function(){
+        return {
+            ignore: this.get('ignore'),
+            invalid: this.get('invalid'),
+            separator: this.get('separator')
+        };
+    }.property('ignore','invalid','separator'),
+        
+    length: function() {
+        return this.get('_tagsArray').length;
+    }.property('_tagsArray'),
+    
+    toString: function() {
             var tagArr = this.get('_tagsArray');
             if( tagArr.length > 0 ) {
-                return tagArr.join(',');
+                return tagArr.join(this.get('separator'));
             }
             return '';
         },
 
     forEach: function(callback,context) {
-        TagUtils.toArray(this).forEach(callback,context);
+        this.get('_tagsArray').forEach(callback,context || this);
         return this;
     },
         
-});
-
-TagUtils.reopenClass({
-
-    ignore: /^(-|\*|all)$/,
-    invalid: /[^a-zA-Z0-9_]/,
-    
-    combine: function(tags1,tags2) {
-            if( !tags1 ) {
-                return tags2;
-            }
-            if( tags2 ) {
-                return TagUtils.create({ source: tags1 }).add(tags2).tagString();
-            }
-            return tags1;
-        },
-
-    contains: function(source,tag) {
-        var srcArr = TagUtils.toArray(source);
-        return TagUtils.toArray(tag).find( function(tag) {
-                return srcArr.contains(tag);
-            });
-    },        
-    
     toArray: function(source) {
             if( !source ) {
                 return [ ];
             }
             var arr = null;
             if( typeof(source) === 'string' ) {
-                if( source.match(TagUtils.ignore) ) {
+                if( source.match(this.get('ignore')) ) {
                     return [ ];
                 }
+                var separator = this.get('separator');
                 // wups
                 arr = source.replace(/^[^_\w]+|[^_\w]+$/g, '') 
                             .replace(/[^_\w]/g, ' ') 
-                            .replace(/\s+/g,',')
-                            .split(',')
+                            .replace(/\s+/g,separator)
+                            .split(separator)
                             .reject( function(tag) {
                                 return !tag;
                             });          
@@ -156,9 +192,35 @@ TagUtils.reopenClass({
             }
             return arr;
     },
+        
+});
+
+TagUtils.reopenClass({
+
+    combine: function(tags1,tags2,opts) {
+            if( !tags1 ) {
+                return tags2;
+            }
+            if( tags2 ) {
+                opts = Ember.merge( { source: tags1 }, opts || { } );
+                return TagUtils.create(opts).add(tags2).toString();
+            }
+            return tags1;
+        },
+
+    contains: function(source,tag,opts) {
+        opts = Ember.merge( { source: source }, opts || { } );
+        return TagUtils.create(opts).contains(tag);
+    },        
     
-    forEach: function(source,callback,context) {
-        TagUtils.toArray(source).forEach(callback,context);
+    toArray: function(source,opts) {
+        opts = Ember.merge( { source: source }, opts || { } );
+        return TagUtils.create( opts ).get('_tagsArray');
+    },
+    
+    forEach: function(source,callback,context,opts) {
+        opts = Ember.merge( { source: source }, opts || { } );
+        return TagUtils.create( opts ).forEach(callback,context);
     }
 });
 export default TagUtils;

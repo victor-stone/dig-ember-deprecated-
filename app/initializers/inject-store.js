@@ -1,5 +1,6 @@
 import Store from '../models/store';
 import Uploads from '../models/uploads';
+import Tags from '../models/tags';
 
 export default {
     name: 'inject-store',
@@ -13,5 +14,9 @@ export default {
         app.register(STORE_UPLOADS, Uploads);
         app.inject('route:uploads','store', STORE_UPLOADS);
         app.inject('controller:uploads','store', STORE_UPLOADS);
+        
+        var STORE_TAGS = 'store:tags';
+        app.register(STORE_TAGS, Tags);
+        
     }
 };

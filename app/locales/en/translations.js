@@ -92,6 +92,25 @@ export default {
         email: 'Share via e-Mail',
         subject: "Dig the sounds at Dig",
         body: "I'm sharing some sounds I found at dig.ccmixter: "
-    }
+    },
+    morelike: {
+        title: '<span>More like</span> {{name}}',
+    },
+    dig: {
+        titleWithStr: '<span>Search Results</span> {{str}}',
+        title: 'Dig the Music',
+    },
+    free: {
+        title: "Music Free for Commercial Use",
+    },
+    ccplus: {
+        title: "Music Available for Royalty-Free License",
+    },
+    games: {
+        title: "Instrumental Music for Video Games",
+    },
+    video: {
+        title: "Instrumental Music for Film and Video",
+    },
     
 };

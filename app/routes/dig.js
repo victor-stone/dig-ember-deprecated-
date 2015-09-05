@@ -3,6 +3,10 @@ import PageableRoute from './pageable';
 
 export default PageableRoute.extend({
 
+    routeQueryOptions: {
+    
+        },
+
     routeQueryParams: function() {
             return { 
                      s: this.get('queryOptions.searchText'),
