@@ -14,7 +14,7 @@ function computedPercentage(partial, total) {
 }
 
 var Media = Ember.Object.extend(Ember.Evented, {
-  player: Ember.inject.service(),
+  audioPlayer: Ember.inject.service(),
 
   isPlaying:  false,
   artist:     '',
@@ -31,30 +31,30 @@ var Media = Ember.Object.extend(Ember.Evented, {
   }.property(),
 
   sound: function() {
-    var item = this;
+    var me = this;
     var streamUrl = this.get('mp3Url');
-    var player = this.get('player');
+    var playerService = this.get('audioPlayer');
     if (streamUrl) {
       var sound = soundManager.createSound({
         id:  streamUrl,
         url: streamUrl,
         onplay: function() {
           Ember.run(function() {
-            player.set('track', item);
-            item.set('isPlaying', true);
-            item.trigger('onPlay');
+            playerService.set('track', me);
+            me.set('isPlaying', true);
+            me.trigger('onPlay');
           });
         },
         onstop: function() {
           Ember.run(function() {
-            item.set('isPlaying', false);
-            item.trigger('onStop');
+            me.set('isPlaying', false);
+            me.trigger('onStop');
           });
         },
         onfinish: function() {
           Ember.run(function() {
-            item.set('isPlaying', false);
-            item.trigger('onFinish');
+            me.set('isPlaying', false);
+            me.trigger('onFinish');
           });
         },
         whileloading: function() {
@@ -65,7 +65,7 @@ var Media = Ember.Object.extend(Ember.Evented, {
         }
       });
       sound.setPlaybackProperties = function() {
-        item.setProperties({
+        me.setProperties({
           bytesLoaded: this.bytesLoaded,
           bytesTotal: this.bytesTotal,
           position: this.position,

@@ -23,9 +23,9 @@
                                     </a>
                                 </div>
                                 <div class="col-md-10">                                        
-                                    <span class="song-title">{{#link-to 'uploads' item.user_name item.upload_id}}{{item.upload_name}}{{/link-to}}</span> 
+                                    <span class="song-title">{{#link-to 'uploads' item.artistLogin item.id}}{{item.name}}{{/link-to}}</span> 
                                     {{#unless skipUserListing}}
-                                        <span class="artist-name light-color">{{#link-to 'users' item.user_name}}{{item.user_real_name}}{{/link-to}}</span>
+                                        <span class="artist-name light-color">{{#link-to 'users' item.artistLogin}}{{item.artist}}{{/link-to}}</span>
                                     {{/unless}}
                                 </div>
                             </div>

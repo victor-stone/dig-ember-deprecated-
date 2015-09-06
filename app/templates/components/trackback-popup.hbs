@@ -5,12 +5,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"><span>{{t 'tbPopup.trackback'}}</span> {{t 'tbPopup.title' name=trackback.pool_item_name artist=trackback.pool_item_artist}}</h4>
-          <h5>{{t 'tbPopup.featuring' name=upload.upload_name artist=upload.user_real_name}}</h5>
+          <h4 class="modal-title"><span>{{t 'tbPopup.trackback'}}</span> {{t 'tbPopup.title' name=trackback.name artist=trackback.artist}}</h4>
+          <h5>{{t 'tbPopup.featuring' name=upload.name artist=upload.artist}}</h5>
         </div>
         <div class="modal-body">
-            {{{trackback.pool_item_extra.embed}}}
-            <a href="{{trackback.pool_item_url}}" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> {{t 'tbPopup.original'}}</a>
+            {{{trackback.embed}}}
+            <a href="{{trackback.url}}" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> {{t 'tbPopup.original'}}</a>
         </div>
         <div class="modal-footer">
           <button type="button" {{action 'close'}} class="btn btn-default" data-dismiss="modal">{{t 'tbPopup.close'}}</button>

@@ -3,92 +3,69 @@
 {{trackback-form upload=model}}    
 {{share-popup upload=model}}    
 <div class="container">
-<div class="row">
-    <div class="col-md-2 col-md-offset-1">
-        <ul class="upload-action-buttons list-unstyled"> 
-            <li>
-                Play
-            </li>
-            <li>                
-                <a href="#" {{action "doDownloadPopup" item}}>
-                <span class="sprite3 download-sprite"> </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" {{action "dosharePopup" item}}>Share</a>
-            </li>
-            <li>
-                <a href="{{model.file_page_url}}">'See at ccM'</a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>{{model.upload_name}}</h2>
-            </div>
+    <h2 class="centered">{{model.name}}</h2>
+    <div class="row">
+        <div class="col-md-2 col-md-offset-1 hidden-sm hidden-xs">
+            {{partial 'upload-action'}}
         </div>
-        <div class="row">
-            <div class="col-md-8">
-                <p>{{link-to model.user_real_name 'users' model.user_name}}</p>
-                {{#if model.featuring}}
-                    Featuring: {{model.featuring}}
-                {{/if}}
+        <div class="col-md-8 col-sm-12">
+            <div class="row">
+                <div class="col-md-5 col-sm-6">
+                    <p>{{link-to model.artist 'users' model.artistLogin}}</p>
+                    {{#if model.featuring}}
+                        <span class="light-color">{{t 'upload.featuring'}}</span> {{model.featuring}}
+                    {{/if}}
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <a href="{{model.license_url}}"><img class="download-license" src="{{model.licenseLogoUrl}}" /></a>                <button type="button" class="dig-glyph-button" {{action "doLicensePopup"}}>
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                     </button>
+                    <br />
+                    {{link-to (t 'upload.moreBy' artist=model.artist) 'users' model.artistLogin class="btn btn-default"}} <br />
+                    {{link-to (t 'upload.moreLikeThis') 'morelike' model.id  class="btn btn-default"}}
+                </div>
             </div>
-            <div class="col-md-4">
-                <a href="{{model.license_url}}"><img class="download-license" src="{{model.license_logo_url}}" /></a><br />
-                {{link-to (t 'upload.moreBy' artist=model.user_real_name) 'users' model.user_name class="btn btn-default"}} <br />
-                {{link-to (t 'upload.moreLikeThis') 'morelike' model.upload_id  class="btn btn-default"}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7">
-                <ul class="tag-list">
+            <div class="row">
+                <div class="col-md-5">
                     {{#each model.userTags as |tag|}}             
-                        <li class="tag-container">
-                            <button type="button" class="tag-button" {{action "search" tag}}>{{tag}}</button>
-                        </li>
+                        <button type="button" class="exp-button tag-button light-on-hover" {{action "search" tag}}>{{tag}}</button>
                     {{/each}}
-                </ul>
-            </div>    
+                </div>    
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 col-md-offset-1 col-sm-12">
+            <h3>
+                {{t 'upload.trackbacks'}}
+                <a href="#" {{action 'doTrackbackForm'}} class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
+            </h3>
+            <ul class="list-group remix-list">
+            {{#each model.trackbacks as |tb|}}
+                <li class="list-group-item">{{#if (is-embeddable tb.embed)}}
+                        <a href="#" class="video-button" {{action 'doTrackbackPopup' tb}}>
+                            <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+                            {{tb.name}}
+                        </a>
+                    {{else}}
+                        <strong>{{tb.type}}</strong>
+                        <a href="{{tb.url}}">{{tb.name}}</a> 
+                    {{/if}}
+                    <span class="light-color">{{tb.artist}}</span></li>
+            {{else}}
+                <li><span class="light-color">{{t 'upload.noTrackbacks'}}</span></li>
+            {{/each}}
+            </ul>
+        </div>
+        <div class="col-md-5  col-sm-12">
+            <h3>{{t 'upload.remixes'}}</h3>
+            <ul class="list-group remix-list">
+            {{#each model.remixes as |remix|}}
+                <li class="list-group-item"><a href="{{remix.url}}">{{remix.name}}</a> <span class="light-color">{{remix.artist}}</span></li>
+            {{else}}
+                <li><span class="light-color">{{t 'upload.noRemixes'}}</span></li>
+            {{/each}}
+            </ul>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-5 col-md-offset-1">
-        <h3>
-            <div class="add-button-container">
-                <a href="#" {{action 'doTrackbackForm'}} class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
-            </div>
-            {{t 'upload.trackbacks'}}
-        </h3>
-        <ul class="list-group remix-list">
-        {{#each model.trackbacks as |poolItem|}}
-            <li class="list-group-item">{{#if (is-embeddable poolItem.pool_item_extra.embed)}}
-                    <a href="#" class="video-button" {{action 'doTrackbackPopup' poolItem}}>
-                        <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
-                        {{poolItem.pool_item_name}}
-                    </a>
-                {{else}}
-                    <strong>{{poolItem.pool_item_extra.ttype}}</strong>
-                    <a href="{{poolItem.pool_item_url}}">{{poolItem.pool_item_name}}</a> 
-                {{/if}}
-                <small>{{poolItem.pool_item_artist}}</small></li>
-        {{/each}}
-        </ul>
-    </div>
-    <div class="col-md-5">
-        <h3>{{t 'upload.remixes'}}</h3>
-        <ul class="list-group remix-list">
-        {{#each model.remixes as |remix|}}
-            <li class="list-group-item"><a href="{{remix.file_page_url}}">{{remix.upload_name}}</a> <small>{{remix.user_real_name}}</small></li>
-        {{else}}
-            <li><span class="light-color">(no remixes yet!)</span></li>
-        {{/each}}
-        </ul>
-    </div>
-</div>
-
-</div>
-{{outlet}}
-{{audio-player}}

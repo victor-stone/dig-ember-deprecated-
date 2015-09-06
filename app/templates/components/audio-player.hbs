@@ -1,4 +1,4 @@
-<article class="clear-both upload {{if item.isPlaying 'is-playing' ''}}">
+<article class="clear-both audio-player {{if item.isPlaying 'is-playing'}}">
   <div class='btn-group pull-left'>
     <a href='#' {{action 'playPrevious'}} class='btn play-previous'>
         <span class="glyphicon glyphicon-backward"></span>
@@ -10,15 +10,13 @@
         <span class="glyphicon glyphicon-forward"></span>
     </a>
 
-    {{#link-to 'file' item.uploader item.id class='btn info' bubbles=false}}
+    {{#link-to 'uploads' item.artist item.id class='btn info' bubbles=false}}
       <span class="glyphicon glyphicon-info-sign"></span>
     {{/link-to}}
   </div>
   <div class='media-body'>
-    <h4 class='media-heading'>{{link-to item.title 'file' item.uploader item.id bubbles=false}}</h4>
-    <div class='attribution'>
-      by {{#link-to 'user' item.uploader class='user' bubbles=false}}{{item.uploader}}{{/link-to}}
-    </div>
+    <h4 class='media-heading'>{{link-to item.name 'uploads' item.artist item.id bubbles=false}}</h4>
+      {{#link-to 'users' item.artistLogin class='user' bubbles=false}}<span class='light-color'>{{item.artist}}</span>{{/link-to}}
     {{#if item.isPlaying}}
       {{playback-scrubber media=item.media classNames="pull-left" bubbles=false}}
     {{/if}}

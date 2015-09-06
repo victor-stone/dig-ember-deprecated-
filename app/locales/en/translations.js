@@ -84,6 +84,9 @@ export default {
         trackbacks: 'Trackback Projects',
         remixes: 'Remixed at ccMixter',
         addTrackback: 'Add',
+        noRemixes: '(no remixes yet!)',
+        noTrackbacks: '(no trackbacks yet - add one!)',
+        featuring: 'Featuring',
     },
     share: {
         share: 'Share',
@@ -111,6 +114,17 @@ export default {
     },
     video: {
         title: "Instrumental Music for Film and Video",
+    },
+    licenses: {
+        title: "Our Licenses Overview",
+        by: "Free to use, even in commercial projects " +
+             "<strong>but</strong> you must give credit to the musicians.",
+        'by-nc': "Free to use only in non-commercial projects. Again, " +
+              "you must give credit to the musicians.",
+        ccplus: "Available without any restrictions for a " +
+                "sliding scale, royalty free fee.",
+        example: 'Example',
+        linkToLic: 'Full CC license',
     },
     
 };

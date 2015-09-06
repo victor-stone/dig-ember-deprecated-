@@ -17,6 +17,10 @@ export default Ember.Component.extend({
         },
         copyToClip: function() {
             window.prompt('Control (or Cmd) + C to copy', Ember.$('#attributionText')[0].value );
-        }
+        },
+        doLicensePopup: function() {        
+            Ember.$('#downloadPopupClose').click();
+            Ember.$('#licenseInfoPopupTriggerLink').click();
+        },        
     }
 });

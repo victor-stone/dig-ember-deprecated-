@@ -15,6 +15,7 @@ Router.map(function() {
   this.route('ccplus');
   this.route('games');
   this.route('morelike', { path: '/morelike/:upload_id' } );
+  this.route('licenses');
 });
 
 export default Router;

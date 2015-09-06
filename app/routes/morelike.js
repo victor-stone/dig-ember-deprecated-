@@ -19,7 +19,7 @@ export default PageableRoute.extend({
         var trackTitle = null;
         
         function gotUpload(upload) {
-            trackTitle = upload.get('upload_name');
+            trackTitle = upload.get('name');
             var userTags = upload.get('userTags');
             var tags = userTags.intersection(me.get('genreTags'));
             if( !tags.get('length') ) {
@@ -34,7 +34,7 @@ export default PageableRoute.extend({
         
         function gotRecords(model) {
             model.trackTitle = trackTitle;
-            model.playlist = model.playlist.rejectBy('upload_id',id);
+            model.playlist = model.playlist.rejectBy('id',id);
             return model;
         }
         

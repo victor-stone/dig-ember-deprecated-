@@ -2,8 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    queryOptions: Ember.inject.service('query-options'),
-    
+    queryOptions: Ember.inject.service(),
+
+    licenseInfo: function() {
+        var licController = this.container.lookup('controller:licenses');
+        return licController.get('licenseInfo');
+    }.property(),
+        
     // UI model
     app_title: 'dig -> ccMixter',
     menu: [

@@ -9,10 +9,7 @@ export default PageableController.extend({
     _title: t('dig.title'),
         
     title: function() {
-        if( this.get('queryOptions.searchText') ) {
-            return this.get('_titleWithStr');
-        }
-        return this.get( '_title' );
+        return this.get( this.get('queryOptions.searchText') ? '_titleWithStr' : '_title' );
     }.property('queryOptions.searchText')
 
 });

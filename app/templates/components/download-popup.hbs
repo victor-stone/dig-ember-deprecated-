@@ -5,7 +5,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"><span>{{t 'dlPopup.download'}}</span> {{upload.upload_name}}</h4>
+          <h4 class="modal-title"><span>{{t 'dlPopup.download'}}</span> {{upload.name}}</h4>
         </div>
         <div class="modal-body">
             <div class="row">
@@ -16,7 +16,7 @@
                         <li role="presentation" class="{{if plainSelected 'active'}}"><a href="#" {{action 'selectFormat' 'plain'}}>{{t 'dlPopup.plainText'}}</a></li>
                         <li role="presentation" class="{{unless plainSelected 'active'}}"><a href="#" {{action 'selectFormat' 'html'}}>{{t 'dlPopup.HTML'}}</a></li>
                         </ul>
-                        <textarea id="attributionText" readonly="1" cols="40" rows="3">{{#if plainSelected}}{{t 'dlPopup.licenseTextPlain' songTitle=upload.upload_name artistName=upload.user_real_name year=upload.licenseYear licenseName=upload.license_name filePageUrl=upload.file_page_url}}{{else}}{{{t 'dlPopup.licenseTextHTML' songTitle=upload.upload_name artistName=upload.user_real_name year=upload.licenseYear licenseName=upload.license_name filePageUrl=upload.file_page_url licenseUrl=upload.license_url}}}{{/if}}{{#if upload.featuring}} {{#if plainSelected}}{{t 'dlPopup.featuring' ft=upload.featuring}}{{else}}{{{t 'dlPopup.featuringHTML' ft=upload.featuring}}}{{/if}}{{/if}}</textarea>
+                        <textarea id="attributionText" readonly="1" cols="40" rows="3">{{#if plainSelected}}{{t 'dlPopup.licenseTextPlain' songTitle=upload.name artistName=upload.artist year=upload.licenseYear licenseName=upload.license_name filePageUrl=upload.file_page_url}}{{else}}{{{t 'dlPopup.licenseTextHTML' songTitle=upload.name artistName=upload.artist year=upload.licenseYear licenseName=upload.license_name filePageUrl=upload.file_page_url licenseUrl=upload.licenseUrl}}}{{/if}}{{#if upload.featuring}} {{#if plainSelected}}{{t 'dlPopup.featuring' ft=upload.featuring}}{{else}}{{{t 'dlPopup.featuringHTML' ft=upload.featuring}}}{{/if}}{{/if}}</textarea>
                         <button class="btn btn-sm" {{action 'copyToClip'}}>{{t 'dlPopup.copyToClip'}}</button>
                     </div>
                     {{#if upload.isCCPlus}}
@@ -29,7 +29,10 @@
                 <div class="col-md-6">
                     <a class="download-link" href="{{upload.streamUrl}}" download>{{t 'dlPopup.downloadButtonText'}}</a>
                     <div class="download-size">{{downloadSize}}</div>
-                    <a href="{{upload.license_url}}"><img class="download-license" src="{{upload.license_logo_url}}" /></a>
+                    <a href="{{upload.licenseUrl}}"><img class="download-license" src="{{upload.licenseLogoUrl}}" /></a>
+                    <button type="button" class="dig-glyph-button" {{action "doLicensePopup"}}>
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                     </button>
                     <div class="download-text license-info">
                         {{#if upload.isOpen}} 
                             {{t 'dlPopup.freeToUse'}}
@@ -41,7 +44,7 @@
             </div> 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{{t 'dlPopup.close'}}</button>
+          <button type="button" id="downloadPopupClose" class="btn btn-default" data-dismiss="modal">{{t 'dlPopup.close'}}</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -24,5 +24,8 @@ export default Ember.Controller.extend({
         dosharePopup: function() {
             Ember.$('#sharePopupTriggerLink').click();
         },
+        doLicensePopup: function() {
+            return true;
+        },
     },
 });

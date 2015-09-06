@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
     queryParams: [ 'offset' ],
-    queryOptions: Ember.inject.service('query-options'),
+    queryOptions: Ember.inject.service(),
     offset: 0,
     
    applyQueryOptions: function() {
@@ -39,13 +39,13 @@ export default Ember.Controller.extend({
         return this.get('offset') + this.get('queryOptions.limit');
     }.property('offset', 'model' /* ,'queryOptions.limit' */),
 
-    uploadForDownloadPopup: { upload_name: '(no upload selected)' },
+    uploadForDownloadPopup: { name: '(no upload selected)' },
     
     actions: {
         doDownloadPopup: function(upload) {
             var store = this.container.lookup('store:uploads');
             var me = this;
-            store.info(upload.upload_id)
+            store.info(upload.get('id'))
                 .then( function(details) {
                     me.set('uploadForDownloadPopup',details);
                     Ember.$('#downloadPopupTriggerLink').click();

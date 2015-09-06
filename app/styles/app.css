@@ -17,21 +17,63 @@ span.light-color a,
     font-weight: 300;
 }
 
+.light-on-hover:hover {
+    color:white;
+}
+
 .centered {
     text-align: center;
 }
+
+.dig-glyph-button {
+    background: transparent;
+    border: 0;
+}
+
+.required::after {
+    content: '*',
+    color: #F88;
+}
+
+.sprite3 {
+  background-image: url('../dig-images/glyphs3.png');
+  background-repeat: no-repeat;
+  width: 51px;
+  height: 48px;
+}
+
+.sprite4 {
+  background-image: url('../dig-images/glyphs4.png');
+  background-repeat: no-repeat;
+  width: 97px;
+  height: 94px;
+  display: block;
+}
+
+
 
 .navbar { /* override bootstrap */
     margin-bottom: 0;
 }
 
-.nav-form-element {
-    padding-top: 12px;
+.menu li {
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-right: 12px;
 }
 
-.search-options[input],
-.search-options[button] {
-    font-size: 10px;
+.navbar-search {
+    padding-top: 18px;
+}
+
+.navbar-search a {
+    color: #9d9d9d;
+    margin-right: 11px;
+}
+
+nav input[type=text],
+nav select {
+    border-radius: 6px;
 }
 
 .query-options {
@@ -42,53 +84,21 @@ span.light-color a,
     color: #9d9d9d;
 }
 
-.query-options label {
-    font-weight: normal;
-}
-
-.query-options span:hover,
-.query-options label:hover {
-    color:white;
-}
-
-.query-options li,
-.search-options li {
-    padding-top: 15px;
+.query-options li {
+    padding-top: 1px;
     padding-bottom: 15px;
-    padding-right: 22px;
+    padding-right: 20px;
 }
 
 .query-options li > div {
     display: inline;
 }
 
-.dig-glyph-button {
-    background: transparent;
-    border: 0;
-    color: #DDD;
+.query-options label {
+    font-weight: normal;
 }
 
-.navbar input[type=text],
-.navbar select {
-    border-radius: 4px;
-}
-
-.g1 {
-    padding: 0px;
-    width: 53px;
-}
-
-.g2 {
-    padding: 0px;
-}
-
-.sprite3 {
-  background-image: url('../dig-images/glyphs3.png');
-  background-repeat: no-repeat;
-  width: 51px;
-  height: 48px;
-}
-
+/* playlist */
 
 .play-sprite {
     background-position: -99px 0px;
@@ -101,32 +111,43 @@ span.light-color a,
     float: left;
 }
 
-.tag-container {
-    background-image: url('../dig-images/tag.png');
-    background-size: cover;
-    margin: 4px;
-    padding: 5px;
-    padding-left: 20px;
-    
-    float: left;
-    position: relative;
-    display: block;    
-}
-.tag-button {
-    background-color: transparent;
-    border: 0;
+
+/* upload page */
+
+.download-sprite-big {    
 }
 
-.upload-action-buttons {
-    margin-top: 50px;
+.download-sprite-big:hover { 
+    background-position: -100px 0px;       
 }
 
-.upload-action-buttons li {
-    height: 90px;
-    width: 90px;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #CCC;
+.play-sprite-big {
+    background-position: -197px 0px;
+}
+
+.play-sprite-big .is-playing,
+.play-sprite-big:hover {
+    background-position: -296px 0px;
+}
+
+.share-sprite-big {
+    background-position: -395px 0px;
+}
+.share-sprite-big:hover {
+    background-position: -495px 0px;
+}
+
+.ccm-sprite-big {
+    background-position: -592px 0px;
+}
+
+.g1 {
+    padding: 0px;
+    width: 53px;
+}
+
+.g2 {
+    padding: 0px;
 }
 
 .remix-list li {
@@ -139,4 +160,154 @@ span.light-color a,
 
 #sharePopup .modal-body > div {
     margin-bottom: 20px;
+}
+
+/* licenses popup */
+.license-images img {
+    display: block;
+    margin: 20px auto 3px auto;
+}
+
+.license-images a {
+    margin: 4px auto;
+}
+
+.license-description {
+    padding: 12px 0px 12px 0px;
+    line-height: 1.3;
+}
+
+
+/* audio player */
+
+.playback-scrubber {
+  margin: 0.5em;
+  height: 1.5em;
+  width: 20%;
+  position: relative;
+  border: 2px solid white;
+  background-color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.track-header .playback-scrubber {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  border-color: #3399CC;
+}
+
+.playback-scrubber .bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.playback-scrubber .loaded {
+  background-color: #EEEEEE;
+}
+
+.playback-scrubber .position {
+  background-color: #3399CC;
+}
+
+.audio-player .media-heading,
+.audio-player .attribution {
+  display: inline
+}
+
+.audio-player .license {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+ul.audio-players {
+  margin-top: 1em;
+}
+
+.audio-players .audio-player .media-heading {
+  color: #3399CC;
+  font-size: 100%;
+}
+
+.audio-players > .audio-player {
+  height: auto;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  cursor: pointer;
+}
+
+.audio-players .is-playing,
+.audio-players .is-playing a,
+.audio-players .is-playing .media-heading {
+  background-color: #3399CC;
+  color: white;
+}
+
+.audio-players .audio-player .play-next,
+.audio-players .audio-player .play-previous {
+  display: none;
+}
+
+.audio-player .btn {
+  padding: 6px 10px;
+}
+
+article.audio-player {
+  line-height: 34px;
+  height: 34px;
+}
+
+.now-playing .thumbnail,
+.audio-player .thumbnail {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+/* expanding buttons */
+.exp-button {
+  position: relative;
+  height: 31px;
+  
+  /* allow for the pseudo-elements which do not have layout due to absolute positioning */
+  margin: 0 15px;
+  border: 0;
+  background: red;
+}
+.exp-button::before,
+.exp-button::after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  width: 26px;
+  height: 31px;
+}
+.exp-button::before {
+  left: -26px;
+  background: blue;
+}
+.exp-button::after {
+  right: -26px;
+  background: green;
+}
+
+.tag-button {
+    background-image: url('../dig-images/tag.png');
+    background-repeat: repeat-x;
+    background-color: transparent;
+    margin-right: 36px;
+    margin-bottom: 12px;
+}
+.tag-button::before {
+    background-image: url('../dig-images/tag-front.png');
+    background-color: transparent;
+}
+
+.tag-button::after {
+    background-image: url('../dig-images/tag-back.png');
+    background-color: transparent;
 }

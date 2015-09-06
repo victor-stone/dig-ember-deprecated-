@@ -3,7 +3,7 @@ import TagUtils from '../lib/tags';
 
 export default Ember.Route.extend({
     
-    queryOptions: Ember.inject.service('query-options'),
+    queryOptions: Ember.inject.service(),
     queryParams: {
         offset: { refreshModel: true },
     },
@@ -12,13 +12,6 @@ export default Ember.Route.extend({
 
     isOptionsChangeRefresh: false,
     
-    /*
-    init: function() {
-        this._super.apply(this,arguments);
-        this.get('queryOptions'); // observers don't hook up if you never do a get()
-    },
-    */
-
     _optionsWatcher: function() {
         Ember.debug('Signalled option change in curr route: ' + this.router.currentRouteName + ' while in ' + this.toString());
         if( (this.router.currentRouteName === this.routeName) && !this.isOptionsChangeRefresh ) {
@@ -87,6 +80,7 @@ export default Ember.Route.extend({
     },
     
     // _super is broken for async calls (was fixed, borked again, etc.)
+    // use this call from .then() functions in derivations
     _model: function(params,transition) {  
         Ember.debug('Getting model for ' + this.toString() + ' isOptionsChangeRefresh('+this.isOptionsChangeRefresh+')');
         
@@ -115,13 +109,9 @@ export default Ember.Route.extend({
         
         var store = this.store;
         
-        var countParams = { };
-        Ember.merge(countParams,qparams);
-        countParams.f = 'count';
-        
         var retModel = {
-            playlist: store.query(qparams),
-            total:    store.query(countParams)
+            playlist: store.playlist(qparams),
+            total:    store.count(qparams)
         };
         
         return Ember.RSVP.hash(retModel);

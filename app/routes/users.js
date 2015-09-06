@@ -1,5 +1,3 @@
-/* globals Ember */
-
 import PageableRoute from './pageable';
 
 export default PageableRoute.extend({
@@ -20,17 +18,12 @@ export default PageableRoute.extend({
         var store = this.store;
         
         function getProfile( model ) {
-            Ember.merge(retModel,model);
-            var qparams = {
-                u: params.user_id,
-                dataview: 'user_basic',
-                f: 'json'
-            };
-            return store.query(qparams);
+            retModel = model;
+            return store.find('user',params.user_id);
         }
         
         function returnProfile( model ) {
-            retModel.profile = model[0];
+            retModel.profile = model;
             return retModel;
         }
         
