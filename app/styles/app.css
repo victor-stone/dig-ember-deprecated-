@@ -9,6 +9,10 @@ ul {
     list-style: none;
 }
 
+p {
+    line-height: 1.3;
+}
+
 .light-color, 
 span.light-color a,
 .modal-header span,
@@ -35,21 +39,13 @@ span.light-color a,
     color: #F88;
 }
 
-.sprite3 {
-  background-image: url('../dig-images/glyphs3.png');
-  background-repeat: no-repeat;
-  width: 51px;
-  height: 48px;
-}
-
 .sprite4 {
   background-image: url('../dig-images/glyphs4.png');
   background-repeat: no-repeat;
   width: 97px;
   height: 94px;
-  display: block;
+  display: inline-block;
 }
-
 
 
 .navbar { /* override bootstrap */
@@ -100,21 +96,30 @@ nav select {
 
 /* playlist */
 
+.sprite3 {
+  background-image: url('../dig-images/glyphs3.png');
+  background-repeat: no-repeat;
+  width: 51px;
+  height: 48px;
+  display: inline-block;
+}
+
 .play-sprite {
     background-position: -99px 0px;
-    display: block;
-    float: left;
 }
 .download-sprite {
     background-position: 0px 0px;
-    display: block;
-    float: left;
 }
 
+.play-list .action {
+    display: inline-block;
+    margin-right: 8px;
+}
 
 /* upload page */
 
 .download-sprite-big {    
+    background-position: 0px 0px;       
 }
 
 .download-sprite-big:hover { 
@@ -174,7 +179,6 @@ nav select {
 
 .license-description {
     padding: 12px 0px 12px 0px;
-    line-height: 1.3;
 }
 
 
@@ -270,44 +274,152 @@ article.audio-player {
 
 /* expanding buttons */
 .exp-button {
-  position: relative;
-  height: 31px;
-  
-  /* allow for the pseudo-elements which do not have layout due to absolute positioning */
-  margin: 0 15px;
-  border: 0;
-  background: red;
+    position: relative;
+    background-repeat: repeat-x;
+    background-color: transparent;
+    border: 0;
+    background-image: url('../dig-images/buttons.png');
+
+    /* override these: */    
+    background-position: 0px 0px;
+    height: 31px;  
+    /* margin-right >= ::after width
+       margin-left  >= ::before width */
+    margin: 0 15px;
 }
+
 .exp-button::before,
 .exp-button::after {
-  content: ' ';
-  position: absolute;
-  top: 0;
-  width: 26px;
-  height: 31px;
+    content: ' ';
+    position: absolute;
+    background-color: transparent;
+    top: 0;
+    background-image: url('../dig-images/button-heads.png');
+
+    /* height matches above */    
+    height: 31px;
 }
 .exp-button::before {
-  left: -26px;
-  background: blue;
+    width: 15px;
+    left: -15px;
 }
 .exp-button::after {
-  right: -26px;
-  background: green;
+    width: 15px;
+    right: -15px;
+}
+
+a.exp-button:hover {
+    text-decoration: none;
+    color: white;
 }
 
 .tag-button {
-    background-image: url('../dig-images/tag.png');
-    background-repeat: repeat-x;
-    background-color: transparent;
+    height: 31px;
+    background-position: 0px 0px;
     margin-right: 36px;
     margin-bottom: 12px;
 }
 .tag-button::before {
-    background-image: url('../dig-images/tag-front.png');
-    background-color: transparent;
+    height: 31px;
+    background-position: 0px 0px;
+    left: -25px;
+    width: 25px;
 }
 
 .tag-button::after {
-    background-image: url('../dig-images/tag-back.png');
-    background-color: transparent;
+    height: 31px;
+    background-position: -90px 0px;
+    right: -10px;
+    width: 10px;
+}
+
+.utility-button {
+    height: 38px;
+    background-position: 0px -175px;
+    margin: 0 25px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 12px;
+    font-weight: 600;    
+}
+
+
+.utility-button::before {
+    height: 38px;
+    background-position: 0px -175px;
+    left: -25px;
+    width: 25px;
+}
+
+.utility-button::after {
+    height: 38px;
+    background-position: -100px -175px;
+    right: -25px;
+    width: 25px;
+}
+
+.utility-button:hover { 
+    background-position: 0px -220px;
+}
+.utility-button:hover::before {
+    background-position: 0px -220px;
+}
+.utility-button:hover::after {
+    background-position: -100px -220px;
+}
+
+a.utility-button {
+    color: rgb(240, 240, 200);
+}
+
+.download-button {
+    height: 62px;
+    background-position: 0px -40px;
+    margin: 0 25px 0 9px;
+    display: inline-block;
+    text-align: center;
+    padding: 15px 20px 8px 40px
+    font-weight: 600;    
+}
+
+.download-button::before {
+    height: 62px;
+    background-position: 0px -40px;
+    left:  -9px;
+    width: -9px;
+}
+
+.download-button::after {
+    height: 62px;
+    background-position: -100px -40px;
+    right: -25px;
+    width: 25px;
+}
+
+.download-button:hover {
+    background-position: 0px -110px;
+}
+.download-button:hover::before {
+    background-position: 0px -110px;
+}
+.download-button:hover::after {
+    background-position: -100px -110px;
+}
+a.download-button {
+    color: rgb(218, 218, 220);
+}
+
+.cloud-sprite {
+    background-image: url('../dig-images/button-heads.png');
+    background-position: -50px -50px;
+    width: 30px;
+    height: 23px;
+    display: inline-block;
+    position: relative;
+    right: 7px;
+    top: 5px;
+}
+
+.download-size {
+    padding-top: 28px;
 }

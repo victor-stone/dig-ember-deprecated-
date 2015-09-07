@@ -30,6 +30,13 @@ export default Ember.Object.extend({
         return this.query(countParams);
     },
     playlist: function(params) {
-        return this.query(params).then( models('upload') );
+        var container = this.get('container');
+        function containerHack( uploads ) {            
+            return uploads.map( function(upload) {
+                upload.set('container', container);
+                return upload;
+            });
+        }
+        return this.query(params).then( models('upload') ).then( containerHack );
     },
 });

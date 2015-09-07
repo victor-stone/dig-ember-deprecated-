@@ -17,6 +17,5 @@ export default {
         
         var STORE_TAGS = 'store:tags';
         app.register(STORE_TAGS, Tags);
-        
     }
 };

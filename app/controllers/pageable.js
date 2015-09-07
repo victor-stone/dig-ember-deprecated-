@@ -51,5 +51,8 @@ export default Ember.Controller.extend({
                     Ember.$('#downloadPopupTriggerLink').click();
                 });
         },
+        togglePlay: function(){
+            return true;
+        }
     },
 });

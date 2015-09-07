@@ -23,7 +23,9 @@ var Media = Ember.Object.extend(Ember.Evented, {
   site:       null,
   release:    null,
   imageUrl:   '',
-  mp3Url:     '',
+  mp3Url:  function() {
+      return this.get(this.mp3UrlBinding);
+  }.property('track'),
 
   playlist: function(key, value) {
     if (arguments.length > 1) {return value;}
@@ -112,10 +114,12 @@ export default Ember.Service.extend({
   track: null,
   blankValue: -1,
   shouldContinuousPlay: true,
-  position: Ember.computed.defaultTo('blankValue').property('currentSound'),
-  duration: Ember.computed.defaultTo('blankValue').property('currentSound'),
-  bytesLoaded: Ember.computed.defaultTo('blankValue').property('currentSound'),
-  bytesTotal: Ember.computed.defaultTo('blankValue').property('currentSound'),
+  stats: { position: -1, duration: -1, bytesLoaded: -1, bytesTotal: -1 },
+  position: Ember.computed.alias('stats.position'),
+  duration: Ember.computed.alias('stats.duration'),
+  bytesLoaded: Ember.computed.alias('stats.bytesLoaded'),
+  bytesTotal: Ember.computed.alias('stats.bytesTotal'),
+  
   positionPercentage: computedPercentage('position', 'duration'),
   loadedPercentage: computedPercentage('bytesLoaded', 'bytesTotal'),
 
@@ -167,6 +171,7 @@ export default Ember.Service.extend({
     }
   },
 
+/*
   trackWillChange: function() {
     var track = this.get('track');
     if (track) {
@@ -174,7 +179,7 @@ export default Ember.Service.extend({
       track.stop();
     }
   }.observesBefore('track'),
-
+*/
   trackDidChange: function() {
     var track = this.get('track');
     if (track) {

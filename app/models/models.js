@@ -29,7 +29,32 @@ var Upload = UploadBasic.extend({
 
     id: Ember.computed.alias('upload_id'),
     artistLogin: Ember.computed.alias('user_name'),
+
+    fileInfo: function() {
+        var files = this.get('files');
+        for( var i = 0; i < files.length; i++ ) {
+            if( files[i].file_format_info["format-name"] === "audio-mp3-mp3" ) {
+                return files[i];
+            }
+        }
+        return this._dummyInfo;
+    }.property('files'),
  
+    audioPlayer: Ember.inject.service(),
+    isPlaying: Ember.computed.alias('media.isPlaying'),
+    media: function() {
+        return this.get('audioPlayer').media({
+                track:            this,
+                artistBinding:    'track.user_name',
+                titleBinding:     'track.upload_name',
+                mp3UrlBinding:    'track.streamUrl'
+            });
+    }.property(),
+    
+    streamUrl: function() {
+        return this.get('fplay_url') || this.get('fileInfo').download_url;
+    }.property('files'),
+    
 });
 
 var User = Model.extend( {
@@ -47,20 +72,6 @@ var Detail = Upload.extend( {
     userTags: function() {
         return TagUtils.create( { source: this.get('upload_extra.usertags') } );
     }.property('upload_extra'),
-
-    streamUrl: function() {
-        return this.get('fplay_url') || this.get('fileInfo').download_url;
-    }.property('files'),
-    
-    fileInfo: function() {
-        var files = this.get('files');
-        for( var i = 0; i < files.length; i++ ) {
-            if( files[i].file_format_info["format-name"] === "audio-mp3-mp3" ) {
-                return files[i];
-            }
-        }
-        return this._dummyInfo;
-    }.property('files'),
     
     hasTag: function(tag) {
         return this.get('tags').contains(tag);
@@ -94,19 +105,6 @@ var Detail = Upload.extend( {
         return baseUrl + this.get('file_page_url').replace('http://', '');
     }.property('file_page_url'),
         
-    // this stuff really should be on the controller
-    audioPlayer: Ember.inject.service(),
-    isPlaying: Ember.computed.alias('media.isPlaying'),
-    media: function() {
-        return this.get('audioPlayer').media({
-                track:            this,
-                artistBinding:    'track.user_name',
-                titleBinding:     'track.upload_name',
-                mp3UrlBinding:    'track.streamUrl'
-            });
-    }.property(),
-
-    
 });
 
 function _wrap(param,model) {
