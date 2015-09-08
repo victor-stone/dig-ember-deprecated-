@@ -2,33 +2,31 @@
 import TagUtils from '../lib/tags';
 import LicenseUtils from '../lib/licenses';
 
-var Model = Ember.Object.extend();
+var Model = Ember.Object.extend({
+});
 
 var UploadBasic = Model.extend( {
-    artist: Ember.computed.alias('user_real_name'),
-    name: Ember.computed.alias('upload_name'),
-    url:  Ember.computed.alias('file_page_url'),
+    artistBinding: 'user_real_name',
+    nameBinding: 'upload_name',
+    urlBinding:  'file_page_url',
+    idBinding: 'upload_id',
 });
 
 var Remix = UploadBasic.extend();
 
 var Trackback = Model.extend( {
-    artist: Ember.computed.alias('pool_item_artist'),
-    name: Ember.computed.alias('pool_item_name'),
-    url: Ember.computed.alias('pool_item_url'),
+    artistBinding: 'pool_item_artist',
+    nameBinding: 'pool_item_name',
+    urlBinding: 'pool_item_url',
     
-    embed: Ember.computed.alias('pool_item_extra.embed'),
-    type: Ember.computed.alias('pool_item_extra.ttype'),
+    embedBinding: 'pool_item_extra.embed',
+    typeBinding: 'pool_item_extra.ttype',
 });
 
-var Upload = UploadBasic.extend({
+export var Upload = UploadBasic.extend({
 
-    artist: Ember.computed.alias('user_real_name'),
-    name: Ember.computed.alias('upload_name'),
-    url: Ember.computed.alias('file_page_url'),
-
-    id: Ember.computed.alias('upload_id'),
-    artistLogin: Ember.computed.alias('user_name'),
+    idBinding: 'upload_id',
+    artistLoginBinding: 'user_name',
 
     fileInfo: function() {
         var files = this.get('files');
@@ -37,20 +35,8 @@ var Upload = UploadBasic.extend({
                 return files[i];
             }
         }
-        return this._dummyInfo;
     }.property('files'),
- 
-    audioPlayer: Ember.inject.service(),
-    isPlaying: Ember.computed.alias('media.isPlaying'),
-    media: function() {
-        return this.get('audioPlayer').media({
-                track:            this,
-                artistBinding:    'track.user_name',
-                titleBinding:     'track.upload_name',
-                mp3UrlBinding:    'track.streamUrl'
-            });
-    }.property(),
-    
+
     streamUrl: function() {
         return this.get('fplay_url') || this.get('fileInfo').download_url;
     }.property('files'),
@@ -58,13 +44,12 @@ var Upload = UploadBasic.extend({
 });
 
 var User = Model.extend( {
-    name: Ember.computed.alias('user_real_name'),
-    avatarUrl: Ember.computed.alias('user_avatar_url'),
+    nameBinding: 'user_real_name',
+    avatarUrlBinding: 'user_avatar_url',
 });
 
 var Detail = Upload.extend( {
 
-    
     tags: function() {
         return TagUtils.create( { source: this.get('upload_tags') } );
     }.property('upload_tags'),
@@ -77,12 +62,12 @@ var Detail = Upload.extend( {
         return this.get('tags').contains(tag);
     },
     
-    featuring: Ember.computed.alias('upload_extra.featuring'),
+    featuringBinding: 'upload_extra.featuring',
     
     // License stuff 
     
-    licenseName: Ember.computed.alias('license_name'),
-    licenseUrl: Ember.computed.alias('license_url'),
+    licenseNameBinding: 'license_name',
+    licenseUrlBinding: 'license_url',
     
     isCCPlus: function() {
         return this.hasTag('ccplus');
@@ -109,7 +94,7 @@ var Detail = Upload.extend( {
 
 function _wrap(param,model) {
     if( Ember.isArray(param) ) {
-        return param.map( function(o) { return model.create(o); } );
+        return param.map( o => model.create(o) );
     }
     return model.create(param);
 }
@@ -124,10 +109,7 @@ var models = {
 
 export default function modelWrap(param,model) {
         if( typeof(model) === 'undefined' ) {
-            model = param;
-            return function _modelWrapper(result) {
-                return _wrap(result,models[model]);
-            };
+            return result => _wrap(result,models[param]);
         }
         return _wrap(param,models[model]);
     }

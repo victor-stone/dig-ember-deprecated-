@@ -27,5 +27,8 @@ export default Ember.Controller.extend({
         doLicensePopup: function() {
             return true;
         },
+        togglePlay: function() {
+            return true;
+        }
     },
 });

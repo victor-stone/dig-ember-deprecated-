@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   media: null,
-  classNames: ['playback-scrubber'],
+  classNames: ['playback-scrubber','playback-scrubber-dim','pull-left'],
 
   click: function() {
     return false;
@@ -29,7 +29,8 @@ export default Ember.Component.extend({
       var loaded = this.get('media.bytesLoaded'),
           total = this.get('media.bytesTotal'),
           percent = 100 * (loaded / total);
-      return ('width: ' + percent + '%;').htmlSafe();
+          
+      return new Ember.Handlebars.SafeString('width: ' + percent + '%;');
     } catch(e) {
       console.error('loadingStyle', e.stack);
     }
@@ -40,7 +41,7 @@ export default Ember.Component.extend({
       var position = this.get('media.position'),
           duration = this.get('media.duration'),
           percent = 100 * (position / duration);
-      return ('width: ' + percent + '%;').htmlSafe();
+      return new Ember.Handlebars.SafeString('width: ' + percent + '%;');
     } catch(e) {
       console.error('loadingStyle', e.stack);
     }

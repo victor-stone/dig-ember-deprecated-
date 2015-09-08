@@ -2,7 +2,7 @@
 {{trackback-popup upload=model trackback=poolItemForTrackbackPopup}}
 {{trackback-form upload=model}}    
 {{share-popup upload=model}}    
-<div class="container">
+<div class="container upload-page">
     <h2 class="centered">{{model.name}}</h2>
     <div class="row">
         <div class="col-md-2 col-md-offset-1 hidden-sm hidden-xs">
@@ -10,23 +10,29 @@
         </div>
         <div class="col-md-8 col-sm-12">
             <div class="row">
-                <div class="col-md-5 col-sm-6">
-                    <p>{{link-to model.artist 'users' model.artistLogin}}</p>
+                <div class="col-md-6 col-sm-6">
+                    <div class="text">{{link-to model.artist 'users' model.artistLogin}}</div>
                     {{#if model.featuring}}
                         <span class="light-color">{{t 'upload.featuring'}}</span> {{model.featuring}}
                     {{/if}}
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <a href="{{model.license_url}}"><img class="download-license" src="{{model.licenseLogoUrl}}" /></a>                <button type="button" class="dig-glyph-button" {{action "doLicensePopup"}}>
-                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                     </button>
-                    <br />
-                    {{link-to (t 'upload.moreBy' artist=model.artist) 'users' model.artistLogin class="exp-button utility-button"}} <br />
-                    {{link-to (t 'upload.moreLikeThis') 'morelike' model.id  class="exp-button utility-button"}}
+                <div class="col-md-6 col-sm-6">
+                    <ul class="extras">
+                        <li>
+                            <a href="{{model.license_url}}"><img class="download-license" src="{{model.licenseLogoUrl}}" /></a>    
+                            <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
+                        </li>
+                        <li>
+                            {{link-to (chop (t 'upload.moreBy' artist=model.artist) 17) 'users' model.artistLogin class="exp-button utility-button"}} 
+                        </li>
+                        <li>
+                            {{link-to (t 'upload.moreLikeThis') 'morelike' model.id  class="exp-button utility-button"}}
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-9 tags">
                     {{#each model.userTags as |tag|}}             
                         <button type="button" class="exp-button tag-button light-on-hover" {{action "search" tag}}>{{tag}}</button>
                     {{/each}}
@@ -36,32 +42,32 @@
     </div>
     <div class="row">
         <div class="col-md-5 col-md-offset-1 col-sm-12">
-            <h3>
-                {{t 'upload.trackbacks'}}
-                <a href="#" {{action 'doTrackbackForm'}} class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
-            </h3>
+            <div class="centered">
+                <h3 class="inlined">{{t 'upload.trackbacks'}}</h3>
+                <a href="#" {{action 'doTrackbackForm'}} class="exp-button utility-button"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
+            </div>
             <ul class="list-group remix-list">
             {{#each model.trackbacks as |tb|}}
-                <li class="list-group-item">{{#if (is-embeddable tb.embed)}}
-                        <a href="#" class="video-button" {{action 'doTrackbackPopup' tb}}>
-                            <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
-                            {{tb.name}}
+                <li class="list-group-item"><div class="text">{{#if (is-embeddable tb.embed)}}
+                        <a href="#" {{action 'doTrackbackPopup' tb}}>
+                            <i class="fa fa-youtube-play"></i>
+                            {{{tb.name}}}
                         </a>
                     {{else}}
-                        <strong>{{tb.type}}</strong>
-                        <a href="{{tb.url}}">{{tb.name}}</a> 
+                        <span class="light-color"><i class="fa fa-external-link"></i> {{tb.type}}</span>
+                        <a href="{{tb.url}}" target="_blank">{{{tb.name}}}</a> 
                     {{/if}}
-                    <span class="light-color">{{tb.artist}}</span></li>
+                    <span class="light-color">{{tb.artist}}</span></div></li>
             {{else}}
                 <li><span class="light-color">{{t 'upload.noTrackbacks'}}</span></li>
             {{/each}}
             </ul>
         </div>
         <div class="col-md-5  col-sm-12">
-            <h3>{{t 'upload.remixes'}}</h3>
-            <ul class="list-group remix-list">
+            <h3 class="centered">{{t 'upload.remixes'}}</h3>
+            <ul class="remix-list">
             {{#each model.remixes as |remix|}}
-                <li class="list-group-item"><a href="{{remix.url}}">{{remix.name}}</a> <span class="light-color">{{remix.artist}}</span></li>
+                <li class="list-group-item"><a target="_blank" href="{{remix.url}}">{{remix.name}}</a> <span class="light-color">{{remix.artist}}</span></li>
             {{else}}
                 <li><span class="light-color">{{t 'upload.noRemixes'}}</span></li>
             {{/each}}

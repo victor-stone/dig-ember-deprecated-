@@ -39,9 +39,7 @@
                 {{at-select content=licenses 
                             selection=queryOptions.licenseScheme 
                             action=(action (mut queryOptions.licenseScheme))}}
-                <button type="button" class="dig-glyph-button light-on-hover" {{action "doLicensePopup"}}>
-                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                 </button>
+                <div class="inlined light-on-hover" {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></div>
         </li>
         <li>
                 <label class="light-on-hover" for="instrumentalOnly">{{t 'queryOptions.instrumental'}}</label> 
@@ -80,4 +78,6 @@
     </div>
 </div>
 
-{{audio-player}}
+{{#if audioPlayer.nowPlaying}} 
+    {{audio-player media=audioPlayer.nowPlaying}}
+{{/if}}

@@ -15,6 +15,15 @@ module.exports = function(defaults) {
     var bootstrapFonts = new Funnel('bower_components/bootstrap/dist/fonts', {
                 destDir: 'fonts'
                 });
+
+    app.import({
+            development: 'bower_components/font-awesome/css/font-awesome.css',
+            production: 'bower_components/font-awesome/css/font-awesome.min.css'
+        });
+
+    var fontAwesomeFonts = new Funnel('bower_components/font-awesome/fonts', {
+                destDir: 'fonts'
+                });
                 
     /** soundManager **/
     
@@ -32,13 +41,5 @@ module.exports = function(defaults) {
             }
         });
 
-    /*
-    app.import('bower_components/soundmanager/demo/bar-ui/script/bar-ui.js');
-    app.import('bower_components/soundmanager/demo/bar-ui/css/bar-ui.css');
-    var smImages = new Funnel('bower_components/soundmanager/demo/bar-ui/image', {
-                destDir: 'image'
-                });
-    */
-    
-  return app.toTree( [ bootstrapFonts, /* smImages */] );
+    return app.toTree( [ bootstrapFonts, fontAwesomeFonts, /* smImages */] );
 };

@@ -9145,7 +9145,8 @@ enifed('ember-htmlbars/morphs/attr-morph', ['exports', 'ember-metal/core', 'dom-
   };
 
   proto.setContent = function EmberAttrMorph_setContent(value) {
-    this._deprecateEscapedStyle(value);
+  // VICTOR hack
+  //  this._deprecateEscapedStyle(value);
     this.HTMLBarsAttrMorph$setContent(value);
   };
 

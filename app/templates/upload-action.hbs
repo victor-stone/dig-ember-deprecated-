@@ -1,16 +1,16 @@
 <ul class="upload-action-buttons list-unstyled"> 
     <li>
-        <a href="#" {{action "play" item}}>
-        <span class="sprite4 play-sprite-big"> </span>
+        <a href="#" {{action "togglePlay" model}}>
+        <span class="sprite4 play-sprite-big {{if model.isPlaying 'is-playing'}}"> </span>
         </a>
     </li>
     <li>                
-        <a href="#" {{action "doDownloadPopup" item}}>
+        <a href="#" {{action "doDownloadPopup"}}>
         <span class="sprite4 download-sprite-big"> </span>
         </a>
     </li>
     <li>
-        <a href="#" {{action "dosharePopup" item}}>
+        <a href="#" {{action "dosharePopup"}}>
         <span class="sprite4 share-sprite-big"> </span>
         </a>
     </li>

@@ -56,6 +56,13 @@ export default Ember.Route.extend({
         }
     },
     
+    setupController: function(controller, model) {
+        if( model.hasOwnProperty('playlist') ) {
+            model.playlist.forEach( m => m.container = this.container );
+        } 
+        this._super.apply(this,arguments);
+    },
+    
     _activateWatcher: function() {
             Ember.debug('Activating: ' + this.toString());
         }.on('activate'),

@@ -126,9 +126,11 @@ export default Ember.Service.extend({
     
     setBatch: function(options) {
             this._killNotify = true;
-            var valueProp = this.get('userEditing') ? 'value' : 'default';
+            var valueProp = this.get('userEditing') ? 'value' : 'defaultValue';
             this._forEachUpdatingOption( function(opt) {
-                this.set(opt.name, options[opt.name] || opt.get(valueProp) );
+                var pValue = options[opt.name];
+                var oValue = opt.get(valueProp);
+                this.set(opt.name, pValue || oValue );
             });
             this._killNotify = false;
         },

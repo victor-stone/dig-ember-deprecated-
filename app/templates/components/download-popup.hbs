@@ -10,7 +10,7 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-5">
-                    <p>{{{t 'dlPopup.toUseThisMusic'}}}</p>
+                    <div class="text">{{{t 'dlPopup.toUseThisMusic'}}}</div>
                     <div>
                         <ul class="nav nav-tabs">
                         <li role="presentation" class="{{if plainSelected 'active'}}"><a href="#" {{action 'selectFormat' 'plain'}}>{{t 'dlPopup.plainText'}}</a></li>
@@ -24,11 +24,9 @@
             <div class="col-md-6 col-md-offset-1">
                     <a class="exp-button download-button" href="{{upload.streamUrl}}" download>
                         <span class="cloud-sprite"> </span>{{t 'dlPopup.downloadButtonText'}}</a>
-                    <span class="download-size pull-right light-color">{{downloadSize}}</span>
+                    <span class="media-middle light-color">{{downloadSize}}</span>
                     <a href="{{upload.licenseUrl}}"><img class="download-license" src="{{upload.licenseLogoUrl}}" /></a>
-                    <button type="button" class="dig-glyph-button" {{action "doLicensePopup"}}>
-                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                     </button>
+                    <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
                     <div class="download-text license-info">
                         {{#if upload.isOpen}} 
                             {{t 'dlPopup.freeToUse'}}

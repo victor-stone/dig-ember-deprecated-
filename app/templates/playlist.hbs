@@ -3,12 +3,12 @@
 <h2 class="playlist-title centered">{{title}}</h2>
 <div class="container play-list">
     <div class="row">
-        <div class="col-md-6 col-md-offset=3 col-md-sm-12">
+        <div class="col-md-8 col-md-offset=3 col-md-sm-12">
             <ul>
                 {{#each model.playlist as |item|}}
                     <li class="clearfix">
                         <a href="#" class="action pull-left" {{action "togglePlay" item}}>
-                            <span class="sprite3 play-sprite {{if item.isPlaying 'is-playing'}}"> </span>
+                            <span class="{{if item.isPlaying 'sprite3 play-sprite is-playing' 'sprite3 play-sprite'}}"> </span>
                         </a>
                         <a href="#" class="action pull-left" {{action "doDownloadPopup" item}}>
                              <span class="sprite3 download-sprite"> </span>
@@ -32,7 +32,7 @@
                 <li>{{link-to (t 'pagination.next') (query-params offset=nextValue)}}</li>
             {{/if}}            
             </ul>
-            <p>Showing {{model.playlist.length}} of {{model.total}}</p>
+            <div class="text">Showing {{model.playlist.length}} of {{commaize model.total}}</div>
         </div>
     </div>
 
