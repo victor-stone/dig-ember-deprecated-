@@ -5,17 +5,17 @@
     <div class="row">
         <div class="col-md-8 col-md-offset=3 col-md-sm-12">
             <ul>
-                {{#each model.playlist as |item|}}
+                {{#each model.playlist as |upload|}}
                     <li class="clearfix">
-                        <a href="#" class="action pull-left" {{action "togglePlay" item}}>
-                            <span class="{{if item.isPlaying 'sprite3 play-sprite is-playing' 'sprite3 play-sprite'}}"> </span>
+                        <a href="#" class="action pull-left" {{action "togglePlay" upload}}>
+                            <span class="sprite3 play-sprite {{if upload.media.isPlaying 'is-playing'}}"> </span>
                         </a>
-                        <a href="#" class="action pull-left" {{action "doDownloadPopup" item}}>
+                        <a href="#" class="action pull-left" {{action "doDownloadPopup" upload}}>
                              <span class="sprite3 download-sprite"> </span>
                         </a>
-                        <span class="song-title">{{#link-to 'uploads' item.artistLogin item.id}}{{item.name}}{{/link-to}}</span> 
+                        <span class="song-title">{{#link-to 'uploads' upload.artistLogin upload.id}}{{upload.name}}{{/link-to}}</span> 
                         {{#unless skipUserListing}}
-                            <span class="artist-name light-color">{{#link-to 'users' item.artistLogin}}{{item.artist}}{{/link-to}}</span>
+                            <span class="artist-name light-color">{{#link-to 'users' upload.artistLogin}}{{upload.artist}}{{/link-to}}</span>
                         {{/unless}}
                     </li>
                 {{/each}}

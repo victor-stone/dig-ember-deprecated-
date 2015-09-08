@@ -2,21 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   audioPlayer: Ember.inject.service(),
-
+  nowPlayingBinding: 'audioPlayer.nowPlaying',
+  
   actions: {
-    togglePlay: function() {
-      var media = this.get('media');
-      if (media) {
-        this.get('audioPlayer').play(media, null); // this.get('playlist'));
-      }
-    },
-
-    play: function() {
-      this.get('audioPlayer').play(this.get('media')); //, this.get('playlist'));
-      var media = this.get('media');
-      if (media) {
-        this.get('audioPlayer').play(media); //, this.get('playlist'));
-      }
+    togglePause: function() {
+        this.get('audioPlayer').togglePause();
     },
 
     stop: function() {

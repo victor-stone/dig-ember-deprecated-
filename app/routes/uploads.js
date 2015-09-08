@@ -1,8 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    setupController: function(controller, model) {
-        model.container = this.container;
+    audioPlayer: Ember.inject.service(),
+    setupController: function(controller,model) {
+        if( model.get('mediaUrl') === this.get('audioPlayer.nowPlaying.url') ) {
+            model.set('media', this.get('audioPlayer.nowPlaying') );
+        }
         this._super.apply(this,arguments);
     },
 });

@@ -37,8 +37,17 @@ export var Upload = UploadBasic.extend({
         }
     }.property('files'),
 
-    streamUrl: function() {
+    mediaUrl: function() {
         return this.get('fplay_url') || this.get('fileInfo').download_url;
+    }.property('files'),
+    
+    mediaTags: function() {
+        return {
+            name: this.get('name'),
+            artist: this.get('artist'),
+            artistLogin: this.get('artistLogin'),
+            id: this.get('id'),
+        };
     }.property('files'),
     
 });
@@ -63,6 +72,7 @@ var Detail = Upload.extend( {
     },
     
     featuringBinding: 'upload_extra.featuring',
+    avatarUrlBinding: 'user_avatar_url',
     
     // License stuff 
     

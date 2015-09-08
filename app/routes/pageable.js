@@ -2,7 +2,7 @@ import Ember from 'ember';
 import TagUtils from '../lib/tags';
 
 export default Ember.Route.extend({
-    
+    audioPlayer: Ember.inject.service(),
     queryOptions: Ember.inject.service(),
     queryParams: {
         offset: { refreshModel: true },
@@ -53,16 +53,25 @@ export default Ember.Route.extend({
         didTransition: function() {
             Ember.debug('Did transition to: ' + this.toString() );
             return true;
+        },
+        togglePlay: function() {
+            this.get('audioPlayer').set('playlist',this.currentModel.playlist);
+            return true;
         }
     },
     
-    setupController: function(controller, model) {
+    setupController: function(controller,model) {
         if( model.hasOwnProperty('playlist') ) {
-            model.playlist.forEach( m => m.container = this.container );
-        } 
+            var nowPlaying = this.get('audioPlayer.nowPlaying');
+            if( nowPlaying ) {
+                var nowPlayingUpload = model.playlist.findBy('mediaUrl',nowPlaying.url);
+                if( nowPlayingUpload ) {
+                    nowPlayingUpload.set('media',nowPlaying);
+                }
+            }
+        }
         this._super.apply(this,arguments);
     },
-    
     _activateWatcher: function() {
             Ember.debug('Activating: ' + this.toString());
         }.on('activate'),

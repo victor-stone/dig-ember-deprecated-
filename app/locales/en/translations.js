@@ -126,5 +126,11 @@ export default {
         example: 'Example',
         linkToLic: 'Full CC license',
     },
+    nowPlaying: {
+        title: 'Now Playing',
+    },
+    audioPlayer: {
+        playlist: 'playlist',
+    },
     
 };

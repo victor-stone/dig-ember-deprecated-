@@ -16,6 +16,7 @@ Router.map(function() {
   this.route('games');
   this.route('morelike', { path: '/morelike/:upload_id' } );
   this.route('licenses');
+  this.route('nowplaying');
 });
 
 export default Router;

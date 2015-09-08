@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   media: null,
-  classNames: ['playback-scrubber','playback-scrubber-dim','pull-left'],
+  classNames: ['playback-scrubber','pull-left'],
 
   click: function() {
     return false;

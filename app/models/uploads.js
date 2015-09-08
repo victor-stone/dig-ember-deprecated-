@@ -27,11 +27,16 @@ export default Store.extend({
             trackbacks: adapter.query(trackbacksQ)
         };
         
+        var upload = null;
+        var me = this;
         return Ember.RSVP.hash(queries)
             .then( function(record) {
-                var upload        = models(record.upload, 'detail');
+                upload            = models(record.upload, 'detail');
                 upload.remixes    = models(record.remixes, 'remix') || [ ];
                 upload.trackbacks = models(record.trackbacks, 'trackback') || [ ];                
+                return me.findUser(record.upload.user_name);
+            }).then( function(user) {
+                upload.profile = user;
                 return upload;
             });
     },

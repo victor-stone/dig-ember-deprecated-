@@ -14,47 +14,53 @@ function computedPercentage(partial, total) {
 }
 
 var Media = Ember.Object.extend(Ember.Evented, {
-  audioPlayer: Ember.inject.service(),
 
   isPlaying:  false,
-  artist:     '',
-  album:      '',
-  title:      '',
-  site:       null,
-  release:    null,
-  imageUrl:   '',
+  isPaused: false,
   position: -1,
   duration: -1,
   bytesLoaded: -1,
   bytesTotal: -1,
+  positionPercentage: computedPercentage('position', 'duration'),
+  loadedPercentage: computedPercentage('bytesLoaded', 'bytesTotal'),
     
   sound: function() {
-    var streamUrl = this.get('url');
-    if( !streamUrl ) {
+    var url = this.get('url');
+    if( !url ) {
         return;
     }
     var me = this;
-    var playerService = this.get('audioPlayer');
     var sound = soundManager.createSound({
-        id:  streamUrl,
-        url: streamUrl,
+        id:  url,
+        url: url,
         onplay: function() {
             Ember.run(function() {
-                playerService.set('nowPlaying', me);
                 me.set('isPlaying', true);
-                me.trigger('onPlay');
+                me.trigger('onPlay',me);
             });
         },
         onstop: function() {
             Ember.run(function() {
                 me.set('isPlaying', false);
-                me.trigger('onStop');
+                me.trigger('onStop',me);
+            });
+        },
+        onpause: function() {
+            Ember.run(function() {
+                me.set('isPaused', true);
+                me.trigger('onPause',me);
+            });
+        },
+        onresume: function() {
+            Ember.run(function() {
+                me.set('isPaused', false);
+                me.trigger('onResume',me);
             });
         },
         onfinish: function() {
             Ember.run(function() {
                 me.set('isPlaying', false);
-                me.trigger('onFinish');
+                me.trigger('onFinish',me);
             });
         },
         whileloading: function() {
@@ -92,6 +98,13 @@ var Media = Ember.Object.extend(Ember.Evented, {
     }
   },
 
+  togglePause: function() {
+    var sound = this.get('sound');
+    if( sound ) {
+        sound.togglePause();
+    }
+  },
+  
   setPosition: function(position) {
     return this.get('sound').setPosition(position);
   },
@@ -107,64 +120,111 @@ var Media = Ember.Object.extend(Ember.Evented, {
     } else {
       this.play();
     }
-  }
+  },
+  
 });
 
 export default Ember.Service.extend({
-  nowPlaying:   null,
-  position:    Ember.computed.alias('nowPlaying.position'),
-  duration:    Ember.computed.alias('nowPlaying.position'),
-  bytesLoaded: Ember.computed.alias('nowPlaying.position'),
-  bytesTotal:  Ember.computed.alias('nowPlaying.position'),
-  
-  positionPercentage: computedPercentage('position', 'duration'),
-  loadedPercentage: computedPercentage('bytesLoaded', 'bytesTotal'),
+    nowPlaying: null,
+    playlist: null,
 
-  play: function(media, playlist) {
-    if (media) {
-        media.togglePlay();
+    play: function(playable) {
+        this._delegate(playable,'play');
+    },
+
+    stop: function(playable) {
+        this._delegate(playable,'stop');
+    },
+        
+    togglePlay: function(playable) {
+        this._delegate(playable,'togglePlay');
+    },
+
+    togglePause: function(playable) {
+        this._delegate(playable,'togglePause');
+    },
+
+    playNext: function() {
+        this._advance(1);
+    },
+
+    playPrevious: function() {
+        this._advance(-1);
+    },
+
+    hasNext: function() {
+        var index = this.get('_nowPlayingIndex');
+        return index > -1 && index < this.playlist.length - 1;
+    }.property('_nowPlayingIndex'),
+    
+    hasPrev: function() {
+        return this.get('_nowPlayingIndex') > 0;
+    }.property('_nowPlayingIndex'),
+    
+    _delegate: function(playable,method) {
+        var media = this._media(playable) || this.nowPlaying;
+        if( media ) {
+            media[method]();
+        }
+    },
+    
+    _advance: function(dir) {
+        if( this.playlist && this.nowPlaying ) {
+            var index =  this.get('_nowPlayingIndex') + (1*dir);
+            if( index >= 0 && index < this.playlist.length) {
+                this.play( this.playlist[index] );
+            }
+        }
+    },
+    
+    _nowPlayingIndex: function() {
+        var index = -1;
+        if( this.playlist && this.nowPlaying ) {
+            index = this.playlist.indexOf( this.playlist.findBy('mediaUrl',this.nowPlaying.get('url')) );
+        }
+        return index;
+    }.property('playlist','nowPlaying'),
+    
+    _onPlay: function(media) {
+        var nowPlaying = this.get('nowPlaying');
+        if( nowPlaying && nowPlaying !== media ) {
+            nowPlaying.stop();
+        }
+        this.set('nowPlaying',media);
+        media.one('onFinish',this, this._onFinish);
+    },
+    
+    _onFinish: function(media) {
+        media.stop();
+        this.playNext();
+    },
+
+    _mediaCache: function() {
+        return {};
+    }.property(),
+
+    _media: function(playable) {
+        if( !playable ) {
+            return;
+        }
+        if( playable instanceof Media ) {
+            return playable;
+        }
+        var media = playable.get('media');
+        if( !media ) {
+            Ember.assert('Object '+playable+' is not playable without a "mediaUrl" property', playable.get('mediaUrl'));
+            var url = playable.get('mediaUrl');
+            var cache = this.get('_mediaCache');
+            if (cache[url]) {
+                media = cache[url];
+            } else {    
+                var args = Ember.merge( { audioPlayer: this, url: url },  playable.get('mediaTags') );
+                media = Media.create(args);
+                media.on('onPlay',this,this._onPlay);
+                cache[url] = media;
+            }
+            playable.set('media',media);
+        }
+        return media;
     }
-    return media;
-  },
-
-  playNext: function() {
-  },
-
-  playPrevious: function() {
-  },
-
-  didFinish: function() {
-  },
-
-  _mediaWatcher: function() {
-    var media = this.get('nowPlaying');
-    if( this._prevMedia && this._prevMedia !== media ) {
-          this._prevMedia.off('onFinish', this, this.didFinish);
-          this._prevMedia.stop();
-    }
-    if (media) {
-      media.on('onFinish', this, this.didFinish);
-      this._prevMedia = media;
-    }
-  }.observes('nowPlaying').on('init'),
-
-  _mediaCache: function() {
-    return {};
-  }.property(),
-  
-  media: function(args) {
-    var media;
-    var url = args.track.get( args.urlBinding ) ;
-    var cache = this.get('_mediaCache');
-    [ 'artist', 'title', 'id', 'url'].forEach( k => args[k+'Binding'] = 'track.'+ args[k+'Binding'] );
-    if (cache[url]) {
-        media = cache[url];
-        media.setProperties( args );
-    } else {    
-        args.container = this.get('container');
-        media = Media.create(args);
-        cache[url] = media;
-    }
-    return media;
-  }
 });
