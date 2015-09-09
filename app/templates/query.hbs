@@ -1,1 +1,15 @@
-{{partial "playlist"}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 md-offset-2">
+            <h4>{{t 'tags.categories.genre'}}</h4>
+            {{selectable-tags target=selectedTags tags=model.genre}}
+        </div>
+    </div>
+    <div class="row">
+        Tags: {{#each selectedTags as |tag|}} {{tag.name}}, {{/each}}
+    </div>
+</div>
+
+
+{{outlet}}

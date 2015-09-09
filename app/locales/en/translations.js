@@ -3,6 +3,7 @@ export default {
             instrumental: 'instrumentals only',
             limit: 'results',
             recent: 'recent',
+            deep: 'dig deep',
             licenses: {
                 all: 'All licenses',
                 free: 'Free for commercial use',
@@ -132,5 +133,12 @@ export default {
     audioPlayer: {
         playlist: 'playlist',
     },
+    tags: {
+        categories: {
+            instr: 'Instruments',
+            genre: 'Genres',
+            mood: 'Mood'
+            },
+    }
     
 };

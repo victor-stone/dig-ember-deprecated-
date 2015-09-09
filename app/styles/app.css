@@ -157,8 +157,8 @@ nav select {
     background-position: -495px 0px;
 }
 
-.ccm-sprite-big {
-    background-position: -592px 0px;
+.upload-page .extras li {
+    padding-bottom: 20px;
 }
 
 div.tags {
@@ -443,3 +443,9 @@ a.download-button {
     top: 5px;
 }
 
+/* query page */
+
+.tags-list {
+    height: 120px;
+    overflow: auto;
+}

@@ -11,8 +11,12 @@
         <div class="col-md-8 col-sm-12">
             <div class="row">
                 <div class="col-md-6 col-sm-6">
-                    <img src="{{model.profile.avatarUrl}}" />
-                    <div class="text">{{link-to model.artist 'users' model.artistLogin}}</div>
+                    
+                    {{#link-to model.artist 'users' model.artistLogin}}
+                                            <img src="{{model.profile.avatarUrl}}" />
+                                            {{model.artist}}
+                    {{/link-to}}
+
                     {{#if model.featuring}}
                         <span class="light-color">{{t 'upload.featuring'}}</span> {{model.featuring}}
                     {{/if}}
@@ -24,10 +28,10 @@
                             <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
                         </li>
                         <li>
-                            {{link-to (chop (t 'upload.moreBy' artist=model.artist) 17) 'users' model.artistLogin class="exp-button utility-button"}} 
+                            {{link-to (t 'upload.moreLikeThis') 'morelike' model.id  class="exp-button utility-button"}}
                         </li>
                         <li>
-                            {{link-to (t 'upload.moreLikeThis') 'morelike' model.id  class="exp-button utility-button"}}
+                            <a class="exp-button utility-button" href="{{model.file_page_url}}"><i class="fa fa-external-link"></i> @ccMixter</a>
                         </li>
                     </ul>
                 </div>
@@ -68,7 +72,7 @@
             <h3 class="centered">{{t 'upload.remixes'}}</h3>
             <ul class="remix-list">
             {{#each model.remixes as |remix|}}
-                <li class="list-group-item"><a target="_blank" href="{{remix.url}}">{{remix.name}}</a> <span class="light-color">{{remix.artist}}</span></li>
+                <li class="list-group-item"><i class="fa fa-external-link"></i> <a target="_blank" href="{{remix.url}}">{{remix.name}}</a> <span class="light-color">{{remix.artist}}</span></li>
             {{else}}
                 <li><span class="light-color">{{t 'upload.noRemixes'}}</span></li>
             {{/each}}

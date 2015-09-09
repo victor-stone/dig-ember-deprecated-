@@ -1,8 +1,11 @@
-/* globals Ember */
-import PageableController from './pageable';
+import Ember from 'ember';
 
-export default PageableController.extend({
+export default Ember.Controller.extend({
 
+        selectedTags: [ ],
+    
+
+/*
     queryParams: [ 'tags', 'sinced', 'lic', 'title' ],
 
     applyQueryOptions: function() {
@@ -14,5 +17,5 @@ export default PageableController.extend({
         this.setProperties( this.get('queryOptions.queryParams') );
         this._super();
     },                  
-
+*/
 });

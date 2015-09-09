@@ -1,13 +1,8 @@
-import PageableRoute from './pageable';
+import Ember from 'ember';
 
-export default PageableRoute.extend({
-
-  queryParams: {
-  
-    tags:   { refreshModel: true },
-    sinced: { refreshModel: true },
-    title:  { refreshModel: true },
-    lic:    { refreshModel: true },
-  },
+export default Ember.Route.extend({
+    model: function() {  
+        return this.store.query( { categories: [ 'genre', 'instr', 'mood' ], details: true } );
+    },
 
 });

@@ -102,6 +102,11 @@ var Detail = Upload.extend( {
         
 });
 
+var Tag = Model.extend( {
+    nameBinding: 'tags_tag',
+    countBinding: 'tags_count'
+});
+
 function _wrap(param,model) {
     if( Ember.isArray(param) ) {
         return param.map( o => model.create(o) );
@@ -114,7 +119,8 @@ var models = {
     trackback: Trackback,
     detail: Detail,
     upload: Upload,
-    user: User
+    user: User,
+    tag: Tag
 };
 
 export default function modelWrap(param,model) {

@@ -17,5 +17,7 @@ export default {
         
         var STORE_TAGS = 'store:tags';
         app.register(STORE_TAGS, Tags);
+        app.inject('route:query','store', STORE_TAGS);
+        app.inject('controller:query','store', STORE_TAGS);
     }
 };
