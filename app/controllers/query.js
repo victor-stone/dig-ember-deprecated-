@@ -1,21 +1,34 @@
-import Ember from 'ember';
+/* globals Ember */
+import TagUtils from '../lib/tags';
+import PageableController from './pageable';
 
-export default Ember.Controller.extend({
-
+export default PageableController.extend({
+        queryOptions: Ember.inject.service(),
+        
         selectedTags: [ ],
-    
-
-/*
-    queryParams: [ 'tags', 'sinced', 'lic', 'title' ],
-
-    applyQueryOptions: function() {
-        Ember.debug('controller update signalled on route: ',this.get('target').currentRouteName);
-        Ember.run.once(this,'onOptionsChanged');
-    }.observes('queryOptions.queryParams'),
-      
-    onOptionsChanged: function() {        
-        this.setProperties( this.get('queryOptions.queryParams') );
-        this._super();
-    },                  
-*/
+        catNames: ['genre', 'instr', 'mood'],
+        categories: null,
+        
+        setupCategories: function() {
+            var tagStore = this.container.lookup('store:tags');
+            var me = this;
+            tagStore.query( { categories: this.catNames, details: true } )
+                .then( tags => me.set('categories',tags) );
+        }.on('init'),
+        
+        actions: {
+            remove: function(tag) {
+                tag.set('isSelected',false);
+                this.selectedTags.removeObject(tag);
+            },
+            clear: function() {
+                this.selectedTags.forEach( t => t.set('isSelected',false) );
+                this.set('selectedTags',[ ]);
+            }
+        },
+        
+        _tagWatcher: function() {
+            var tags = TagUtils.create( { source: this.selectedTags.mapBy( 'name' ) } );
+            this.set('queryOptions.extraTags', tags);
+        }.observes( 'selectedTags.[]'),
 });

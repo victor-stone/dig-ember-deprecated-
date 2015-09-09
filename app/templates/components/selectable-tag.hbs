@@ -1,1 +1,4 @@
- <label>{{input type="checkbox" checked=isSelected}} {{tag.name}}</label>
+<a href='#' {{action 'toggle' tag}}>
+    <i class="fa {{if tag.isSelected 'fa-check-square-o' 'fa-square-o'}}"></i> 
+    {{tag.name}} <span class="light-color">({{tag.count}})</span>
+</a>

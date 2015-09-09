@@ -1,8 +1,23 @@
-import Ember from 'ember';
+/* globals Ember */
+import PageableRoute from './pageable';
 
-export default Ember.Route.extend({
-    model: function() {  
-        return this.store.query( { categories: [ 'genre', 'instr', 'mood' ], details: true } );
+
+export default PageableRoute.extend({
+
+    onOptionsChanged: function() {
+//        this.get('queryOptions').updateOptions();
+        this.refresh();
     },
 
+    afterModel: function() {
+        var controller = this.controllerFor('query');
+        controller.set('loading',false);        
+    },
+    
+    actions: {
+        loading: function() {
+            var controller = this.controllerFor('query');
+            controller.set('loading',true);
+        }
+    }
 });

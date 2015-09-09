@@ -66,6 +66,10 @@ var optionsMeta = [
                               type: QUERYOPTION_TYPE_ENUM,
                               defaultValue: '-',
                               queryParam: 'tags' }),
+        QueryOption.create( { name: 'extraTags',                            
+                              type: QUERYOPTION_TYPE_ENUM,
+                              defaultValue: '-',
+                              queryParam: 'tags' }),
         QueryOption.create( { name: 'instrumentalOnly',
                               type: QUERYOPTION_TYPE_BOOLEAN,
                               defaultValue: false,
@@ -78,52 +82,11 @@ var optionsMeta = [
                               model: '3 months ago' } ),
     ]; 
     
-export default Ember.Service.extend({
-    _optionsMeta: { },
-        
-    _tags: TagUtils.create(),
+export default Ember.Service.extend(Ember.Evented, {
+    queryParams: { },
 
-    init: function() {
-        this._super.apply(this,arguments);
-
-        var me = this;
-        function optionWatcher() {
-            me.updateOptions();
-        }
-        
-        optionsMeta.forEach( function(optMeta) {
-            var name = optMeta.get('name');
-            me._optionsMeta[name] = optMeta;
-            me.set(name, Ember.computed.alias('_optionsMeta.'+name+'.value'));
-            if( optMeta.updatesParams ) {
-                optMeta.addObserver('value',optionWatcher);
-            }
-        });
-    },
-    
-    queryParams: { },     
-
-    meta: Ember.computed.alias('_optionsMeta'),
-
-    updateOptions: function() {
-            Ember.debug('updating query options');
-            var qparams = { };
-            this._forEachUpdatingOption( function(opt) {
-                opt.convertToQueryParam(qparams,this);
-            });
-            if( this._killNotify ) {
-                for( var k in qparams ) {
-                    this.queryParams[k] = qparams[k];
-                }
-            } else {
-                this.set('queryParams', qparams );
-            }
-        },
-        
-    _killNotify: false,
-    
     userEditing: false,
-    
+
     setBatch: function(options) {
             this._killNotify = true;
             var valueProp = this.get('userEditing') ? 'value' : 'defaultValue';
@@ -135,6 +98,37 @@ export default Ember.Service.extend({
             this._killNotify = false;
         },
 
+    
+    _optionsMeta: { },
+        
+    _tags: TagUtils.create(),
+
+    _setupOptions: function() {    
+        var me = this;
+        optionsMeta.forEach( function(optMeta) {
+            var name = optMeta.get('name');
+            me._optionsMeta[name] = optMeta;
+            me.set(name, Ember.computed.alias('_optionsMeta.'+name+'.value'));
+            if( optMeta.updatesParams ) {
+                optMeta.addObserver('value',me._optionChanged.bind(me));
+            }
+        });
+    }.on('init'),
+    
+    _optionChanged: function() {
+        this.queryParams = { };
+        this._forEachUpdatingOption( function(opt) {
+            opt.convertToQueryParam(this.queryParams,this);
+        });
+        if( !this._killNotify ) {
+            this.trigger('optionsChanged');
+        }
+    },
+
+    meta: Ember.computed.alias('_optionsMeta'),
+    
+    _killNotify: false,
+        
     _forEachUpdatingOption: function( callback ) {            
             var meta = this._optionsMeta;
             for( var k in meta ) {

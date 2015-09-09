@@ -10,18 +10,19 @@ export default Ember.Route.extend({
     routeQueryOptions: undefined,
     routeQueryParams: undefined,
 
-    isOptionsChangeRefresh: false,
+    _setupWatcher: function() {
+        this.get('queryOptions').on('optionsChanged',this._optionsWatcher.bind(this));
+    }.on('init'),
     
     _optionsWatcher: function() {
-        Ember.debug('Signalled option change in curr route: ' + this.router.currentRouteName + ' while in ' + this.toString());
-        if( (this.router.currentRouteName === this.routeName) && !this.isOptionsChangeRefresh ) {
+        // This is broken for sub-routes
+        if( this.router.currentRouteName === this.routeName ) {
             Ember.run.once( this, 'onOptionsChanged' );
         }
-    }.observes('queryOptions.queryParams'),
+    },
     
     onOptionsChanged: function() {
         Ember.debug('Calling option refresh in route ' + this.routeName);
-        this.isOptionsChangeRefresh = true;
         this.refresh();
     },
 
@@ -72,10 +73,7 @@ export default Ember.Route.extend({
         }
         this._super.apply(this,arguments);
     },
-    _activateWatcher: function() {
-            Ember.debug('Activating: ' + this.toString());
-        }.on('activate'),
-        
+
     sysDefaultQueryArgs: function() {
         return {    tags: '', 
                     dataview: 'links_by',
@@ -86,10 +84,9 @@ export default Ember.Route.extend({
                     f: 'json',
                     _cache_bust: (new Date()).getTime(),                     
                 };
-        }.property(),
+    }.property(),
     
-    translateDynamicParamsToQuery: function( /* params */ ) {
-        },
+    translateDynamicParamsToQuery: function( /* params */ ) { },
 
     model: function(params,transition) {  
         return this._model(params,transition);
@@ -98,8 +95,7 @@ export default Ember.Route.extend({
     // _super is broken for async calls (was fixed, borked again, etc.)
     // use this call from .then() functions in derivations
     _model: function(params,transition) {  
-        Ember.debug('Getting model for ' + this.toString() + ' isOptionsChangeRefresh('+this.isOptionsChangeRefresh+')');
-        
+
         // app defaults
         var sysDefaults = this.get('sysDefaultQueryArgs');
                         
@@ -107,7 +103,7 @@ export default Ember.Route.extend({
         var routeParams = this.get('routeQueryParams');
 
         // query settings from UI (limit, genre, etc) 
-        if( !this.isOptionsChangeRefresh && this.get('routeQueryOptions')) {
+        if( this.get('routeQueryOptions')) {
             // this route forces options on the user. update the UI
             this.get('queryOptions').setBatch( this.get('routeQueryOptions') );
         }
@@ -120,8 +116,6 @@ export default Ember.Route.extend({
         var urlParams = transition.queryParams;
 
         var qparams = this.safeMergeParameters(sysDefaults,routeParams,userOptions,dynParams,urlParams);
-        
-        this.isOptionsChangeRefresh = false;
         
         var store = this.store;
         

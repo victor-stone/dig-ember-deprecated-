@@ -139,6 +139,7 @@ export default {
             genre: 'Genres',
             mood: 'Mood'
             },
+        clear: 'clear',
     }
     
 };

@@ -1,13 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  change: function() {
-    var tag = this.get('tag');
-    tag.toggleProperty('isSelected');
-    if( tag.get('isSelected') ) {
-        this.get('target').pushObject(tag);
-    } else {
-        this.get('target').removeObject(tag);
+    actions: {
+        toggle: function() {
+            var tag = this.get('tag');
+            tag.toggleProperty('isSelected');
+            if( tag.get('isSelected') ) {
+               this.get('target').pushObject(tag);
+            } else {
+                this.get('target').removeObject(tag);
+            }
+        }
     }
-  }
 });

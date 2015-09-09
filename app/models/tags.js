@@ -29,7 +29,13 @@ export default Store.extend({
     query: function(params) {
         var adapter = this.container.lookup('adapter:query');
         if( params.category ) {
-            var q = {  f: 'json', category: params.category };
+            var q = {   f: 'json', 
+                        category: params.category,
+                        pair: 'remix',
+                        sort: 'name',
+                        ord: 'ASC',
+                        min: 10
+                     };
             if( params.details ) {
                 q.dataview = 'tags';
                 return adapter.query(q).then( models('tag') );

@@ -6,13 +6,9 @@ export default Ember.Controller.extend({
     queryOptions: Ember.inject.service(),
     offset: 0,
     
-   applyQueryOptions: function() {
-        Ember.debug('Options changed controller: ' + this.toString() );
-        var m = ':' + this.target.currentRouteName + ':';
-        if( this.toString().match(m) !== null ) {
-            Ember.run.once(this,'onOptionsChanged');
-        }
-    }.observes('queryOptions.queryParams'),
+    _setUpWatcher: function() {
+        this.get('queryOptions').on('optionChanged', this.onOptionsChanged.bind(this));
+    },
       
     onOptionsChanged: function() {
         Ember.debug('Setting offset in ' + this.toString());
