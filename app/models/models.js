@@ -55,6 +55,17 @@ export var Upload = UploadBasic.extend({
 var User = Model.extend( {
     nameBinding: 'user_real_name',
     avatarUrlBinding: 'user_avatar_url',
+
+    page: function() {
+        return this.get('artist_page_url') + '/profile';
+    }.property('artist_page_url'),
+    
+    homepage: function() {
+        if( this.get('user_homepage') === this.get('artist_page_url') ) {
+            return null;
+        }
+        return this.get('user_homepage');
+    }.property('user_homepage','artist_page_url'),
 });
 
 var Detail = Upload.extend( {
@@ -73,6 +84,7 @@ var Detail = Upload.extend( {
     
     featuringBinding: 'upload_extra.featuring',
     avatarUrlBinding: 'user_avatar_url',
+    pageBinding: 'file_page_url',
     
     // License stuff 
     
@@ -96,10 +108,17 @@ var Detail = Upload.extend( {
     }.property(),
     
     purchaseLicenseUrl: function() {
-        var baseUrl = 'http://tunetrack.net/license/';
-        return baseUrl + this.get('file_page_url').replace('http://', '');
-    }.property('file_page_url'),
-        
+        if( this.get('isCCPlus') ) {
+            var baseUrl = 'http://tunetrack.net/license/';
+            return baseUrl + this.get('file_page_url').replace('http://', '');
+        }
+    }.property('file_page_url','isCCPlus'),
+
+    purchaseLogoUrl: function() {
+        if( this.get('isCCPlus') ) {
+            return LicenseUtils.logoUrlFormAbbr( 'ccplus' );
+        }
+    }.property('isCCPlus'),
 });
 
 var Tag = Model.extend( {

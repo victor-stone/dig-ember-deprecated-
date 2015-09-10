@@ -49,12 +49,13 @@ export default Ember.Controller.extend({
             this.transitionToRoute('dig');
         },
         toggleOptions: function() {
-            this.toggleProperty('optionsOpen');
-        },
-        togglePlay: function(item) {
-            if (item) {
-                item.get('media').togglePlay();
+            if( this.get('optionsOpen') ) {
+                Ember.$('#query-opts').slideUp(400);
             }
+            else {
+                Ember.$('#query-opts').slideDown(600);
+            }
+            this.toggleProperty('optionsOpen');
         },
     },
 });

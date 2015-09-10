@@ -21,6 +21,18 @@ export default Ember.Route.extend({
         }
     },
     
+    beforeModel: function() {
+        Ember.debug('set loading ON');
+        var controller = this.controllerFor('application');
+        controller.set('loading',true);        
+    },
+    
+    afterModel: function() {
+        Ember.debug('set loading OFF');
+        var controller = this.controllerFor('application');
+        controller.set('loading',false);        
+    },
+        
     onOptionsChanged: function() {
         Ember.debug('Calling option refresh in route ' + this.routeName);
         this.refresh();
@@ -58,6 +70,9 @@ export default Ember.Route.extend({
         togglePlay: function() {
             this.get('audioPlayer').set('playlist',this.currentModel.playlist);
             return true;
+        },
+        loading: function() {
+            // kill this even here
         }
     },
     

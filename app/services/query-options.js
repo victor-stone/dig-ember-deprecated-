@@ -11,6 +11,7 @@ var QueryOption = Ember.Object.extend({
     model: undefined,
     defaultValue: '',
     updatesParams: true,
+    honorUserEdit: true,
     queryParam: '',
     type: '',
 
@@ -69,6 +70,7 @@ var optionsMeta = [
         QueryOption.create( { name: 'extraTags',                            
                               type: QUERYOPTION_TYPE_ENUM,
                               defaultValue: '-',
+                              honorUserEdit: false,
                               queryParam: 'tags' }),
         QueryOption.create( { name: 'instrumentalOnly',
                               type: QUERYOPTION_TYPE_BOOLEAN,
@@ -92,7 +94,7 @@ export default Ember.Service.extend(Ember.Evented, {
             var valueProp = this.get('userEditing') ? 'value' : 'defaultValue';
             this._forEachUpdatingOption( function(opt) {
                 var pValue = options[opt.name];
-                var oValue = opt.get(valueProp);
+                var oValue = opt.get( opt.honorUserEdit ? valueProp : 'defaultValue');
                 this.set(opt.name, pValue || oValue );
             });
             this._killNotify = false;

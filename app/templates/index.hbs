@@ -1,1 +1,75 @@
-<img src="dig-images/home-bg.jpg" />
+<div class="dig-img container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-12">
+        <h1>{{{t 'homepage.mainHeading' break='<br class="hidden-xs" />'}}}</h1>
+        <h3>{{{t 'homepage.subHeading' break='<br class="hidden-xs" />'}}}</h3>
+    </div>
+  </div>
+</div>
+    <h1 class="centered">{{t 'homepage.howItWorks'}}</h1>
+ <a name='howitworks'></a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="how-it-works">
+                <div class="home-glyph musicians-glyph"></div>
+                <i class="fa fa-chevron-right"></i>
+                <div class="text">{{t 'homepage.musicians'}}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="how-it-works">
+                <div class="home-glyph findMusic-glyph">
+                    <div class="urHere">
+                        {{{t 'homepage.urHere'}}}
+                    </div>
+                </div>
+                <i class="fa fa-chevron-right"></i>
+                <div class="text">{{t 'homepage.findMusic'}}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="how-it-works">
+                <div class="home-glyph project-glyph"></div>
+                <div class="text">{{t 'homepage.project'}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="so-links">
+                <h1>{{t 'homepage.instrHead'}}</h1>
+                <h3>{{t 'homepage.instrSub'}}</h3>
+                {{link-to (t 'homepage.more') 'video' class="btn btn-default"}}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="so-links">
+                <h1>{{t 'homepage.freeHead'}}</h1>
+                <h3>{{t 'homepage.freeSub'}}</h3>
+                {{link-to (t 'homepage.more') 'free' class="btn btn-default"}}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="so-links">
+                <h1>{{t 'homepage.gamesHead'}}</h1>
+                <h3>{{t 'homepage.gamesSub'}}</h3>
+                {{link-to (t 'homepage.more') 'games' class="btn btn-default"}}
+            </div>
+        </div>
+    </div>    
+    <div class="row partner-well">
+        <div class="col-md-3">
+            <a href="http://ccmixter.org"><img src="../dig-images/ccmixter-h.jpg"></a>
+        </div>
+        <div class="col-md-3">
+            <a href="http://tunetrack.net/artistech/"><img src="../dig-images/artistech-h.jpg"></a>
+        </div>
+        <div class="col-md-3">
+            <a href="http://tunetrack.net"><img src="../dig-images/tunetrack-h.jpg"></a>
+        </div>
+        <div class="col-md-3">
+            <a href="http://creativecommons.org"><img src="../dig-images/cc-h.jpg"></a>
+        </div>
+    </div>
+</div>

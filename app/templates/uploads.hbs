@@ -12,26 +12,32 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     
-                    {{#link-to model.artist 'users' model.artistLogin}}
-                                            <img src="{{model.profile.avatarUrl}}" />
+                    {{#link-to 'users' model.artistLogin}}
+                                            <img class="img-circle" src="{{model.profile.avatarUrl}}" />
                                             {{model.artist}}
                     {{/link-to}}
 
                     {{#if model.featuring}}
-                        <span class="light-color">{{t 'upload.featuring'}}</span> {{model.featuring}}
+                        <div class="text"><span class="light-color">{{t 'upload.featuring'}}</span> {{model.featuring}}</div>
                     {{/if}}
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <ul class="extras">
-                        <li>
+                        <li class="license-badge">
                             <a href="{{model.license_url}}"><img class="download-license" src="{{model.licenseLogoUrl}}" /></a>    
                             <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
                         </li>
+                        {{#if model.purchaseLogoUrl}}
+                            <li class="license-badge">
+                                <a href="{{model.purchaseLicenseUrl}}"><img src="{{model.purchaseLogoUrl}}" /></a>
+                            <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
+                            </li>
+                        {{/if}}
                         <li>
                             {{link-to (t 'upload.moreLikeThis') 'morelike' model.id  class="exp-button utility-button"}}
                         </li>
                         <li>
-                            <a class="exp-button utility-button" href="{{model.file_page_url}}"><i class="fa fa-external-link"></i> @ccMixter</a>
+                            <a class="exp-button utility-button" href="{{model.page}}"><i class="fa fa-external-link"></i> @ccMixter</a>
                         </li>
                     </ul>
                 </div>

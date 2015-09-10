@@ -67,6 +67,7 @@ var TagUtils = Ember.Object.extend({
             var invalid = this.get('invalid');
             var arr = this.get('_tagsArray');
             function safeAddTag(tag) {
+                tag += ''; // stringize
                 if( tag && 
                     tag.match(ignore) === null &&
                     tag.match(invalid) === null && 

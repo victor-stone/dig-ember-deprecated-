@@ -21,28 +21,40 @@
                     </div>
                 </div>
                                 
-            <div class="col-md-6 col-md-offset-1">
-                    <a class="exp-button download-button" href="{{upload.streamUrl}}" download>
-                        <span class="cloud-sprite"> </span>{{t 'dlPopup.downloadButtonText'}}</a>
-                    <span class="media-middle light-color">{{downloadSize}}</span>
-                    <a href="{{upload.licenseUrl}}"><img class="download-license" src="{{upload.licenseLogoUrl}}" /></a>
-                    <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
-                    <div class="download-text license-info">
-                        {{#if upload.isOpen}} 
-                            {{t 'dlPopup.freeToUse'}}
-                        {{else}}
-                            {{t 'dlPopup.forNonComm'}}
+                <div class="col-md-6 col-md-offset-1">
+                    <ul class="option-list">
+                        <li>
+                            <a class="exp-button download-button" href="{{upload.streamUrl}}" download>
+                                <span class="cloud-sprite"> </span>{{t 'dlPopup.downloadButtonText'}}</a>
+                            <span class="media-middle light-color">{{downloadSize}}</span>
+                        </li>
+                        <li class="license-badge">
+                            <a href="{{upload.licenseUrl}}"><img src="{{upload.licenseLogoUrl}}" /></a>                    
+                            <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
+                        </li>
+                        {{#if upload.purchaseLogoUrl}}
+                            <li class="license-badge">
+                                <a href="{{upload.purchaseLicenseUrl}}"><img src="{{upload.purchaseLogoUrl}}" /></a>
+                                <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
+                            </li>
                         {{/if}}
-                    </div>
-                    {{#if upload.isCCPlus}}
-                        <div class="ccplus">
-                        <a href="{{upload.purchaseLicenseUrl}}" class="exp-button utility-button">{{t 'dlPopup.buyALicense1'}}</a>
-                        {{t 'dlPopup.buyALicense2'}}
-                        </div>
-                    {{/if}}
-                </div>
-            </div> 
-        </div>
+                        <li class="text">
+                            {{#if upload.isOpen}} 
+                                {{t 'dlPopup.freeToUse'}}
+                            {{else}}
+                                {{t 'dlPopup.forNonComm'}}
+                            {{/if}}
+                        </li>
+                        {{#if upload.isCCPlus}}
+                            <li>
+                                <a href="{{upload.purchaseLicenseUrl}}" class="exp-button utility-button">{{t 'dlPopup.buyALicense1'}}</a>
+                                <div class="text">{{t 'dlPopup.buyALicense2'}}</div>
+                            </li>
+                        {{/if}}
+                    </ul>
+                </div><!-- col -->
+            </div><!-- row --> 
+        </div><!-- model-body -->
         <div class="modal-footer">
           <button type="button" id="downloadPopupClose" class="btn btn-default" data-dismiss="modal">{{t 'dlPopup.close'}}</button>
         </div>

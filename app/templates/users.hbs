@@ -1,2 +1,10 @@
-<h2 class="centered"><img src="{{model.profile.avatarUrl}}" /> {{model.profile.name}}</h2>
+<div class="body-header">
+<h2 class="centered"><img class="img-circle" src="{{model.profile.avatarUrl}}" /> {{model.profile.name}}</h2>
+<div class="centered">
+        <a class="exp-button utility-button" href="{{model.profile.page}}"><i class="fa fa-external-link"></i> @ccMixter</a>
+        {{#if model.profile.homepage}}
+        <a class="exp-button utility-button" href="{{model.profile.homepage}}"><i class="fa fa-external-link"></i> {{t 'user.homepage'}}</a>
+        {{/if}}
+</div>
+</div>
 {{partial "playlist"}}

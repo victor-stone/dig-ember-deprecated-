@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+    //tagName: 'a',
+    
     actions: {
         toggle: function() {
             var tag = this.get('tag');

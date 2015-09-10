@@ -140,6 +140,45 @@ export default {
             mood: 'Mood'
             },
         clear: 'clear',
+    },
+    playlist: {
+        noMatches: 'Hrumph. No matches for your query. Try again....',
+        loading: 'Hold on... ',
+    },
+    query: {
+        loadingOptions: 'Getting options...',
+    },
+    user: {
+        homepage: 'home page',
+    },
+    homepage: {
+        mainHeading: 'You Already{{{break}}} Have Permission',
+        subHeading: 'The music discovery site used in{{{break}}} over 1 million videos and games',
+        howItWorks: 'How it Works',
+        musicians: 'Musicians upload to ccMixter.org',
+        urHere: 'You<br >are<br >here!',
+        findMusic: 'You find music at dig.ccMixter',
+        project: 'You put it into your project',
+        instrHead: 'Instrumental Music for Film & Video',
+        instrSub: 'Find that perfect soundtrack or theme music for your film or video project.',
+        freeHead: 'Free Music for Commerical Projects',
+        freeSub: 'Thousands of hours of free music - all you have to do is give credit to the musicians.',
+        gamesHead: 'Music for Video Games',
+        gamesSub: 'Eclectic, eccentric, experimental genres for themes, soundtrack and looping backgrounds',
+        more: 'Go...',
+    },
+    footer: {
+        aboutUs: 'About Us',
+        resources: 'Resources',        
+        contactLink: 'Contact',
+        freeLink: 'Free Music',
+        ccPlusLink: 'Royalty Free Licenses',
+        privacy: 'Privacy',
+        terms: 'Terms of Use',
+        social: 'Social',
+        forums: 'Forums',
+        licenses: 'About Our Licenses',
+        
     }
     
 };
