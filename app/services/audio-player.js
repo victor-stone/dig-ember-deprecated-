@@ -125,9 +125,16 @@ var Media = Ember.Object.extend(Ember.Evented, {
 });
 
 export default Ember.Service.extend({
+    /**
+        nowPlaying is a 'Media' object - wrapper for underlying implementation
+        of sound player.
+        
+        If whatever you pass to the play() method has a 'mediaTags' hash of bindings
+        then those bindings with show up on the nowPlaying object.
+    */
     nowPlaying: null,
     playlist: null,
-
+    
     play: function(playable) {
         this._delegate(playable,'play');
     },
@@ -167,6 +174,14 @@ export default Ember.Service.extend({
             media[method]();
         }
     },
+    
+    _updatePlaylist: function() {
+        if( this.get('nowPlaying') && this.get('playlist') ) {
+            if( !this.get('playlist').findBy('mediaUrl',this.get('nowPlaying.url') ) ) {
+                this.set('playlist',null);
+            }
+        }
+    }.observes('nowPlaying'),
     
     _advance: function(dir) {
         if( this.playlist && this.nowPlaying ) {

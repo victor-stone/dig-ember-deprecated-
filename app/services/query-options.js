@@ -101,15 +101,16 @@ export default Ember.Service.extend(Ember.Evented, {
         },
 
     
-    _optionsMeta: { },
+    _optionsMeta: Ember.Object.create(),
         
     _tags: TagUtils.create(),
 
     _setupOptions: function() {    
         var me = this;
+        Ember.debug('Setting up queryOptions');
         optionsMeta.forEach( function(optMeta) {
             var name = optMeta.get('name');
-            me._optionsMeta[name] = optMeta;
+            me._optionsMeta.set(name,optMeta);
             me.set(name, Ember.computed.alias('_optionsMeta.'+name+'.value'));
             if( optMeta.updatesParams ) {
                 optMeta.addObserver('value',me._optionChanged.bind(me));

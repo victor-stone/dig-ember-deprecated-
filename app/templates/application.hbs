@@ -26,35 +26,35 @@
                 </li>
             {{/each}}
             <li>
-                {{#if loading}}<i style="color:white" class="fa fa-spinner fa-pulse"></i>{{/if}}
+                {{#if loading}}<a href='#'><i style="color:white" class="fa fa-spinner fa-pulse"></i></a>{{/if}}
             </li>            
         </ul>
         <div class="navbar-form navbar-right" role="search">
             <div class="form-group">
-                    {{input type="text" 
-                              class="form-control" 
-                              value=searchCollector
-                              enter="search"
-                              size="20" 
-                              placeholder=(t 'navbar.searchPlaceHolder')}}
-                     <button class="btn btn-xs" href='#' {{action "search"}}>
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                     </button>
+                {{input type="text" 
+                    class="form-control" 
+                    value=searchCollector
+                    enter="search"
+                    size="20" 
+                    placeholder=(t 'navbar.searchPlaceHolder')
+                }}
+                <button class="btn btn-xs" href='#' {{action "search"}}>
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
             </div>
             <button class="btn btn-xs" {{action 'toggleOptions'}}>{{t 'navbar.options'}} 
-                    <span class="glyphicon glyphicon-chevron-{{if optionsOpen 'down' 'up'}}" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-chevron-{{if optionsOpen 'down' 'up'}}" aria-hidden="true"></span>
             </button>
         </div><!-- novbar-form search -->
     </div><!-- collapse -->
   </div><!-- container-fluid -->
     <div id="query-opts" style="display:none" class="form-inline query-opts centered clearfix">
         <div class="form-group">
-            <select class="form-control">
-                <option><a href="#">Action</a></option>
-                <option><a href="#">Another action</a></option>
-                <option><a href="#">Something else here</a></option>
-                <option><a href="#">Separated link</a></option>
-            </select>
+            {{at-select content=licenses 
+                        selection=queryOptions.licenseScheme 
+                        action=(action (mut queryOptions.licenseScheme))
+                        className='form-control'
+            }}        
         
             <button class="btn btn-xs form-control" {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></button>
         </div>
@@ -64,34 +64,31 @@
                     checked=queryOptions.instrumentalOnly 
                     id="instrumentalOnly"
                     name="instrumentalOnly"
-                    }} 
+            }} 
         </div>
         <div class="form-group">
-                    <label class="control-label">{{t 'queryOptions.limit'}} </label>
-                    <select class="form-control">
-                        <option><a href="#">Action</a></option>
-                        <option><a href="#">Another action</a></option>
-                        <option><a href="#">Something else here</a></option>
-                        <option><a href="#">Separated link</a></option>
-                    </select>
+            <label class="control-label">{{t 'queryOptions.limit'}} </label>
+            {{at-select content=limits 
+                        selection=queryOptions.limit 
+                        action=(action (mut queryOptions.limit))
+                        className='form-control'
+            }}
         </div>
-        
-        <div class="form-group">
-                    <select class="form-control">
-                        <option><a href="#">foo</a></option>
-                        <option><a href="#">Another action</a></option>
-                        <option><a href="#">Something else here</a></option>
-                        <option><a href="#">Separated link</a></option>
-                    </select>
 
+        <div class="form-group">
+            {{at-select content=genres 
+                selection=queryOptions.genre 
+                action=(action (mut queryOptions.genre))
+                className='form-control'
+            }}  
         </div>
         <div class="form-group">
-                    <label class="control-label" for="recent">{{t 'queryOptions.recent'}}</label> 
-                    {{input type="checkbox" 
-                            checked=queryOptions.recent 
-                            id="recent"
-                            name="recent"
-                            }} 
+            <label class="control-label" for="recent">{{t 'queryOptions.recent'}}</label> 
+            {{input type="checkbox" 
+                checked=queryOptions.recent 
+                id="recent"
+                name="recent"
+            }} 
         </div>
         <div class="form-group">
             <button class="btn btn-xs form-control" {{action 'query'}}><i class="fa fa-tags"></i> {{t 'queryOptions.deep'}}</button>

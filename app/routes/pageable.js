@@ -77,7 +77,7 @@ export default Ember.Route.extend({
     },
     
     setupController: function(controller,model) {
-        if( model.hasOwnProperty('playlist') ) {
+        if( model.hasOwnProperty('playlist') && model.playlist && model.playlist.length ) {
             var nowPlaying = this.get('audioPlayer.nowPlaying');
             if( nowPlaying ) {
                 var nowPlayingUpload = model.playlist.findBy('mediaUrl',nowPlaying.url);

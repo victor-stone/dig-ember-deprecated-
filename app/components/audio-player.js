@@ -9,13 +9,6 @@ export default Ember.Component.extend({
         this.get('audioPlayer').togglePause();
     },
 
-    stop: function() {
-      var media = this.get('media');
-      if (media) {
-        media.stop();
-      }
-    },
-
     playPrevious: function() {
       this.get('audioPlayer').playPrevious();
     },

@@ -39,13 +39,14 @@ h4.inlined, h4.inlined,
     display: inline-block;
 }
  
- .navbar {
+.navbar {
     margin-bottom: 0px;
- },
+}
  
 .navbar-brand {
     padding-top: 6px;
 }
+
 .required::after {
     content: '*',
     color: #F88;
@@ -457,11 +458,18 @@ a.download-button {
     background-size: cover;
 }
 
+
 .dig-img h1 {
     color: whitesmoke;
     text-shadow: 2px 2px black;
     font-size: 400%;
     font-weight: 300;
+}
+
+@media screen and (min-width: 640px){
+    .dig-img h1 {
+        padding-top: 120px;
+    }
 }
 
 .dig-img h3 {
