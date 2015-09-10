@@ -9,67 +9,112 @@
     <h1 class="centered">{{t 'homepage.howItWorks'}}</h1>
  <a name='howitworks'></a>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row how panel-group">
         <div class="col-md-4">
-            <div class="how-it-works">
-                <div class="home-glyph musicians-glyph"></div>
-                <i class="fa fa-chevron-right"></i>
-                <div class="text">{{t 'homepage.musicians'}}</div>
-            </div>
-        </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="home-glyph musicians-glyph"></div>
+                    <!-- i class="fa fa-chevron-right"></i -->
+                </div>
+                <div class="panel-footer centered">
+                    {{t 'homepage.musicians'}}
+                </div>
+            </div><!-- panel -->
+        </div><!--- col -->
         <div class="col-md-4">
-            <div class="how-it-works">
-                <div class="home-glyph findMusic-glyph">
-                    <div class="urHere">
-                        {{{t 'homepage.urHere'}}}
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="home-glyph findMusic-glyph">
+                        <div class="urHere">
+                            {{{t 'homepage.urHere'}}}
+                        </div>
                     </div>
                 </div>
-                <i class="fa fa-chevron-right"></i>
-                <div class="text">{{t 'homepage.findMusic'}}</div>
-            </div>
-        </div>
+                <div class="panel-footer centered">
+                    {{t 'homepage.findMusic'}}
+                </div>
+            </div><!-- panel -->
+        </div><!--- col -->
         <div class="col-md-4">
-            <div class="how-it-works">
-                <div class="home-glyph project-glyph"></div>
-                <div class="text">{{t 'homepage.project'}}</div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="home-glyph project-glyph"></div>
+                </div>
+                <div class="panel-footer centered">
+                    {{t 'homepage.project'}}
+                </div>
+            </div><!-- panel -->
+        </div><!--- col -->
+    </div><!-- row -->
+    <div class="row gso-links panel-group">
         <div class="col-md-4">
-            <div class="so-links">
-                <h1>{{t 'homepage.instrHead'}}</h1>
-                <h3>{{t 'homepage.instrSub'}}</h3>
-                {{link-to (t 'homepage.more') 'video' class="btn btn-default"}}
-            </div>
-        </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">{{t 'homepage.instrHead'}}</h1>
+                </div>
+                <div class="panel-body">
+                    {{t 'homepage.instrSub'}}
+                </div>
+                <div class="panel-footer centered">
+                    {{link-to (t 'homepage.more') 'video' class="btn btn-default"}}
+                </div>
+            </div><!-- panel -->
+        </div><!--- col -->
         <div class="col-md-4">
-            <div class="so-links">
-                <h1>{{t 'homepage.freeHead'}}</h1>
-                <h3>{{t 'homepage.freeSub'}}</h3>
-                {{link-to (t 'homepage.more') 'free' class="btn btn-default"}}
-            </div>
-        </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">{{t 'homepage.freeHead'}}</h1>
+                </div>
+                <div class="panel-body">
+                    {{t 'homepage.freeSub'}}
+                </div>
+                <div class="panel-footer centered">
+                    {{link-to (t 'homepage.more') 'free' class="btn btn-default"}}
+                </div>
+            </div><!-- panel -->
+        </div><!--- col -->
         <div class="col-md-4">
-            <div class="so-links">
-                <h1>{{t 'homepage.gamesHead'}}</h1>
-                <h3>{{t 'homepage.gamesSub'}}</h3>
-                {{link-to (t 'homepage.more') 'games' class="btn btn-default"}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">{{t 'homepage.gamesHead'}}</h1>
+                </div>
+                <div class="panel-body">
+                    {{t 'homepage.gamesSub'}}
+                </div>
+                <div class="panel-footer centered">
+                    {{link-to (t 'homepage.more') 'games' class="btn btn-default"}}
+                </div>
+            </div><!-- panel -->
+        </div><!--- col -->
+    </div><!-- row -->
+    <div class="row partners panel-group">
+        <div class="col-md-3">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <a href="http://ccmixter.org"><img src="../dig-images/ccmixter-h.jpg"></a>
+                </div>
             </div>
         </div>
-    </div>    
-    <div class="row partner-well">
         <div class="col-md-3">
-            <a href="http://ccmixter.org"><img src="../dig-images/ccmixter-h.jpg"></a>
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <a href="http://tunetrack.net/artistech/"><img src="../dig-images/artistech-h.jpg"></a>
+                </div>
+            </div>
         </div>
         <div class="col-md-3">
-            <a href="http://tunetrack.net/artistech/"><img src="../dig-images/artistech-h.jpg"></a>
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <a href="http://tunetrack.net"><img src="../dig-images/tunetrack-h.jpg"></a>
+                </div>
+            </div>
         </div>
         <div class="col-md-3">
-            <a href="http://tunetrack.net"><img src="../dig-images/tunetrack-h.jpg"></a>
-        </div>
-        <div class="col-md-3">
-            <a href="http://creativecommons.org"><img src="../dig-images/cc-h.jpg"></a>
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <a href="http://creativecommons.org"><img src="../dig-images/cc-h.jpg"></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
