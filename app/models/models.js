@@ -52,8 +52,12 @@ export var Upload = UploadBasic.extend({
     
 });
 
-var User = Model.extend( {
+var UserBasic = Model.extend( {
     nameBinding: 'user_real_name',
+    artistLoginBinding: 'user_name',
+});
+
+var User = UserBasic.extend( {
     avatarUrlBinding: 'user_avatar_url',
 
     page: function() {
@@ -139,7 +143,8 @@ var models = {
     detail: Detail,
     upload: Upload,
     user: User,
-    tag: Tag
+    tag: Tag,
+    userBasic: UserBasic
 };
 
 export default function modelWrap(param,model) {

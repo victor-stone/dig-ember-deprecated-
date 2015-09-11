@@ -168,8 +168,9 @@ export default {
         more: 'Go...',
     },
     footer: {
-        aboutUs: 'Here',
-        resources: 'There',        
+        here: 'Here',
+        resources: 'Resources',        
+        there: 'There',
         contactLink: 'Contact',
         freeLink: 'Free Music',
         ccPlusLink: 'Licensed Music',

@@ -37,6 +37,7 @@
                     class="form-control" 
                     value=searchCollector
                     enter="search"
+                    id="dig"
                     size="20" 
                     placeholder=(t 'navbar.searchPlaceHolder')
                 }}
@@ -44,9 +45,11 @@
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                 </button>
             </div>
-            <button class="btn btn-xs" {{action 'toggleOptions'}}>{{t 'navbar.options'}} 
-                <span class="glyphicon glyphicon-chevron-{{if optionsOpen 'down' 'up'}}" aria-hidden="true"></span>
-            </button>
+            <div class="form-group">
+                <button class="btn btn-xs" {{action 'toggleOptions'}}>{{t 'navbar.options'}} 
+                    <span class="glyphicon glyphicon-chevron-{{if optionsOpen 'down' 'up'}}" aria-hidden="true"></span>
+                </button>
+            </div>
         </div><!-- novbar-form search -->
     </div><!-- collapse -->
   </div><!-- container-fluid -->
@@ -98,43 +101,22 @@
     </div><!-- form-inline query-opts -->
 
 </nav>
+<div class="outlet-wrap">
 {{outlet}}
-<div class="container-fluid footer">
+</div>
+<div class="container-fluid footer" data-spy="affix" data-offset-bottom="0">
     <div class="row">
         <div class="col-md-3">
-              <h1>{{t 'footer.aboutUs'}}</h1>
+              <h1>{{t 'footer.here'}}</h1>
               <ul>
                 <li>{{link-to (t 'footer.licenses') 'licenses'}}</li>
-                <li>{{link-to (t 'footer.freeLink') 'free'}}</li>
-                <li>{{link-to (t 'footer.ccPlusLink') 'ccplus'}}</li>
                 <li><a href="http://ccmixter.org/privacy">{{t 'footer.privacy'}}</a></li>
                 <li><a href="http://ccmixter.org/terms">{{t 'footer.terms'}}</a></li>
                 <li><a href="http://ccmixter.org/keep-ccmixter-open-and-free"><i class="fa fa-heart"></i> {{t 'footer.donate'}}</a></li>
               </ul>
         </div>
         <div class="col-md-3">
-              <h1>{{t 'footer.resources'}}</h1>
-              <ul>
-                <li><a href="https://github.com/ArtisTechMedia/dig.ccMixter"><i class="fa fa-github"></i> GitHub</a></li>
-                <li><a href="/query-api">Query API</a></li>
-                <li><a href="https://ccmixter.com/forum">{{t 'footer.forums'}}</a></li>
-                <li><a href="http://ccmixter.org/media/people/contact/admin">{{t 'footer.contactLink'}}</a></li>
-              </ul>
-        </div>
-        <div class="col-md-3">
-              <h1>{{t 'footer.social'}}</h1>
-              <ul>
-                <li><a href="https://twitter.com/ccmixtermusic">Twitter</a></li>
-                <li><a href="https://www.youtube.com/channel/UCU7QBXVX4gcePOcEyha7yng">YouTube</a></li>
-                <li><a href="https://vimeo.com/ccmixter">Vimeo</a></li>
-                <li><a href="https://www.facebook.com/CCMixter">Facebook</a></li>
-                <li><a href="https://www.pinterest.com/ccmixtermusic/">Pinterest</a></li>
-                <li><a href="http://instagram.com/ccmixter">Instagram</a></li>
-                <li><a href="http://ccmixterblog.blogspot.com/">Blogspot</a></li>
-              </ul>
-        </div>
-        <div class="col-md-3">
-            <h1>{{t 'footer.whoweare'}}</h1>
+            <h1>{{t 'footer.there'}}</h1>
             <div class="row">
                 <div class="col-md-6">
                     <a href="http://ccmixter.org">
@@ -153,6 +135,25 @@
                     </a>
                 </div>
             </div>
+        </div>
+        <div class="col-md-3">
+              <h1>{{t 'footer.social'}}</h1>
+              <ul>
+                <li><a href="https://twitter.com/ccmixtermusic">Twitter</a></li>
+                <li><a href="https://www.youtube.com/channel/UCU7QBXVX4gcePOcEyha7yng">YouTube</a></li>
+                <li><a href="https://vimeo.com/ccmixter">Vimeo</a></li>
+                <li><a href="https://www.facebook.com/CCMixter">Facebook</a></li>
+                <li><a href="http://instagram.com/ccmixter">Instagram</a></li>
+              </ul>
+        </div>
+        <div class="col-md-3">
+              <h1>{{t 'footer.resources'}}</h1>
+              <ul>
+                <li><a href="https://github.com/ArtisTechMedia/dig.ccMixter"><i class="fa fa-github"></i> GitHub</a></li>
+                <li><a href="http://ccmixter.org/query-api">Query API</a></li>
+                <li><a href="https://ccmixter.org/forum">{{t 'footer.forums'}}</a></li>
+                <li><a href="http://ccmixter.org/media/people/contact/admin">{{t 'footer.contactLink'}}</a></li>
+              </ul>
         </div>
     </div>
 </div>

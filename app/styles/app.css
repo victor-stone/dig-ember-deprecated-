@@ -72,20 +72,21 @@ nav input[type="text"] {
     height: 20px;
 }
 
-nav label,
-nav .btn {
+
+nav .form-group > label,
+nav .form-group > .btn {
     font-weight: normal;
     font-size:12px;
 }
 
-nav label,
-nav .btn {
+nav .form-group > label,
+nav .form-group > .btn {
     background-color: transparent;
     color: #DDD;
 }
 
-nav label:hover,
-nav .btn:hover {
+nav .form-group > label:hover,
+nav .form-group > .btn:hover {
     color: white;
 }
 
@@ -440,12 +441,49 @@ a.download-button {
     right: 7px;
     top: 5px;
 }
+/* playlist */
+
+.song-title  a{
+    font-size: 25px;
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 10px;
+    color: black;    
+}
+
+.song-title  a:hover{
+  color: #999;
+  text-decoration: none;
+}
+
+.play-list .artist-name {
+    font-size: 20px;
+    display: inline-block;
+    margin-left: 12px;
+}
 
 /* query page */
 
 .tags-list {
     height: 120px;
     overflow: auto;
+}
+
+/* user page */
+.img-circle {
+    box-shadow: 4px 4px 8px #999;
+    margin-right: 15px;
+    margin-bottom: 20px;
+}
+
+/* dig page */
+.popover-content .btn {
+    background:transparent;
+    padding: 5px;
+}
+
+.popover-content .btn:hover {
+    text-decoration: underline;
 }
 
 /* home page */
