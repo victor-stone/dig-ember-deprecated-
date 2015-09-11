@@ -12,6 +12,6 @@ export default Ember.Route.extend({
             },
             query: function() {
                 this.transitionTo('query');
-            }
+            },
         },
 });

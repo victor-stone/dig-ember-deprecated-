@@ -164,21 +164,23 @@ export default {
         freeHead: 'Free Music for Commerical Projects',
         freeSub: 'Thousands of hours of free music - all you have to do is give credit to the musicians.',
         gamesHead: 'Music for Video Games',
-        gamesSub: 'Eclectic, eccentric, experimental genres for themes, soundtrack and looping backgrounds',
+        gamesSub: 'Eclectic, eccentric, experimental genres for themes and looping backgrounds',
         more: 'Go...',
     },
     footer: {
-        aboutUs: 'About Us',
-        resources: 'Resources',        
+        aboutUs: 'Here',
+        resources: 'There',        
         contactLink: 'Contact',
         freeLink: 'Free Music',
-        ccPlusLink: 'Royalty Free Licenses',
+        ccPlusLink: 'Licensed Music',
         privacy: 'Privacy',
         terms: 'Terms of Use',
-        social: 'Social',
+        social: 'Everywhere',
         forums: 'Forums',
         licenses: 'About Our Licenses',
+        whoweare: 'Who We R',
+        donate: 'Donate (!)',
         
-    }
+    },
     
 };

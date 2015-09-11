@@ -27,7 +27,8 @@ export default Ember.Controller.extend({
               linkto: 'games',
               title: 'navbar.links.gamestitle'},
             { name: 'navbar.links.how',
-              url: '/#howitworks',
+              anchor: 'howitworks',
+              route: 'index',
               title: 'navbar.links.howtitle' }
         ],
     licenses: [
@@ -42,7 +43,19 @@ export default Ember.Controller.extend({
     
     // UI state
     optionsOpen: Ember.computed.alias('queryOptions.userEditing'),
-    
+
+    scrollToAnchor: function(name) {
+        try {    
+            var anchor = Ember.$('a[name="'+name+'"]');
+            var offset = 0; // incNav ? $jq('#myNav_div').height() : 0;
+            Ember.$('html,body').animate({ scrollTop: Ember.$(anchor).offset().top - offset },
+                    { duration: 'slow', easing: 'swing'});
+            }
+        catch( e ) {
+            Ember.debug('wups ' + e.toString() );
+        }
+    },
+        
     actions: {
         search: function() {
             this.set('queryOptions.searchText', this.searchCollector);
@@ -56,6 +69,16 @@ export default Ember.Controller.extend({
                 Ember.$('#query-opts').slideDown(600);
             }
             this.toggleProperty('optionsOpen');
+        },
+        goToAnchor: function(routeName,anchor) {
+            if( this.get('currentPath') === routeName ) {
+                this.scrollToAnchor(anchor);
+            } else {
+                var me = this;
+                this.transitionToRoute(routeName).then(function(route) {
+                    Ember.run.next(me,me.scrollToAnchor,anchor);
+                });
+            }
         },
     },
 });

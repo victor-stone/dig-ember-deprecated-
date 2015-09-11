@@ -3,10 +3,6 @@ body {
     font-family: Avenir Next, Verdana;
 }
 
-.pad-for-footer {
-    padding-bottom: 80px;
-}
-
 ul {
     list-style: none;
 }
@@ -93,6 +89,9 @@ nav .btn:hover {
     color: white;
 }
 
+.footer-pad {
+    padding-bottom: 90px; 
+}
 /* playlist */
 
 .sprite3 {
@@ -525,6 +524,7 @@ a.download-button {
 .partners .panel-body {
     text-align: center;
     box-shadow: 6px 6px #868F94;
+    background-color: #555;
 }
 
 .footer {
@@ -535,41 +535,48 @@ a.download-button {
     color: white;
 }
 
-/*** questionable stuff ***/
-
-/*
-.navbar { 
-    margin-bottom: 0; 
+.fa-heart {
+    color: red;
 }
 
-.menu li {
-    padding-top: 11px;
-    padding-bottom: 11px;
-    padding-right: 12px;
+.brand-glyph {
+  background-image: url('../dig-images/brands.png');
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 100px;
+  height: 50px;
 }
 
-.navbar-search {
-    padding-top: 18px;
+.artistech {
+    background-position: 0px -50px;
 }
 
-.navbar-search a {
-    color: #9d9d9d;
-    margin-right: 11px;
+.artistech:hover {
+    background-position: 0px 0px;
 }
 
-nav input[type=text],
-nav select {
-    border-radius: 6px;
+.cc {
+    background-position: -100px -50px;
+}
+
+.cc:hover {
+    background-position: -100px 0px;
+}
+
+.ccmixter {
+    background-position: -200px -50px;
+}
+
+.ccmixter:hover {
+    background-position: -200px 0px;
+}
+
+.tunetrack {
+    background-position: -300px -50px;
+}
+
+.tunetrack:hover {
+    background-position: -300px 0px;
 }
 
 
-.remix-list li {
-    margin-top: 4px;
-}
-
-#sharePopup .modal-body > div {
-    margin-bottom: 20px;
-}
-
-
-*/
