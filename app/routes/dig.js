@@ -28,20 +28,22 @@ export default PageableRoute.extend({
         var args = {
                 t: 'search_users',
                 limit: 40,
+                minrx: 1,
                 f: 'json',
                 search: this.get('queryOptions.searchText')
             };
 
-        var rgx = new RegExp( '^' + args.search ,'i');
+        var rgx = new RegExp( args.search ,'i');
         function match(u) {
             return u.user_real_name.match(rgx) || u.user_name.match(rgx);
         }
+
         var store = this.store;
         return this._model(params,transition).then( function(result) {
             retModel = result;
             return store.query(args);
-        }).then( function(hits) {
-            retModel.artists = models( hits.filter( match ), 'userBasic'  );
+        }).then( function(users) {
+            retModel.artists = models( users.filter(match), 'userBasic'  );
             return retModel;
         });
     }

@@ -8,4 +8,10 @@ export default Ember.Route.extend({
         }
         this._super.apply(this,arguments);
     },
+    model: function() {
+        var me = this;
+        return this._super.apply(this,arguments).catch(function(){
+            me.transitionTo('unknown-upload');
+        });
+    }
 });

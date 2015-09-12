@@ -4,7 +4,7 @@ export default PageableRoute.extend({
 
     routeQueryOptions: {
         instrumentalOnly: false,
-        genre: '-',
+        genre: '*',
         recent: false,
         licenseScheme: 'all'
     },

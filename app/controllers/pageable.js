@@ -35,6 +35,25 @@ export default Ember.Controller.extend({
         return this.get('offset') + this.get('queryOptions.limit');
     }.property('offset', 'model' /* ,'queryOptions.limit' */),
 
+    lastValue: function() {
+        var off = this.get('offset');
+        var count = this.get('model.playlist.length');
+        var limit = this.get('queryOptions.limit');
+        return off + ( count < limit ? count : limit);
+    }.property('model'),
+    
+    lastPage: function() {
+        var total = this.get('model.total');
+        var off = this.get('offset');
+        var count = this.get('model.playlist.length');
+        if( total - count > off ) { 
+            return total - this.get('queryOptions.limit');
+        }
+        return false;
+    }.property('model'),
+    
+    showLast: Ember.computed.alias('lastPage'),
+    
     uploadForDownloadPopup: { name: '(no upload selected)' },
     
     actions: {

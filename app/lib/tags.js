@@ -47,8 +47,8 @@ import Ember from 'ember';
 var TagUtils = Ember.Object.extend({
 
     _tagsArray: [ ],
-    ignore: /^(-|\*|all)$/,
-    invalid: /[^a-zA-Z0-9_]/,
+    ignore: /^(\*|all)$/,
+    invalid: /[^-a-zA-Z0-9_]/,
     separator: ',',
     
     init: function() {
@@ -175,15 +175,9 @@ var TagUtils = Ember.Object.extend({
                 if( source.match(this.get('ignore')) ) {
                     return [ ];
                 }
-                var separator = this.get('separator');
-                // wups
-                arr = source.replace(/^[^_\w]+|[^_\w]+$/g, '') 
-                            .replace(/[^_\w]/g, ' ') 
-                            .replace(/\s+/g,separator)
-                            .split(separator)
-                            .reject( function(tag) {
-                                return !tag;
-                            });          
+                // still not 100% because '-'
+                var r = new RegExp(this.get('separator'),'g');
+                arr = source.replace(r,' ').w();
             } else if( Ember.isArray(source) ) {
                 arr = source.slice();                
             } else if( source && source.hasOwnProperty('_tagsArray') ) {

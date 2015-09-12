@@ -1,0 +1,21 @@
+{{#if loading}}<h4>Playlist {{t 'playlist.loading'}} <i class="fa fa-spinner fa-pulse"></i></h4>{{/if}}
+<div class="container play-list">
+    <div class="row">
+        <div class="col-md-9 col-md-offset-2 col-md-sm-12">
+            <ul>
+                {{#each model.playlist as |upload|}}
+                    <li class="clearfix text-nowrap">
+                    <a class="btn btn-lg btn-info"    href="#" {{action "togglePlay" upload}}>{{#if upload.media.isPlaying }}<i class="fa fa-stop"></i>{{else}}<i class="fa fa-play"></i>{{/if}}</a>
+                    <a class="btn btn-lg btn-warning" href="#" {{action "doDownloadPopup" upload}}><i class="fa fa-cloud-download"></i></a>
+                    <span class="song-title">{{#link-to 'uploads' upload.artistLogin upload.id}}{{upload.name}}{{/link-to}}</span> 
+                    {{#unless skipUserListing}}
+                        <span class="artist-name light-color">{{#link-to 'users' upload.artistLogin}}{{upload.artist}}{{/link-to}}</span>
+                    {{/unless}}
+                    </li>
+                {{else}}
+                    <li><div class="mid-screen-announce">{{t 'playlist.noMatches'}}</div></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

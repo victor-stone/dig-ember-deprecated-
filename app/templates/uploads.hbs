@@ -2,10 +2,12 @@
 {{trackback-popup upload=model trackback=poolItemForTrackbackPopup}}
 {{trackback-form upload=model}}    
 {{share-popup upload=model}}    
+<div class="page-header">
+    <h1 class="center-text">{{model.name}}</h1>
+</div>
 <div class="container upload-page">
-    <h2 class="centered">{{model.name}}</h2>
     <div class="row">
-        <div class="col-md-2 col-md-offset-1 hidden-sm hidden-xs">
+        <div class="col-md-3 hidden-sm hidden-xs">
             {{partial 'upload-action'}}
         </div>
         <div class="col-md-8 col-sm-12">
@@ -18,11 +20,11 @@
                     {{/link-to}}
 
                     {{#if model.featuring}}
-                        <div class="text"><span class="light-color">{{t 'upload.featuring'}}</span> {{model.featuring}}</div>
+                        <p><span class="light-color">{{t 'upload.featuring'}}</span> {{model.featuring}}</p>
                     {{/if}}
                 </div>
                 <div class="col-md-6 col-sm-6">
-                    <ul class="extras">
+                    <ul class="actions">
                         <li class="license-badge">
                             <a href="{{model.license_url}}"><img class="download-license" src="{{model.licenseLogoUrl}}" /></a>    
                             <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
@@ -34,10 +36,10 @@
                             </li>
                         {{/if}}
                         <li>
-                            {{link-to (t 'upload.moreLikeThis') 'morelike' model.id  class="exp-button utility-button"}}
+                            {{link-to (t 'upload.moreLikeThis') 'morelike' model.id  class="btn btn-success"}}
                         </li>
                         <li>
-                            <a class="exp-button utility-button" href="{{model.page}}"><i class="fa fa-external-link"></i> @ccMixter</a>
+                            <a class="btn btn-success" href="{{model.page}}"><i class="fa fa-external-link"></i> @ccMixter</a>
                         </li>
                     </ul>
                 </div>
@@ -53,13 +55,13 @@
     </div>
     <div class="row">
         <div class="col-md-5 col-md-offset-1 col-sm-12">
-            <div class="centered">
+            <div class="center-text">
                 <h3 class="inlined">{{t 'upload.trackbacks'}}</h3>
-                <a href="#" {{action 'doTrackbackForm'}} class="exp-button utility-button"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
+                <a href="#" {{action 'doTrackbackForm'}} class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
             </div>
             <ul class="list-group remix-list">
             {{#each model.trackbacks as |tb|}}
-                <li class="list-group-item"><div class="text">{{#if (is-embeddable tb.embed)}}
+                <li class="list-group-item"><p>{{#if (is-embeddable tb.embed)}}
                         <a href="#" {{action 'doTrackbackPopup' tb}}>
                             <i class="fa fa-youtube-play"></i>
                             {{{tb.name}}}
@@ -68,14 +70,14 @@
                         <span class="light-color"><i class="fa fa-external-link"></i> {{tb.type}}</span>
                         <a href="{{tb.url}}" target="_blank">{{{tb.name}}}</a> 
                     {{/if}}
-                    <span class="light-color">{{tb.artist}}</span></div></li>
+                    <span class="light-color">{{tb.artist}}</span></p></li>
             {{else}}
                 <li><span class="light-color">{{t 'upload.noTrackbacks'}}</span></li>
             {{/each}}
             </ul>
         </div>
         <div class="col-md-5  col-sm-12">
-            <h3 class="centered">{{t 'upload.remixes'}}</h3>
+            <h3 class="center-text">{{t 'upload.remixes'}}</h3>
             <ul class="remix-list">
             {{#each model.remixes as |remix|}}
                 <li class="list-group-item"><i class="fa fa-external-link"></i> <a target="_blank" href="{{remix.url}}">{{remix.name}}</a> <span class="light-color">{{remix.artist}}</span></li>

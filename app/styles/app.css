@@ -12,10 +12,13 @@ ul {
     margin: 0 0 3px;
 }
 
+h1 small {
+  font-weight: 300;
+  text-shadow: 0px 0px;
+}
+
 .light-color, 
-span.light-color a,
-.modal-header span,
-.playlist-title span {
+span.light-color a {
     color: #999;
     font-weight: 300;
 }
@@ -24,15 +27,15 @@ span.light-color a,
     color:white;
 }
 
-.centered {
-    text-align: center;
-}
-
 .inlined,
 h1.inlined, h2.inlined,
 h4.inlined, h4.inlined,
 .navbar .ember-view {
     display: inline-block;
+}
+
+.center-text {
+    text-align: center;
 }
  
 .navbar {
@@ -93,71 +96,25 @@ nav .form-group > .btn:hover {
 .footer-pad {
     padding-bottom: 90px; 
 }
+
+.page-header h1 i {
+  color: #777;
+  text-shadow: 5px 5px 4px #ddd;
+}
+.page-header {
+  text-shadow: 1px 2px #ddd;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
 /* playlist */
 
-.sprite3 {
-  background-image: url('../dig-images/glyphs3.png');
-  background-repeat: no-repeat;
-  width: 50px;
-  height: 48px;
-  display: inline-block;
+.actions li {
+    margin-bottom: 15px;    
 }
-
-.play-sprite {
-    background-position: -99px 0px;
-}
-
-.play-sprite:hover,
-.play-sprite.is-playing {
-    background-position: -149px 0px;
- }
-
-.download-sprite {
-    background-position: 0px 0px;
-}
-
-.download-sprite:hover {
-    background-position: -50px 0px;
-}
-
-.play-list .action {
-    display: inline-block;
-    margin-right: 8px;
+.actions-centered li {
+    text-align: center;
 }
 
 /* upload page */
-
-.sprite4 {
-  background-image: url('../dig-images/glyphs4.png');
-  background-repeat: no-repeat;
-  width: 97px;
-  height: 94px;
-  display: inline-block;
-}
-
-.download-sprite-big {    
-    background-position: 0px 0px;       
-}
-
-.download-sprite-big:hover { 
-    background-position: -100px 0px;       
-}
-
-.play-sprite-big {
-    background-position: -197px 0px;
-}
-
-.play-sprite-big.is-playing,
-.play-sprite-big:hover {
-    background-position: -296px 0px;
-}
-
-.share-sprite-big {
-    background-position: -395px 0px;
-}
-.share-sprite-big:hover {
-    background-position: -495px 0px;
-}
 
 .upload-page .extras li {
     padding-bottom: 20px;
@@ -198,6 +155,34 @@ li.license-badge i { /* help icon */
     padding: 12px 0px 12px 0px;
 }
 
+/* download popup */
+a > small {
+  font-size: 60%;
+}
+a > small::before {
+  content: '('
+}
+
+a > small:after {
+  content: ')'
+}
+
+.col-panel {
+    background-color: #EEE;
+    border-radius: 4px;
+    padding: 12px;
+    margin: 4px;
+}
+
+.col-panel textarea {
+    max-width: 88%;
+    opacity: 0.5;
+}
+
+.col-panel p {
+    margin-top: 7px;
+    margin-bottom: 15px;
+}
 
 /* audio player */
 
@@ -355,111 +340,39 @@ a.exp-button:hover {
     width: 10px;
 }
 
-.utility-button {
-    height: 38px;
-    background-position: 0px -175px;
-    margin: 0 25px;
-    display: inline-block;
-    text-align: center;
-    padding-top: 12px;
-    font-weight: 600;    
-}
-
-
-.utility-button::before {
-    height: 38px;
-    background-position: 0px -175px;
-    left: -25px;
-    width: 25px;
-}
-
-.utility-button::after {
-    height: 38px;
-    background-position: -100px -175px;
-    right: -25px;
-    width: 25px;
-}
-
-.utility-button:hover { 
-    background-position: 0px -220px;
-}
-.utility-button:hover::before {
-    background-position: 0px -220px;
-}
-.utility-button:hover::after {
-    background-position: -100px -220px;
-}
-
-a.utility-button {
-    color: rgb(240, 240, 200);
-}
-
-.download-button {
-    height: 62px;
-    background-position: 0px -40px;
-    margin: 0 25px 0 9px;
-    display: inline-block;
-    text-align: center;
-    padding: 15px 20px 8px 40px;
-    font-weight: 600;    
-}
-
-.download-button::before {
-    height: 62px;
-    background-position: 0px -40px;
-    left:  -9px;
-    width: -9px;
-}
-
-.download-button::after {
-    height: 62px;
-    background-position: -100px -40px;
-    right: -25px;
-    width: 25px;
-}
-
-.download-button:hover {
-    background-position: 0px -110px;
-}
-.download-button:hover::before {
-    background-position: 0px -110px;
-}
-.download-button:hover::after {
-    background-position: -100px -110px;
-}
-a.download-button {
-    color: rgb(218, 218, 220);
-}
-
-.cloud-sprite {
-    background-image: url('../dig-images/button-heads.png');
-    background-position: -50px -50px;
-    width: 30px;
-    height: 23px;
-    display: inline-block;
-    position: relative;
-    right: 7px;
-    top: 5px;
-}
 /* playlist */
+.play-list li {
+  margin-bottom: 2px;
+  font-size: 22px;
+}
 
 .song-title  a{
-    font-size: 25px;
-    display: inline-block;
-    margin-top: 5px;
-    margin-left: 10px;
     color: black;    
 }
-
 .song-title  a:hover{
   color: #999;
   text-decoration: none;
 }
 
-.play-list .artist-name {
-    font-size: 20px;
-    display: inline-block;
-    margin-left: 12px;
+.artist-name a:hover{
+  text-decoration: none;
+}
+
+.paging {
+  position:fixed;
+  top: 150px; 
+  border-radius: 4px;
+  border: 1px solid #DDD;
+  background-color: #9d9d9d;
+  opacity: 0.85;
+  width: 160px;
+  padding: 0px 0px 4px 10px;
+  margin-left: 7px;
+  color: white;
+}
+
+.pagination a {
+  font-size: 70%
 }
 
 /* query page */
@@ -477,13 +390,13 @@ a.download-button {
 }
 
 /* dig page */
-.popover-content .btn {
-    background:transparent;
-    padding: 5px;
-}
 
-.popover-content .btn:hover {
-    text-decoration: underline;
+[data-popover-host] {
+    display: inline-block;
+    height: 2px;
+    width: 2px;
+    position: relative;
+    left: 15%;
 }
 
 /* home page */

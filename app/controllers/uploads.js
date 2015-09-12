@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
         doTrackbackForm: function() {
             Ember.$('#trackbackFormTriggerLink').click();
         },
-        dosharePopup: function() {
+        doSharePopup: function() {
             Ember.$('#sharePopupTriggerLink').click();
         },
         doLicensePopup: function() {

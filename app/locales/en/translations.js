@@ -29,7 +29,7 @@ export default {
     dlPopup: {
         freeToUse: "Free to use in commercial projects.",
         forNonComm: "For non commercial projects only.",
-        toUseThisMusic: "To use this music you are <u>required</u> to give credit to the musicians. Copy the text below to your project.",
+        toUseThisMusic: "To use this music you are <mark>required</mark> to give credit to the musicians.",
         download:  "Download",
         buyALicense1: "Buy a License",
         buyALicense2: 'to remove these restrictions',
@@ -41,7 +41,9 @@ export default {
         copyToClip: 'Copy to clipboard',
         featuring: 'Ft: {{ft}} ',
         featuringHTML: '<div class=\"attribution-ft-block\"> Ft: {{ft}} </div>',
-        close: 'Close'
+        close: 'Close',
+        credit: "What happens if I don't give credit?",
+        answer: "You are in violation of copyright!!! Not. Cool.",
     },
     tbPopup: {
         trackback: 'Trackback',
@@ -98,10 +100,10 @@ export default {
         body: "I'm sharing some sounds I found at dig.ccmixter: "
     },
     morelike: {
-        title: '<span>More like</span> {{name}}',
+        title: 'More like',
     },
     dig: {
-        titleWithStr: '<span>Search Results</span> {{str}}',
+        titleWithStr: 'Search Results',
         title: 'Dig the Music',
     },
     free: {
@@ -183,5 +185,9 @@ export default {
         donate: 'Donate (!)',
         
     },
+    wups: {
+        title: 'Wups',
+        text: "Hey... for some anti-magical reason we can't show you this remix!"
+    }
     
 };

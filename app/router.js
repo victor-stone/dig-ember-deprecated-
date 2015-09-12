@@ -18,6 +18,7 @@ Router.map(function() {
   this.route('licenses');
   this.route('nowplaying');
 
+  this.route('unknown-upload');
 });
 
 export default Router;

@@ -6,5 +6,6 @@ export default PageableController.extend({
     i18n: Ember.inject.service(),
 
     title: t('free.title'),
+    icon: 'beer',
 
 });

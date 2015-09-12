@@ -5,18 +5,20 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"><span>{{t "share.share"}}</span> {{upload.name}}</h4>
+          <h4 class="modal-title"><span  class="light-color">{{t "share.share"}}</span> {{upload.name}}</h4>
         </div>
         <div class="modal-body">
-            <div class="centered">
-<a href="http://www.facebook.com/share.php?u=http://dig.ccmixter.org/files/{{upload.artistLogin}}/{{upload.id}}&t={{upload.name}}" class="exp-button utility-button"><i class="fa fa-facebook"></i> {{t "share.fb"}}</a>            
-            </div>        
-            <div class="centered">
-<a href="http://twitter.com/home?status={{upload.name}}+http://dig.ccmixter.org/files/{{upload.artistLogin}}/{{upload.id}}&t={{upload.name}}" class="exp-button utility-button"><i class="fa fa-twitter"></i> {{t "share.twitter"}}</a>            
-            </div>        
-            <div class="centered">
-<a href="mailto://?subject={{t "share.subject"}}&body={{t "share.body"}} http://dig.ccmixter.org/files/{{upload.artistLogin}}/{{upload.id}}" class="exp-button utility-button"><i class="fa fa-envelope-o"></i> {{t "share.email"}}</a>
-            </div>
+            <ul class="actions actions-centered">
+                <li>
+                    <a href="{{fbLink}}" class="btn btn-success"><i class="fa fa-facebook"></i> {{t "share.fb"}}</a>            
+                </li>
+                <li>
+                    <a href="{{twitterLink}}" class="btn btn-success"><i class="fa fa-twitter"></i> {{t "share.twitter"}}</a>            
+                </li>
+                <li>
+                    <a href="{{mailLink}}" class="btn btn-success"><i class="fa fa-envelope-o"></i> {{t "share.email"}}</a>
+                </li>
+            </ul>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">{{t 'dlPopup.close'}}</button>

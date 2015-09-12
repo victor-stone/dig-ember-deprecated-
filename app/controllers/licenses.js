@@ -5,6 +5,8 @@ import { translationMacro as t } from "ember-i18n";
 export default Ember.Controller.extend({
     i18n: Ember.inject.service(),
 
+    icon: 'creative-commons',
+    
     _title: t('licenses.title'),
     _byDesc: t('licenses.by'), 
     _byncDesc: t('licenses.by-nc'), 
@@ -12,6 +14,8 @@ export default Ember.Controller.extend({
     _example: t('licenses.example'), 
     _linkToLic: t('licenses.linkToLic'), 
 
+    title: Ember.computed.alias('_title'),
+    
     licenseInfo: function() {
         return {
                 byLogoUrl:   LicenseUtils.logoUrlFormAbbr('by-3','big'),

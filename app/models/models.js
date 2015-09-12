@@ -31,14 +31,14 @@ export var Upload = UploadBasic.extend({
     fileInfo: function() {
         var files = this.get('files');
         for( var i = 0; i < files.length; i++ ) {
-            if( files[i].file_format_info["format-name"] === "audio-mp3-mp3" ) {
+            if( files[i].file_format_info['media-type'] === "audio" ) {
                 return files[i];
             }
         }
     }.property('files'),
 
     mediaUrl: function() {
-        return this.get('fplay_url') || this.get('fileInfo').download_url;
+        return this.get('fplay_url') || this.get('download_url') || this.get('fileInfo.download_url');
     }.property('files'),
     
     mediaTags: function() {

@@ -1,0 +1,17 @@
+<div class="paging">
+    <ul class="pagination">    
+        <li class="{{unless offset 'disabled'}}">
+            {{#link-to (query-params offset=0)}}<i class="fa fa-angle-double-left"></i>{{/link-to}}
+        </li>
+        <li class="{{unless showPrev 'disabled'}}">
+            {{#link-to (query-params offset=prevValue)}}<i class="fa fa-arrow-left"></i>{{/link-to}}
+        </li>
+        <li class="{{unless showNext 'disabled'}}">
+            {{#link-to (query-params offset=nextValue)}}<i class="fa fa-arrow-right"></i>{{/link-to}}
+        </li>
+        <li class="{{unless showLast 'disabled'}}">
+            {{#link-to (query-params offset=lastPage)}}<i class="fa fa-angle-double-right"></i>{{/link-to}}
+        </li>
+    </ul>
+    <div class="center-text">{{offset}} - {{lastValue}} of {{commaize model.total}}</div>
+</div>
