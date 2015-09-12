@@ -107,7 +107,6 @@ export default Ember.Service.extend(Ember.Evented, {
 
     _setupOptions: function() {    
         var me = this;
-        Ember.debug('Setting up queryOptions');
         optionsMeta.forEach( function(optMeta) {
             var name = optMeta.get('name');
             me._optionsMeta.set(name,optMeta);

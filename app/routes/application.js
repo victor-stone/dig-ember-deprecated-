@@ -10,8 +10,8 @@ export default Ember.Route.extend({
             togglePlay: function(upload) {
                 this.get('audioPlayer').togglePlay(upload);
             },
-            query: function() {
-                this.transitionTo('query');
+            query: function(tag) {
+                this.transitionTo('query', tag );
             },
         },
 });

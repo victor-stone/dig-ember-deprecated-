@@ -166,6 +166,10 @@ var TagUtils = Ember.Object.extend({
         return this;
     },
         
+    map: function(callback,context) {
+        return this.get('_tagsArray').map(callback,context || this);
+    },
+    
     toArray: function(source) {
             if( !source ) {
                 return [ ];

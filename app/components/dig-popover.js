@@ -16,6 +16,7 @@ export default Ember.Component.extend({
     className: 'hidden',
     hasElement: false,
     
+    // TODO: put this method into a derivation
     artistSearch: function() {
         if( !this.get('model.length') ) {
             return;
@@ -42,15 +43,15 @@ export default Ember.Component.extend({
     }.property('model'),
     
     _modelWatcher: function() {
-        if( !this.get('hasElement') ) {
+        if( !this.hasElement ) {
             return;
         }
         var hostName = this.get('host');
         var opts = this.get(hostName.camelize());
-        opts.title += '<button class="close" data-dig-popover-close="x">&times;</button>';
         var key = '[data-popover-host="'+hostName+'"]';
         var $host = Ember.$(key);
         if( opts ) {
+            opts.title += '<button class="close" data-dig-popover-close="x">&times;</button>';
             try {
                 $host.data('bs.popover').options.content = opts.content;
                 $host.data('bs.popover').options.title = opts.title;
@@ -70,9 +71,10 @@ export default Ember.Component.extend({
         } else {
             $host.popover('hide');
         }
-    }.observes('hasElement','model'),
+    }.observes('model'),
     
     didInsertElement() {
-        this.set('hasElement',true);
+        this.hasElement = true;
+        Ember.run.next(this,this._modelWatcher);
     }
 });

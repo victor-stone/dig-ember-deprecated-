@@ -1,4 +1,4 @@
-<div class="paging">
+<div class="paging" data-spy="affix" data-offset-bottom="200">
     <ul class="pagination">    
         <li class="{{unless offset 'disabled'}}">
             {{#link-to (query-params offset=0)}}<i class="fa fa-angle-double-left"></i>{{/link-to}}
@@ -13,5 +13,5 @@
             {{#link-to (query-params offset=lastPage)}}<i class="fa fa-angle-double-right"></i>{{/link-to}}
         </li>
     </ul>
-    <div class="center-text">{{offset}} - {{lastValue}} of {{commaize model.total}}</div>
+    <div class="center-text">{{commaize offset}} - {{commaize lastValue}} of {{commaize model.total}}</div>
 </div>

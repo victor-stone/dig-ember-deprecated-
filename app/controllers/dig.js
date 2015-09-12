@@ -9,11 +9,16 @@ export default PageableController.extend({
     _title: t('dig.title'),
         
     title: function() {
-        var text = this.get('queryOptions.searchText');
-        if( text ) {
-            return '<small>' + this.get('_titleWithStr') + '</small> ' + text;
+        return this.get('queryOptions.searchText') || this.get('_title');
+    }.property('queryOptions.searchText'),
+    
+    subTitle: function() {
+        if( this.get('queryOptions.searchText') ) {
+            return this.get('_titleWithStr');
         }
-        return this.get('_title');
-    }.property('queryOptions.searchText')
-
+    }.property('queryOptions.searchText'),
+    
+    icon: function() {
+        return this.get('queryOptions.searchText') ? 'search' : 'music';
+    }.property('queryOptions.searchText'),
 });

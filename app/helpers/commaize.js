@@ -2,7 +2,9 @@ import Ember from 'ember';
 
 export function commaize([value]) {
 
-    if( value ) {
+    if( value === 0 || value === '0' ) {
+        return '0';
+    } else if( value ) {
         var regex = /([0-9]+)(([0-9]{3})($|,))/g;
         var str;
         var commaized = (value.string || value) + '';

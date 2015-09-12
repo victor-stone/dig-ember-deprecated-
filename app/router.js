@@ -8,7 +8,7 @@ var Router = Ember.Router.extend({
 Router.map(function() {
   this.route('uploads', { path: '/files/:user/:upload_id' } );
   this.route('users', { path: '/people/:user_id' });
-  this.route('query');
+  this.route('query', { path: '/query/:tags' } );
   this.route('dig');
   this.route('free');
   this.route('video');

@@ -75,7 +75,7 @@ export default Ember.Controller.extend({
                 this.scrollToAnchor(anchor);
             } else {
                 var me = this;
-                this.transitionToRoute(routeName).then(function(route) {
+                this.transitionToRoute(routeName).then(function() {
                     Ember.run.next(me,me.scrollToAnchor,anchor);
                 });
             }

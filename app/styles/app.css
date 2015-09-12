@@ -280,7 +280,7 @@ article.audio-player {
 }
 
 /* expanding buttons */
-.exp-button {
+.btn-exp {
     position: relative;
     background-repeat: repeat-x;
     background-color: transparent;
@@ -295,8 +295,8 @@ article.audio-player {
     margin: 0 15px;
 }
 
-.exp-button::before,
-.exp-button::after {
+.btn-exp::before,
+.btn-exp::after {
     content: ' ';
     position: absolute;
     background-color: transparent;
@@ -306,34 +306,42 @@ article.audio-player {
     /* height matches above */    
     height: 31px;
 }
-.exp-button::before {
+.btn-exp::before {
     width: 15px;
     left: -15px;
 }
-.exp-button::after {
+.btn-exp::after {
     width: 15px;
     right: -15px;
 }
 
-a.exp-button:hover {
+a.btn-exp:hover {
     text-decoration: none;
     color: white;
 }
 
-.tag-button {
+.btn-tag {
     height: 31px;
     background-position: 0px 0px;
     margin-right: 36px;
     margin-bottom: 12px;
+    display: inline-block;
+    font-weight: 500;
+    color: #444;
+    padding-top: 5px;
+    padding-right: 8px;
+    font-family: Verdana;
+    font-size: 11px;
 }
-.tag-button::before {
+
+.btn-tag::before {
     height: 31px;
     background-position: 0px 0px;
     left: -25px;
     width: 25px;
 }
 
-.tag-button::after {
+.btn-tag::after {
     height: 31px;
     background-position: -90px 0px;
     right: -10px;
@@ -360,7 +368,7 @@ a.exp-button:hover {
 
 .paging {
   position:fixed;
-  top: 150px; 
+  top: 75%; 
   border-radius: 4px;
   border: 1px solid #DDD;
   background-color: #9d9d9d;
@@ -391,12 +399,16 @@ a.exp-button:hover {
 
 /* dig page */
 
-[data-popover-host] {
+[data-popover-host="artist-search"] {
     display: inline-block;
     height: 2px;
     width: 2px;
     position: relative;
     left: 15%;
+}
+
+.popover {
+    min-width: 200px;
 }
 
 /* home page */

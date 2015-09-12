@@ -1,5 +1,5 @@
-<ul class="tags-list">        
+<ul class="tags-list" id="{{catId}}_tags">        
 {{#each tags as |tag|}}
-    {{selectable-tag tag=tag target=target}}
+    {{selectable-tag tag=tag target=target catId=catId}}
 {{/each}}
 </ul>

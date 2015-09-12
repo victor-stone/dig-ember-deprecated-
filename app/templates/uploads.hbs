@@ -46,8 +46,8 @@
             </div>
             <div class="row">
                 <div class="col-md-9 tags">
-                    {{#each model.userTags as |tag|}}             
-                        <button type="button" class="exp-button tag-button light-on-hover" {{action "search" tag}}>{{tag}}</button>
+                    {{#each model.userTags as |tag|}}  
+                        {{link-to tag 'query' tag class="btn-exp btn-tag light-on-hover"}}
                     {{/each}}
                 </div>    
             </div>

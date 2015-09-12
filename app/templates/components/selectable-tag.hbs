@@ -1,4 +1,4 @@
-<a href='#' {{action 'toggle' tag}}>
+<a href='#' {{action 'toggle' tag}} data-tag="{{catId}}-{{tag.name}}">
     <i class="fa {{if tag.isSelected 'fa-check-square-o' 'fa-square-o'}}"></i> 
     {{tag.name}} <span class="light-color">({{tag.count}})</span>
 </a>

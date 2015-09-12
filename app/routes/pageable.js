@@ -22,19 +22,19 @@ export default Ember.Route.extend({
     },
     
     beforeModel: function() {
-        Ember.debug('set loading ON');
+        //Ember.debug('set loading ON');
         var controller = this.controllerFor('application');
         controller.set('loading',true);        
     },
     
     afterModel: function() {
-        Ember.debug('set loading OFF');
+        //Ember.debug('set loading OFF');
         var controller = this.controllerFor('application');
         controller.set('loading',false);        
     },
         
     onOptionsChanged: function() {
-        Ember.debug('Calling option refresh in route ' + this.routeName);
+        //Ember.debug('Calling option refresh in route ' + this.routeName);
         this.refresh();
     },
 
@@ -59,6 +59,7 @@ export default Ember.Route.extend({
     },
         
     actions: {
+        /*
         willTransition: function(transition) {
             Ember.debug('Will transition to: ' + transition.targetName + ' from ' + this.toString() );
             return true;
@@ -67,6 +68,7 @@ export default Ember.Route.extend({
             Ember.debug('Did transition to: ' + this.toString() );
             return true;
         },
+        */
         togglePlay: function() {
             this.get('audioPlayer').set('playlist',this.currentModel.playlist);
             return true;
