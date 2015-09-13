@@ -36,7 +36,7 @@ export default Store.extend({
                 upload.trackbacks = models(record.trackbacks, 'trackback') || [ ];                
                 return me.findUser(upload.artistLogin);
             }).then( function(user) {
-                upload.profile = user;
+                upload.artist = user;
                 return upload;
             });
     },

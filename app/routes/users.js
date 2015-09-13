@@ -17,18 +17,18 @@ export default PageableRoute.extend({
         var retModel = { };
         var store = this.store;
         
-        function getProfile( model ) {
+        function getArtistDetail( model ) {
             retModel = model;
             return store.find('user',params.user_id);
         }
         
-        function returnProfile( model ) {
-            retModel.profile = model;
+        function returnArtistDetail( model ) {
+            retModel.artist = model;
             return retModel;
         }
         
         return this._super(params,transition)
-                    .then( getProfile )
-                    .then( returnProfile );
+                    .then( getArtistDetail )
+                    .then( returnArtistDetail );
     },
 });

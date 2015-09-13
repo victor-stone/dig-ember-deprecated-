@@ -20,7 +20,7 @@
                     </div>
                 {{/if}}
                 <h4 class='media-heading'>{{link-to nowPlaying.name 'uploads' nowPlaying.artist nowPlaying.id bubbles=false}}</h4>
-                {{#link-to 'users' nowPlaying.artistLogin class='user' bubbles=false}}<span class='light-color'>{{nowPlaying.artist}}</span>{{/link-to}}
+                {{#link-to 'users' nowPlaying.artist.login class='user' bubbles=false}}<span class='light-color'>{{nowPlaying.artist}}</span>{{/link-to}}
                  {{playback-scrubber media=nowPlaying bubbles=false}}
                 <div class='clearfix'></div>
             </div>

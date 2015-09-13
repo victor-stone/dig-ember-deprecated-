@@ -2,31 +2,92 @@
 import TagUtils from '../lib/tags';
 import LicenseUtils from '../lib/licenses';
 
+/**
+    Module exists to normalize the wild & crazy results from the query API.
+    
+    For all models there are some consistent naming (if not always present - sigh):
+    
+    These include: .id, .name, .url  The 'url' property always points to a page at ccMixter
+    (Except Trackback - the url property points at the original website.)
+    
+    So all models that represent uploads/media (Upload, Remix, Trackback) have the
+    same properties. 
+    
+    Access properties related to the artist through the artist object on the upload:
+    
+       upload.name         -> upload_name
+       upload.url          -> file_page_url
+       upload.artist.name  -> user_real_name
+       upload.artist.url   -> artist_page_url
+       upload.artist.login -> user_name
+    
+    for UploadDetail there is additionally remixes and trackbacks (adding in the store)
+    
+        upload.remixes[0].name
+        upload.remixes[0].artist.name
+        
+        upload.trackbacks[0].name
+    
+    The audio player will add a .media object that needs to have a .name, .artist.name and 
+    .artist.login for the player to display. These are added below in a callback from 
+    the player.
+    
+*/
+
+function reBind(props)
+{
+    var model = Model.create();
+    for( var k in props ) {
+        if( typeof props[k] === 'string' ) {
+            model.set(k, Ember.computed.alias(props[k]));
+        } else {
+            model.set(k,props[k]);
+        }
+    }
+    return model;
+}
+
 var Model = Ember.Object.extend({
 });
 
 var UploadBasic = Model.extend( {
-    artistBinding: 'user_real_name',
     nameBinding: 'upload_name',
     urlBinding:  'file_page_url',
     idBinding: 'upload_id',
+    
+    artistProperties: function() {
+        return {
+                upload: this,
+                name: 'upload.user_real_name',
+            };
+    },
+    
+    _setupArtist: function() {
+        this.set( 'artist', reBind( this.artistProperties() ) );
+    }.on('init'),
+    
 });
 
 var Remix = UploadBasic.extend();
 
 var Trackback = Model.extend( {
-    artistBinding: 'pool_item_artist',
     nameBinding: 'pool_item_name',
     urlBinding: 'pool_item_url',
     
     embedBinding: 'pool_item_extra.embed',
     typeBinding: 'pool_item_extra.ttype',
+    
+    _setupArtist: function() {
+        this.set('artist', reBind({
+            trackback: this,
+            name: 'trackback.pool_item_artist'
+        }));
+    }.on('init'),
 });
 
 export var Upload = UploadBasic.extend({
 
     idBinding: 'upload_id',
-    artistLoginBinding: 'user_name',
 
     fileInfo: function() {
         var files = this.get('files');
@@ -44,23 +105,29 @@ export var Upload = UploadBasic.extend({
     mediaTags: function() {
         return {
             name: this.get('name'),
-            artist: this.get('artist'),
-            artistLogin: this.get('artistLogin'),
             id: this.get('id'),
+            artist: {
+                    name: this.get('artist.name'),
+                    login: this.get('artist.login'),
+                },
         };
     }.property('files'),
+    
+    artistProperties: function() {
+        return Ember.merge( this._super(), { login: 'upload.user_name' } );
+    },
     
 });
 
 var UserBasic = Model.extend( {
     nameBinding: 'user_real_name',
-    artistLoginBinding: 'user_name',
+    loginBinding: 'user_name',
 });
 
 var User = UserBasic.extend( {
     avatarUrlBinding: 'user_avatar_url',
 
-    page: function() {
+    url: function() {
         return this.get('artist_page_url') + '/profile';
     }.property('artist_page_url'),
     
@@ -85,10 +152,8 @@ var Detail = Upload.extend( {
     hasTag: function(tag) {
         return this.get('tags').contains(tag);
     },
-    
+
     featuringBinding: 'upload_extra.featuring',
-    avatarUrlBinding: 'user_avatar_url',
-    pageBinding: 'file_page_url',
     
     // License stuff 
     
@@ -123,6 +188,10 @@ var Detail = Upload.extend( {
             return LicenseUtils.logoUrlFormAbbr( 'ccplus' );
         }
     }.property('isCCPlus'),
+    
+    artistProperties: function() {
+        return Ember.merge( this._super(), { avatarUrl: 'upload.user_avatar_url' } );
+    },
 });
 
 var Tag = Model.extend( {

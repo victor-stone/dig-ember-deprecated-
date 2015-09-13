@@ -25,16 +25,19 @@ export default Ember.Object.extend({
         var adapter = this.container.lookup('adapter:query');
         return adapter.queryOne(qparams).then( models('user') );
     },
+
     query: function(params) {
         var adapter = this.container.lookup('adapter:query');
         return adapter.query(params);
     },
+
     count: function(qparams) {
         var countParams = Ember.merge({},qparams);
         countParams.f = 'count';
         var adapter = this.container.lookup('adapter:query');
         return adapter.queryOne(countParams);
     },
+
     playlist: function(params) {
         return this.query(params).then( models('upload') );
     },
