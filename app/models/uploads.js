@@ -34,7 +34,7 @@ export default Store.extend({
                 upload            = models(record.upload, 'detail');
                 upload.remixes    = models(record.remixes, 'remix') || [ ];
                 upload.trackbacks = models(record.trackbacks, 'trackback') || [ ];                
-                return me.findUser(upload.artistLogin);
+                return me.findUser(upload.get('artist.login'));
             }).then( function(user) {
                 upload.artist = user;
                 return upload;

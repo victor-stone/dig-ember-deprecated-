@@ -6,7 +6,7 @@ export default Ember.Component.extend({
     
     uploadLink: function() {
         return 'http://dig.ccmixter.org/files/' +
-                    this.get('upload.artistLogin') +
+                    this.get('upload.artist.login') +
                     '/' + this.get('upload.id');
     }.property('upload'),
     
