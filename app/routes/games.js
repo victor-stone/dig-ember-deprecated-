@@ -4,11 +4,12 @@ import PageableRoute from './pageable';
 export default PageableRoute.extend({
 
     routeQueryOptions: {
-            instrumentalOnly: true
-        },
+        instrumentalOnly: true,
+        matchAnyTags: true,
+   },
 
     routeQueryParams: {
-            tags: 'loops'
-        },
+        tags: 'experimental, ambient, electronica'
+    },
     
 });

@@ -4,6 +4,7 @@ export default {
             limit: 'results',
             recent: 'recent',
             deep: 'dig deep',
+            matchAnyTags: 'match any tags',
             licenses: {
                 all: 'All licenses',
                 free: 'Free for commercial use',

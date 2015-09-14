@@ -105,6 +105,10 @@ var TagUtils = Ember.Object.extend({
             return this;
         },
         
+    clear: function() {
+            return this.removeAll();
+        },
+        
     toggle: function(tag,flag) {
             if( flag ) {
                 this.add(tag);

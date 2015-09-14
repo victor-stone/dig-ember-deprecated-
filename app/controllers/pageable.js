@@ -6,15 +6,19 @@ export default Ember.Controller.extend({
     queryOptions: Ember.inject.service(),
     offset: 0,
     
-    _setUpWatcher: function() {
-        this.get('queryOptions').on('optionChanged', this.onOptionsChanged.bind(this));
-    },
-      
-    onOptionsChanged: function() {
-        Ember.debug('Setting offset in ' + this.toString());
-        this.set('offset',0);
-    },                  
+    _lastTotal: -1,
+    
+    _modelSizeChanged: function(obj,key) {
+        if( obj.get(key) !== this._lastTotal ) {
+            this.set('offset',0);
+            this._lastTotal = obj.get(key);
+        }
+    }.observes('model.total'),                  
 
+    printableOffset: function() {
+        return Number(this.get('offset')) + 1;
+    }.property('offset'),
+    
     showPrev: function() {
         return this.get('offset') > 0;        
     }.property('offset'),
@@ -45,9 +49,9 @@ export default Ember.Controller.extend({
     lastPage: function() {
         var total = this.get('model.total');
         var off = this.get('offset');
-        var count = this.get('model.playlist.length');
-        if( total - count > off ) { 
-            return total - this.get('queryOptions.limit');
+        var limit = this.get('queryOptions.limit');
+        if( total - limit > off ) { 
+            return total - limit;
         }
         return false;
     }.property('model'),
@@ -63,11 +67,8 @@ export default Ember.Controller.extend({
             store.info(upload.get('id'))
                 .then( function(details) {
                     me.set('uploadForDownloadPopup',details);
-                    Ember.$('#downloadPopupTriggerLink').click();
+                    Ember.$('#downloadPopup').modal('show');
                 });
         },
-        togglePlay: function(){
-            return true;
-        }
     },
 });

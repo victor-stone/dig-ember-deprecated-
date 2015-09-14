@@ -21,10 +21,17 @@ export default Store.extend({
             f: 'json',
             dataview: 'trackbacks'
         };
+        var sourcesQ = {
+            sources: id,
+            f: 'json',
+            dataview: 'links_u',
+            datasource: 'uploads'
+        };
         var queries = {
             upload: adapter.queryOne(uploadQ),
             remixes: adapter.query(remixesQ),
-            trackbacks: adapter.query(trackbacksQ)
+            trackbacks: adapter.query(trackbacksQ),
+            sources: adapter.query(sourcesQ),
         };
         
         var upload = null;
@@ -34,6 +41,7 @@ export default Store.extend({
                 upload            = models(record.upload, 'detail');
                 upload.remixes    = models(record.remixes, 'remix') || [ ];
                 upload.trackbacks = models(record.trackbacks, 'trackback') || [ ];                
+                upload.sources    = models(record.sources, 'source') || [ ];                
                 return me.findUser(upload.get('artist.login'));
             }).then( function(user) {
                 upload.artist = user;

@@ -125,10 +125,13 @@ div.tags {
     padding: 10px 0;
 }
 
-.fa-youtube-play {
+.upload-page .fa-youtube-play {
     font-size: 120%;
 }
-
+.upload-page a[href*="/people"] {
+  font-size: 22px;
+  color: black;
+}
 .add-button-container {
     float: right;
 }

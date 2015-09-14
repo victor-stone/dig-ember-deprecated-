@@ -68,7 +68,8 @@ var UploadBasic = Model.extend( {
     
 });
 
-var Remix = UploadBasic.extend();
+var Remix  = UploadBasic.extend();
+var Source = UploadBasic.extend();
 
 var Trackback = Model.extend( {
     nameBinding: 'pool_item_name',
@@ -153,7 +154,21 @@ var Detail = Upload.extend( {
         return this.get('tags').contains(tag);
     },
 
-    featuringBinding: 'upload_extra.featuring',
+    featuring: function() {
+        var feat = this.get('upload_extra.featuring');
+        if( !feat && this.get('sources') ) {
+            var unique = [ ];
+            // hello O(n)
+            this.get('sources').forEach( f => {
+                var name = f.get('artist.name');
+                if( !unique.contains(name) ) {
+                    unique.push(name);
+                }
+            });
+            feat = unique.join(', ');
+        }    
+        return feat;
+    }.property('upload_extra.featuring','remixes'),
     
     // License stuff 
     
@@ -213,7 +228,8 @@ var models = {
     upload: Upload,
     user: User,
     tag: Tag,
-    userBasic: UserBasic
+    userBasic: UserBasic,
+    source: Source
 };
 
 export default function modelWrap(param,model) {

@@ -44,6 +44,31 @@ export default Ember.Controller.extend({
     // UI state
     optionsOpen: Ember.computed.alias('queryOptions.userEditing'),
 
+    _setupWatcher: function() {
+        this.get('queryOptions').on('onOptionBarChanged',this, this._watchForOptionBarChange);
+    }.on('init'),
+
+    _watchForOptionBarChange: function(hash) {
+        if( this.get('optionsOpen') ) {
+            var me = this;
+            Ember.run.next( this, function() {
+                var css = { height: Ember.$('.inner-qo').outerHeight() };
+                var $qo = Ember.$('.query-opts');
+                $qo.css(css);
+                Ember.$('.inner-qo').slideUp(300,function() {
+                    me.set('queryOptions.hidden',hash);
+                    Ember.run.next( this, function() {
+                        Ember.$('.inner-qo').slideDown(300,function() {
+                            $qo.removeAttr('style');
+                        });
+                    });
+                });
+            });
+        } else {
+            this.set('queryOptions.hidden',hash);
+        }
+    },
+    
     scrollToAnchor: function(name) {
         try {    
             var anchor = Ember.$('a[name="'+name+'"]');
@@ -57,10 +82,6 @@ export default Ember.Controller.extend({
     },
         
     actions: {
-        search: function() {
-            this.set('queryOptions.searchText', this.searchCollector);
-            this.transitionToRoute('dig');
-        },
         toggleOptions: function() {
             if( this.get('optionsOpen') ) {
                 Ember.$('#query-opts').slideUp(400);

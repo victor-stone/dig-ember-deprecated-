@@ -55,51 +55,70 @@
         </div><!-- collapse -->
       </div><!-- container-fluid -->
         <div id="query-opts" style="display:none" class="form-inline query-opts center-text clearfix">
-            <div class="form-group">
-                {{at-select content=licenses 
-                            selection=queryOptions.licenseScheme 
-                            action=(action (mut queryOptions.licenseScheme))
-                            className='form-control'
-                }}        
+            <div class="inner-qo">
+                {{#unless queryOptions.hidden.licenseScheme}}
+                    <div class="form-group">
+                        {{at-select content=licenses 
+                                    selection=queryOptions.licenseScheme 
+                                    action=(action (mut queryOptions.licenseScheme))
+                                    className='form-control'
+                        }}        
         
-                <button class="btn btn-xs form-control" {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></button>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="instrumentalOnly">{{t 'queryOptions.instrumental'}}</label> 
-                {{input type="checkbox" 
-                        checked=queryOptions.instrumentalOnly 
-                        id="instrumentalOnly"
-                        name="instrumentalOnly"
-                }} 
-            </div>
-            <div class="form-group">
-                <label class="control-label">{{t 'queryOptions.limit'}} </label>
-                {{at-select content=limits 
-                            selection=queryOptions.limit 
-                            action=(action (mut queryOptions.limit))
+                        <button class="btn btn-xs form-control" {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></button>
+                    </div>
+                {{/unless}}
+                {{#unless queryOptions.hidden.instrumentalOnly}}
+                    <div class="form-group">
+                        {{input type="checkbox" 
+                                checked=queryOptions.instrumentalOnly 
+                                id="instrumentalOnly"
+                                name="instrumentalOnly"
+                        }} 
+                        <label class="control-label" for="instrumentalOnly">{{t 'queryOptions.instrumental'}}</label> 
+                    </div>
+                {{/unless}}
+                <div class="form-group">
+                    <label class="control-label">{{t 'queryOptions.limit'}} </label>
+                    {{at-select content=limits 
+                                selection=queryOptions.limit 
+                                action=(action (mut queryOptions.limit))
+                                className='form-control'
+                    }}
+                </div>
+                {{#unless queryOptions.hidden.matchAnyTags}}
+                    <div class="form-group">
+                        {{input type="checkbox" 
+                            checked=queryOptions.matchAnyTags
+                            id="matchAnyTags"
+                            name="matchAnyTags"
+                        }} 
+                        <label class="control-label" for="matchAnyTags">{{t 'queryOptions.matchAnyTags'}}</label> 
+                    </div>
+                {{/unless}}
+                {{#unless queryOptions.hidden.genre}}
+                    <div class="form-group">
+                        {{at-select content=genres 
+                            selection=queryOptions.genre 
+                            action=(action (mut queryOptions.genre))
                             className='form-control'
-                }}
-            </div>
-
-            <div class="form-group">
-                {{at-select content=genres 
-                    selection=queryOptions.genre 
-                    action=(action (mut queryOptions.genre))
-                    className='form-control'
-                }}  
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="recent">{{t 'queryOptions.recent'}}</label> 
-                {{input type="checkbox" 
-                    checked=queryOptions.recent 
-                    id="recent"
-                    name="recent"
-                }} 
-            </div>
-            <div class="form-group">
-                <button class="btn btn-xs form-control" {{action 'query' '*'}}><i class="fa fa-tags"></i> {{t 'queryOptions.deep'}}</button>
-            </div>
-        </div><!-- form-inline query-opts -->
+                        }}  
+                    </div>
+                {{/unless}}
+                <div class="form-group">
+                    {{input type="checkbox" 
+                        checked=queryOptions.recent 
+                        id="recent"
+                        name="recent"
+                    }} 
+                    <label class="control-label" for="recent">{{t 'queryOptions.recent'}}</label> 
+                </div>
+                {{#unless queryOptions.hidden.digDeep}}
+                    <div class="form-group">
+                        <button class="btn btn-xs form-control" {{action 'query' '*'}}><i class="fa fa-tags"></i> {{t 'queryOptions.deep'}}</button>
+                    </div>
+                {{/unless}}
+            </div><!-- form-inline query-opts -->
+        </div><!-- inner-qo -->
     </nav>
     <div class="outlet-wrap">
         {{outlet}}

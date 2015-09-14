@@ -2,16 +2,23 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
     audioPlayer: Ember.inject.service(),
-
+    queryOptions: Ember.inject.service(),
+    
     actions: {
-            doLicensePopup: function() {
-                Ember.$('#licenseInfoPopupTriggerLink').click();
-            },                   
-            togglePlay: function(upload) {
-                this.get('audioPlayer').togglePlay(upload);
-            },
-            query: function(tag) {
-                this.transitionTo('query', tag );
-            },
+        search: function(text) {
+            var appc = this.container.lookup('controller:application');
+            appc.set('searchCollector', text);
+            this.set('queryOptions.searchText', text);
+            this.transitionTo('dig');
         },
+        doLicensePopup: function() {
+            Ember.$('#licenseInfoPopup').modal('show');
+        },                   
+        togglePlay: function(upload) {
+            this.get('audioPlayer').togglePlay(upload);
+        },
+        query: function(tag) {
+            this.transitionTo('query', tag );
+        },
+    },
 });

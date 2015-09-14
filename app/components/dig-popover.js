@@ -30,7 +30,7 @@ export default Ember.Component.extend({
         var r1 = new RegExp(/{login}/);
         var r2 = new RegExp(/{name}/);
         var html = '<ul class="list-group">';
-        this.get('model').forEach( u => html += tmpl.replace(r1,u.get('artist.login')).replace(r2,chop(u.get('name'))) );
+        this.get('model').forEach( u => html += tmpl.replace(r1,u.get('login')).replace(r2,chop(u.get('name'))) );
         html += '</ul>';
         return {
                     title: 'Maybe an artist...?',
@@ -43,7 +43,7 @@ export default Ember.Component.extend({
     }.property('model'),
     
     _modelWatcher: function() {
-        if( !this.hasElement ) {
+        if( Ember.isFastBoot() || !this.hasElement ) {
             return;
         }
         var hostName = this.get('host');

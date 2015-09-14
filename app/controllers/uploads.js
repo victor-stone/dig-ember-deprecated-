@@ -5,14 +5,8 @@ export default Ember.Controller.extend({
     poolItemForTrackbackPopup: { },
     
     actions: {
-        search: function(text) {
-            var appc = this.container.lookup('controller:application');
-            appc.set('searchCollector', text);
-            this.set('queryOptions.searchText', text);
-            this.transitionToRoute('dig');
-        },
         doDownloadPopup: function() {
-            Ember.$('#downloadPopupTriggerLink').click();
+            Ember.$('#downloadPopup').modal('show');
         },
         doTrackbackPopup: function(poolItem) {
             this.set('poolItemForTrackbackPopup',poolItem);

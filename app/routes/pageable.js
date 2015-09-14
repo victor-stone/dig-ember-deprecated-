@@ -4,10 +4,12 @@ import TagUtils from '../lib/tags';
 export default Ember.Route.extend({
     audioPlayer: Ember.inject.service(),
     queryOptions: Ember.inject.service(),
+    
     queryParams: {
         offset: { refreshModel: true },
     },
-    routeQueryOptions: undefined,
+
+    routeQueryOptions: { },
     routeQueryParams: undefined,
 
     _setupWatcher: function() {
@@ -34,7 +36,6 @@ export default Ember.Route.extend({
     },
         
     onOptionsChanged: function() {
-        //Ember.debug('Calling option refresh in route ' + this.routeName);
         this.refresh();
     },
 
@@ -97,7 +98,7 @@ export default Ember.Route.extend({
                     limit: 10,
                     sort: 'rank',
                     ord: 'desc',
-                    reqtags: 'remix',
+                    oneof: 'remix,extended_mix',
                     f: 'json',
                     _cache_bust: (new Date()).getTime(),                     
                 };
@@ -120,16 +121,13 @@ export default Ember.Route.extend({
         var routeParams = this.get('routeQueryParams');
 
         // query settings from UI (limit, genre, etc) 
-        if( this.get('routeQueryOptions')) {
-            // this route forces options on the user. update the UI
-            this.get('queryOptions').setBatch( this.get('routeQueryOptions') );
-        }
-        var userOptions = this.get('queryOptions.queryParams');
+        var userOptions = this.get('queryOptions').setBatch( this.routeName, 
+                                                             this.get('routeQueryOptions') );
 
         // Ember's dynamic url parts (/:user_id)
         var dynParams = this.translateDynamicParamsToQuery(params);
 
-        // query parameters (?foo=bar&offset=20) -- Is is at good idea to give user this much power?
+        // query parameters (?foo=bar&offset=20) 
         var urlParams = transition.queryParams;
 
         var qparams = this.safeMergeParameters(sysDefaults,routeParams,userOptions,dynParams,urlParams);

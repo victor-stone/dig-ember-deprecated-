@@ -3,15 +3,13 @@ import PageableRoute from './pageable';
 export default PageableRoute.extend({
 
     routeQueryOptions: {
-        instrumentalOnly: false,
-        genre: '*',
-        recent: false,
-        licenseScheme: 'all'
+        matchAnyTags: false,
     },
-    
+            
     translateDynamicParamsToQuery: function( params ) {
         return { u: params.user_id };
     },
+
 
     model: function(params,transition) {
         var retModel = { };

@@ -3,6 +3,10 @@ import PageableRoute from './pageable';
 
 export default PageableRoute.extend({
 
+    routeQueryOptions: {
+        matchAnyTags: false,
+    },
+    
     genreTags: null,
     
     translateDynamicParamsToQuery: function( params ) {
@@ -34,7 +38,7 @@ export default PageableRoute.extend({
         
         function gotRecords(model) {
             model.trackTitle = trackTitle;
-            model.playlist = model.playlist.rejectBy('id',id);
+            model.playlist = model.playlist.rejectBy('id',Number(id));
             return model;
         }
         

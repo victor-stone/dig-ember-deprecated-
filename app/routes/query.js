@@ -3,6 +3,12 @@ import TagUtils from '../lib/tags';
 
 export default PageableRoute.extend({
 
+    routeQueryOptions: {
+        genre: '*',
+        instrumentalOnly: false,
+        digDeep: false,
+    },
+    
     translateDynamicParamsToQuery: function( params ) { 
         return { tags: TagUtils.create( { source: params.tags } ).toString() };
     },
