@@ -1,8 +1,8 @@
 /* globals Ember */
-import Store from './store';
+import Query from './query';
 import models from './models';
 
-export default Store.extend({
+export default Query.extend({
     find: function(name,id) {
         Ember.debug('UPLOADS Store: Looking for adapter: ' + name + ' (using :query)');
         var adapter = this.container.lookup('adapter:query');

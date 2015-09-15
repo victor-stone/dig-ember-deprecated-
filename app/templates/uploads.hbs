@@ -7,7 +7,7 @@
 </div>
 <div class="container upload-page">
     <div class="row">
-        <div class="col-md-3 hidden-sm hidden-xs">
+        <div class="col-md-2 col-md-offset-1 hidden-sm hidden-xs">
             {{partial 'upload-action'}}
         </div>
         <div class="col-md-8 col-sm-12">
@@ -44,9 +44,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-9 tags">
+                <div class="col-md-8 col-md-offset-1 tags">
                     {{#each model.userTags as |tag|}}  
-                        {{link-to tag 'query' tag class="btn-exp btn-tag light-on-hover"}}
+                        {{link-to tag 'tags' tag class="btn-exp btn-tag light-on-hover"}}
                     {{/each}}
                 </div>    
             </div>

@@ -1,13 +1,6 @@
 import PageableRoute from './pageable';
 import models from '../models/models';
 
-function match(text) {
-    var rgx = new RegExp( text ,'i');
-    return function(u) {
-        return u.user_real_name.match(rgx) || u.user_name.match(rgx);
-    };
-}
-
 export default PageableRoute.extend({
 
     routeQueryOptions: {
@@ -16,22 +9,27 @@ export default PageableRoute.extend({
     
     routeQueryParams: function() {
             return { 
-                     s: this.get('queryOptions.searchText'),
-                     search_type: 'all'
+                     searchp: this.get('queryOptions.searchText'),
+                     search_type: 'all',
+                     dataview: 'links_by'
                     };
         }.property('queryOptions.searchText'),
 
+    _watcher: function() {
+        this.refresh();
+    }.observes('queryOptions.searchText'),
+    
     model: function(params,transition) {
         var retModel = { artists: [ ] };
         
         var text = this.get('queryOptions.searchText');
         if( text ) {
             var args = {
-                    t: 'search_users',
+                    dataview: 'user_basic',
                     limit: 40,
                     minrx: 1,
                     f: 'json',
-                    search: text
+                    searchp: text
                 };
 
             var store = this.store;
@@ -39,10 +37,11 @@ export default PageableRoute.extend({
                 retModel = result;
                 return store.query(args);
             }).then( function(users) {
-                retModel.artists = models( users.filter(match(text)), 'userBasic'  );
+                retModel.artists = models( users, 'userBasic'  );
                 return retModel;
             });
         }
         return this._model(params,transition);
-    }
+    },
+
 });

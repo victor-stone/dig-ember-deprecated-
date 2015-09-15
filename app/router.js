@@ -8,7 +8,7 @@ var Router = Ember.Router.extend({
 Router.map(function() {
   this.route('uploads', { path: '/files/:user/:upload_id' } );
   this.route('users', { path: '/people/:user_id' });
-  this.route('query', { path: '/query/:tags' } );
+  this.route('query');
   this.route('dig');
   this.route('free');
   this.route('video');
@@ -17,8 +17,8 @@ Router.map(function() {
   this.route('morelike', { path: '/morelike/:upload_id' } );
   this.route('licenses');
   this.route('nowplaying');
-
   this.route('unknown-upload');
+  this.route('tags', { path: '/tags/:tags' } );
 });
 
 export default Router;

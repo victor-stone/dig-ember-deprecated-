@@ -143,9 +143,10 @@ export default {
             mood: 'Mood'
             },
         clear: 'clear',
+        subTitle: 'tagged with',
     },
     playlist: {
-        noMatches: 'Hrumph. No matches for your query. Try again....',
+        noMatches: 'Hrumph. No matches for your search. Try again....',
         loading: 'Hold on... ',
     },
     query: {

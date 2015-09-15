@@ -1,5 +1,5 @@
 /* globals Ember */
-import Store from './store';
+import Query from './query';
 import TagUtils from '../lib/tags';
 import models from './models';
 /**
@@ -25,7 +25,7 @@ import models from './models';
         }
     The actual values in the hash depends on the 'details' option
 */
-export default Store.extend({
+export default Query.extend({
     query: function(params) {
         var adapter = this.container.lookup('adapter:query');
         if( params.category ) {

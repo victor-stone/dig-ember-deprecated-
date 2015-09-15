@@ -226,4 +226,16 @@ TagUtils.reopenClass({
         return TagUtils.create( opts ).forEach(callback,context);
     }
 });
+
+String.prototype.tagize = function(pretty) {
+    var tu = TagUtils.create( { source: this } );
+    var str = tu.toString();
+    if( pretty ) {
+        var rx = new RegExp(tu.separator,'g');
+        str = str.replace(rx,tu.separator + ' ');
+    }
+    return str;
+};
+
+
 export default TagUtils;

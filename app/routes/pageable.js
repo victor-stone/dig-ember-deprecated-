@@ -109,7 +109,7 @@ export default Ember.Route.extend({
     model: function(params,transition) {  
         return this._model(params,transition);
     },
-    
+
     // _super is broken for async calls (was fixed, borked again, etc.)
     // use this call from .then() functions in derivations
     _model: function(params,transition) {  

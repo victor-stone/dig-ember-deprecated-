@@ -34,7 +34,7 @@ export default Ember.Component.extend({
         html += '</ul>';
         return {
                     title: 'Maybe an artist...?',
-                    placement: 'right',
+                    placement: 'bottom',
                     html: true,
                     content: html,
                     _dataHook: dataHook,
@@ -43,7 +43,10 @@ export default Ember.Component.extend({
     }.property('model'),
     
     _modelWatcher: function() {
-        if( Ember.isFastBoot() || !this.hasElement ) {
+        // only show a popover on the first page of a query
+        // when the user is at ?offset=n they have already
+        // seen it
+        if( Ember.isFastBoot() || !this.hasElement || this.get('offset') ) {
             return;
         }
         var hostName = this.get('host');

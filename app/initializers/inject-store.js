@@ -1,4 +1,4 @@
-import Store from '../models/store';
+import Query from '../models/query';
 import Uploads from '../models/uploads';
 import Tags from '../models/tags';
 
@@ -6,7 +6,7 @@ export default {
     name: 'inject-store',
     initialize: function(container, app) {
         var STORE_MAIN = 'store:main';
-        app.register(STORE_MAIN, Store);
+        app.register(STORE_MAIN, Query);
         app.inject('route','store', STORE_MAIN);
         app.inject('controller','store', STORE_MAIN);
         

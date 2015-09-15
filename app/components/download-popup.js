@@ -19,8 +19,8 @@ export default Ember.Component.extend({
             window.prompt('Control (or Cmd) + C to copy', Ember.$('#attributionText')[0].value );
         },
         doLicensePopup: function() {        
-            Ember.$('#downloadPopupClose').click();
-            Ember.$('#licenseInfoPopupTriggerLink').click();
+            Ember.$('#downloadPopup').modal('hide');
+            Ember.$('#licenseInfoPopup').modal('show');
         },        
     }
 });

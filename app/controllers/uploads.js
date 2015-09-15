@@ -10,13 +10,13 @@ export default Ember.Controller.extend({
         },
         doTrackbackPopup: function(poolItem) {
             this.set('poolItemForTrackbackPopup',poolItem);
-            Ember.$('#trackbackPopupTriggerLink').click();
+            Ember.$('#trackbackPopup').modal('show');
         },
         doTrackbackForm: function() {
-            Ember.$('#trackbackFormTriggerLink').click();
+            Ember.$('#trackbackForm').modal('show');
         },
         doSharePopup: function() {
-            Ember.$('#sharePopupTriggerLink').click();
+            Ember.$('#sharePopup').modal('show');
         },
         doLicensePopup: function() {
             return true;
