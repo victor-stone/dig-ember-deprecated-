@@ -34,19 +34,6 @@ import LicenseUtils from '../lib/licenses';
     
 */
 
-function reBind(props)
-{
-    var model = Model.create();
-    for( var k in props ) {
-        if( typeof props[k] === 'string' ) {
-            model.set(k, Ember.computed.alias(props[k]));
-        } else {
-            model.set(k,props[k]);
-        }
-    }
-    return model;
-}
-
 var Model = Ember.Object.extend({
 });
 
@@ -213,6 +200,20 @@ var Tag = Model.extend( {
     nameBinding: 'tags_tag',
     countBinding: 'tags_count'
 });
+
+function reBind(props)
+{
+    var model = Model.create();
+    for( var k in props ) {
+        if( typeof props[k] === 'string' ) {
+            model.set(k, Ember.computed.alias(props[k]));
+        } else {
+            model.set(k,props[k]);
+        }
+    }
+    return model;
+}
+
 
 function _wrap(param,model) {
     if( Ember.isArray(param) ) {

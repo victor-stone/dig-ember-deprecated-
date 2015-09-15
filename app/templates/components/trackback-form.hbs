@@ -55,10 +55,9 @@
  </label>
   <div class="col-md-5">
     <select id="mtype" name="mtype" class="form-control" {{action 'typeChange' on='change'}}>
-      <option value="video">{{t "tbForm.types.video"}}</option>
-      <option value="podcast">{{t "tbForm.types.podcast"}}</option>
-      <option value="album">{{t "tbForm.types.album"}}</option>
-      <option value="website">{{t "tbForm.types.website"}}</option>
+        {{#each types as |type|}}
+          <option value="{{type}}">{{t (mp "tbForm.types" type)}}</option>
+         {{/each}} 
     </select>
   </div>
 </div>

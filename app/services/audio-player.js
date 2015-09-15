@@ -98,6 +98,14 @@ var Media = Ember.Object.extend(Ember.Evented, {
     }
   },
 
+  togglePlay: function() {
+    if (this.get('isPlaying')) {
+      this.stop();
+    } else {
+      this.play();
+    }
+  },
+  
   togglePause: function() {
     var sound = this.get('sound');
     if( sound ) {
@@ -114,25 +122,22 @@ var Media = Ember.Object.extend(Ember.Evented, {
     return this.setPosition(duration * (percentage / 100));
   },
 
-  togglePlay: function() {
-    if (this.get('isPlaying')) {
-      this.stop();
-    } else {
-      this.play();
-    }
-  },
-  
 });
 
 export default Ember.Service.extend({
     /**
-        nowPlaying is a 'Media' object - wrapper for underlying implementation
+        nowPlaying is an instance of Media - wrapper for underlying implementation
         of sound player.
         
         If whatever you pass to the play() method has a 'mediaTags' hash of bindings
         then those bindings with show up on the nowPlaying object.
     */
     nowPlaying: null,
+    
+    /**
+        playlist is an array of models. the .media property may not be
+        present on these items.
+    */
     playlist: null,
     
     play: function(playable) {
@@ -161,15 +166,28 @@ export default Ember.Service.extend({
 
     hasNext: function() {
         var index = this.get('_nowPlayingIndex');
-        return index > -1 && index < this.playlist.length - 1;
+        return index > -1 && index < this.get('playlist.length') - 1;
     }.property('_nowPlayingIndex'),
     
     hasPrev: function() {
         return this.get('_nowPlayingIndex') > 0;
     }.property('_nowPlayingIndex'),
     
+    bindToNowPlaying: function(model) {
+        var np = this.get('nowPlaying');
+        if( np && model) {
+            if( !Ember.isArray(model) ) {
+                model = [ model ];
+            }
+            model = model.findBy('mediaUrl',this.get('nowPlaying.url'));
+            if( model ) {
+                model.set('media', np );
+            }
+        }
+    },            
+
     _delegate: function(playable,method) {
-        var media = this._media(playable) || this.nowPlaying;
+        var media = this._media(playable) || this.get('nowPlaying');
         if( media ) {
             media[method]();
         }
@@ -184,26 +202,22 @@ export default Ember.Service.extend({
     }.observes('nowPlaying'),
     
     _advance: function(dir) {
-        if( this.playlist && this.nowPlaying ) {
-            var index =  this.get('_nowPlayingIndex') + (1*dir);
-            if( index >= 0 && index < this.playlist.length) {
-                this.play( this.playlist[index] );
-            }
-        }
+        this.play( this.get('playlist')[this.get('_nowPlayingIndex') + (1*dir)] );
     },
     
     _nowPlayingIndex: function() {
         var index = -1;
-        if( this.playlist && this.nowPlaying ) {
-            index = this.playlist.indexOf( this.playlist.findBy('mediaUrl',this.nowPlaying.get('url')) );
+        var pl = this.get('playlist');
+        if( pl && this.get('nowPlaying') ) {
+            index = pl.indexOf( pl.findBy('mediaUrl',this.get('nowPlaying.url')) );
         }
         return index;
     }.property('playlist','nowPlaying'),
     
     _onPlay: function(media) {
-        var nowPlaying = this.get('nowPlaying');
-        if( nowPlaying && nowPlaying !== media ) {
-            nowPlaying.stop();
+        var np = this.get('nowPlaying');
+        if( np && np !== media ) {
+            np.stop();
         }
         this.set('nowPlaying',media);
         media.one('onFinish',this, this._onFinish);
@@ -233,7 +247,7 @@ export default Ember.Service.extend({
             if (cache[url]) {
                 media = cache[url];
             } else {    
-                var args = Ember.merge( { audioPlayer: this, url: url },  playable.get('mediaTags') );
+                var args = Ember.merge( { url: url },  playable.get('mediaTags') );
                 media = Media.create(args);
                 media.on('onPlay',this,this._onPlay);
                 cache[url] = media;

@@ -6,10 +6,12 @@ export default Ember.Route.extend({
     
     actions: {
         search: function(text) {
-            var appc = this.container.lookup('controller:application');
-            appc.set('searchCollector', text);
+            this.controllerFor('application').set('searchCollector', text);
             this.set('queryOptions.searchText', text);
             this.transitionTo('dig');
+        },
+        doDownloadPopup: function(upload) {            
+            this.controllerFor('application').send('doDownloadPopup',upload);
         },
         doLicensePopup: function() {
             Ember.$('#licenseInfoPopup').modal('show');

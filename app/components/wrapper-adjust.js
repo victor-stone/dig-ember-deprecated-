@@ -5,7 +5,7 @@ export default Ember.Component.extend({
         Ember.run.scheduleOnce('afterRender', this, 'fixWindow');
     },
     fixWindow: function() {
-        if( typeof FastBoot !== 'undefined' ) {
+        if( Ember.isFastBoot() ) {
             return;
         }
         function adjustFooter() {

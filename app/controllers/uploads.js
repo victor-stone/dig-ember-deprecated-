@@ -5,9 +5,7 @@ export default Ember.Controller.extend({
     poolItemForTrackbackPopup: { },
     
     actions: {
-        doDownloadPopup: function() {
-            Ember.$('#downloadPopup').modal('show');
-        },
+
         doTrackbackPopup: function(poolItem) {
             this.set('poolItemForTrackbackPopup',poolItem);
             Ember.$('#trackbackPopup').modal('show');
@@ -18,11 +16,5 @@ export default Ember.Controller.extend({
         doSharePopup: function() {
             Ember.$('#sharePopup').modal('show');
         },
-        doLicensePopup: function() {
-            return true;
-        },
-        togglePlay: function() {
-            return true;
-        }
     },
 });

@@ -1,5 +1,3 @@
-/* global FastBoot */
-
 import Ember from 'ember';
 
 function _makeQ(qparams) {
@@ -17,7 +15,7 @@ export default Ember.Object.extend( {
     _query: function(qString,isSingleton) {
         var url = this.queryHost + qString;
 
-        if (typeof FastBoot !== 'undefined') {        
+        if ( Ember.isFastBoot() ) {        
 //          FastBoot.debug('Using NodeJS for AJAX');
             var ajax = this.container.lookup('ajax:node');
             return ajax( url, 'GET', {} ).then( function( json ) {

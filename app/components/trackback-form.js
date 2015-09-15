@@ -8,6 +8,7 @@ export default Ember.Component.extend({
     artist: '',
     embed: '',
     
+    types: [ 'video', 'podcast', 'album', 'web'],
     type: 'video',
     upload: 0,
     
@@ -50,22 +51,21 @@ export default Ember.Component.extend({
                       dataType: 'text',
     //                contentType: 'application/x-www-form-urlencoded',
                     };
-                var me = this;
                 return Ember.RSVP.resolve(Ember.$.ajax(args))
-                    .then( function(r) { 
+                    .then( r => { 
                         if( r === 'ok' ) {
-                            me.set('messageType','success');
-                            me.set('message','tbForm.success');
+                            this.set('messageType','success');
+                            this.set('message','tbForm.success');
                         } else {
-                            me.set('messageType','danger');
-                            me.set('message','tbForm.wups');
+                            this.set('messageType','danger');
+                            this.set('message','tbForm.wups');
                         }
                         return r === 'ok';
                     });
         },
         typeChange: function() {
             var i = this.$('#mtype')[0].selectedIndex;
-            this.set( 'type', [ 'video', 'podcast', 'album', 'web'][i] );
+            this.set( 'type', this.get('types')[i] );
         },
         
         cancel: function() {

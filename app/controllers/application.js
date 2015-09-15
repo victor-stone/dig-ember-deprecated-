@@ -72,7 +72,7 @@ export default Ember.Controller.extend({
     scrollToAnchor: function(name) {
         try {    
             var anchor = Ember.$('a[name="'+name+'"]');
-            var offset = 0; // incNav ? $jq('#myNav_div').height() : 0;
+            var offset = 0; 
             Ember.$('html,body').animate({ scrollTop: Ember.$(anchor).offset().top - offset },
                     { duration: 'slow', easing: 'swing'});
             }
@@ -82,14 +82,19 @@ export default Ember.Controller.extend({
     },
         
     actions: {
+        doDownloadPopup: function(upload) {            
+            this.set('uploadForDownloadPopup', upload);
+            Ember.run.next( this, function() {
+                Ember.$('#downloadPopup').modal('show');
+            });
+        },
         toggleOptions: function() {
-            if( this.get('optionsOpen') ) {
-                Ember.$('#query-opts').slideUp(400);
-            }
-            else {
+            if(  this.toggleProperty('optionsOpen') ) {
                 Ember.$('#query-opts').slideDown(600);
             }
-            this.toggleProperty('optionsOpen');
+            else {
+                Ember.$('#query-opts').slideUp(400);
+            }
         },
         goToAnchor: function(routeName,anchor) {
             if( this.get('currentPath') === routeName ) {

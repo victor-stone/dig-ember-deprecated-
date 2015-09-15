@@ -35,7 +35,7 @@
 */
 var fs = require('fs');
 var path = require('path');
-var RSVP = require('RSVP');
+var RSVP = require('rsvp');
 var util = require('util');
 
 var fs_readdir = RSVP.denodeify(fs.readdir);

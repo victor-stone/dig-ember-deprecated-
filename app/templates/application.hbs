@@ -159,11 +159,11 @@
         <div class="col-md-3">
               <h1>{{t 'footer.social'}}</h1>
               <ul>
-                <li><a href="https://twitter.com/ccmixtermusic">Twitter</a></li>
-                <li><a href="https://www.youtube.com/channel/UCU7QBXVX4gcePOcEyha7yng">YouTube</a></li>
-                <li><a href="https://vimeo.com/ccmixter">Vimeo</a></li>
-                <li><a href="https://www.facebook.com/CCMixter">Facebook</a></li>
-                <li><a href="http://instagram.com/ccmixter">Instagram</a></li>
+                <li><a href="https://twitter.com/ccmixtermusic"><i class="fa fa-twitter"></i> Twitter</a></li>
+                <li><a href="https://www.youtube.com/channel/UCU7QBXVX4gcePOcEyha7yng"><i class="fa fa-youtube"></i> YouTube</a></li>
+                <li><a href="https://vimeo.com/ccmixter"><i class="fa fa-vimeo"></i> Vimeo</a></li>
+                <li><a href="https://www.facebook.com/CCMixter"><i class="fa fa-facebook"></i> Facebook</a></li>
+                <li><a href="http://instagram.com/ccmixter"><i class="fa fa-instagram"></i> Instagram</a></li>
               </ul>
         </div>
         <div class="col-md-3">
@@ -178,7 +178,9 @@
     </div>
 </div>
 {{license-popup licenseInfo=licenseInfo}}
-
+{{#if uploadForDownloadPopup}}
+    {{download-popup upload=uploadForDownloadPopup}}   
+{{/if}}
 {{#if audioPlayer.nowPlaying}} 
     {{audio-player}}
 {{/if}}

@@ -13,7 +13,7 @@ export default Ember.Route.extend({
     routeQueryParams: undefined,
 
     _setupWatcher: function() {
-        this.get('queryOptions').on('optionsChanged',this._optionsWatcher.bind(this));
+        this.get('queryOptions').on('optionsChanged',this,this._optionsWatcher);
     }.on('init'),
     
     _optionsWatcher: function() {
@@ -24,15 +24,11 @@ export default Ember.Route.extend({
     },
     
     beforeModel: function() {
-        //Ember.debug('set loading ON');
-        var controller = this.controllerFor('application');
-        controller.set('loading',true);        
+        this.controllerFor('application').set('loading',true);
     },
     
     afterModel: function() {
-        //Ember.debug('set loading OFF');
-        var controller = this.controllerFor('application');
-        controller.set('loading',false);        
+        this.controllerFor('application').set('loading',false);
     },
         
     onOptionsChanged: function() {
@@ -48,8 +44,8 @@ export default Ember.Route.extend({
             for( var k in obj ) {
                 var val = obj[k];
                 if( typeof(val) !== 'undefined' ) {
-                    if( k === 'tags' ) {                    
-                        target[k] = TagUtils.combine(target.tags,val);
+                    if( k === 'tags' || k === 'reqtags' || k === 'oneof' ) {                    
+                        target[k] = TagUtils.combine(target[k],val);
                     } else {
                         target[k] = val;
                     }
@@ -60,35 +56,27 @@ export default Ember.Route.extend({
     },
         
     actions: {
-        /*
-        willTransition: function(transition) {
-            Ember.debug('Will transition to: ' + transition.targetName + ' from ' + this.toString() );
-            return true;
-        },
-        didTransition: function() {
-            Ember.debug('Did transition to: ' + this.toString() );
-            return true;
-        },
-        */
         togglePlay: function() {
             this.get('audioPlayer').set('playlist',this.currentModel.playlist);
             return true;
         },
+        
         loading: function() {
-            // kill this even here
-        }
+            // kill this event here
+        },
+
+        doDownloadPopup: function(upload) {
+            var store = this.container.lookup('store:uploads');
+            store.info(upload.get('id'))
+                .then( details => {
+                    this.controllerFor('application').send('doDownloadPopup',details);
+                });
+        },
     },
-    
+        
     setupController: function(controller,model) {
-        if( model.hasOwnProperty('playlist') && model.playlist && model.playlist.length ) {
-            var nowPlaying = this.get('audioPlayer.nowPlaying');
-            if( nowPlaying ) {
-                var nowPlayingUpload = model.playlist.findBy('mediaUrl',nowPlaying.url);
-                if( nowPlayingUpload ) {
-                    nowPlayingUpload.set('media',nowPlaying);
-                }
-            }
-        }
+        Ember.assert('The model passed to setupController is not the playlist:' + model,model.playlist);
+        this.get('audioPlayer').bindToNowPlaying(model.playlist);
         this._super.apply(this,arguments);
     },
 

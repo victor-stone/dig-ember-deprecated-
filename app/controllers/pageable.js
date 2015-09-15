@@ -58,17 +58,4 @@ export default Ember.Controller.extend({
     
     showLast: Ember.computed.alias('lastPage'),
     
-    uploadForDownloadPopup: { name: '(no upload selected)' },
-    
-    actions: {
-        doDownloadPopup: function(upload) {
-            var store = this.container.lookup('store:uploads');
-            var me = this;
-            store.info(upload.get('id'))
-                .then( function(details) {
-                    me.set('uploadForDownloadPopup',details);
-                    Ember.$('#downloadPopup').modal('show');
-                });
-        },
-    },
 });
