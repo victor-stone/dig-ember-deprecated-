@@ -106,6 +106,9 @@ export default {
     dig: {
         titleWithStr: 'Search Results',
         title: 'Dig the Music',
+        didU: 'Did You Mean...',
+        genre: 'Genres',
+        artists: 'Artists',
     },
     free: {
         title: "Music Free for Commercial Use",

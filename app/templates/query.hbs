@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 tags editable">
                 {{#each selectedTags key="@index" as |tag|}} 
-                    <a href="#" {{action 'remove' tag}} class="btn-exp btn-tag"><i class="fa fa-2x fa-times-circle"></i> <span>{{tag.name}}</span></a>
+                    <a href="#" {{action 'remove' tag}} class="btn-exp btn-tag"><i class="fa fa-2x fa-times-circle"></i> <span>{{tag.id}}</span></a>
                 {{/each}}
                 {{#if selectedTags.length}}
                     <a href="#" {{action 'clear'}} class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> {{t 'tags.clear'}}</a>

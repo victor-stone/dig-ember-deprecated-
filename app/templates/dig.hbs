@@ -1,8 +1,15 @@
 {{page-header title=title 
               icon=icon 
               subTitle=subTitle 
-              offset=offset
-              popoverHost="artist-search" 
-              popoverModel=model.artists 
               }}
+    {{#each model.didYouMean as |group|}}
+        <div class="did-you-mean ">
+            {{#if group.items}}
+                <strong>{{t group.name}}</strong>
+                {{#each group.items as |item|}}
+                    {{#link-to group.route item.id}}<i class="fa fa-{{group.icon}}"></i> {{item.name}}{{/link-to}}
+                {{/each}}
+            {{/if}}
+        </div>            
+    {{/each}}        
 {{partial "playlist"}}

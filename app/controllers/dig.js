@@ -21,4 +21,6 @@ export default PageableController.extend({
     icon: function() {
         return this.get('queryOptions.searchText') ? 'search' : 'music';
     }.property('queryOptions.searchText'),
+    
+        
 });

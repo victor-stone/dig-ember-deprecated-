@@ -27,7 +27,7 @@ export default PageableController.extend({
         },
         
         _tagWatcher: function() {
-            var tags = TagUtils.create( { source: this.selectedTags.mapBy( 'name' ) } );
+            var tags = TagUtils.create( { source: this.selectedTags.mapBy( 'id' ) } );
             this.set('queryOptions.extraTags', tags);
         }.observes( 'selectedTags.[]'),
         

@@ -42,7 +42,7 @@ export default Query.extend({
                 upload.remixes    = models(record.remixes, 'remix') || [ ];
                 upload.trackbacks = models(record.trackbacks, 'trackback') || [ ];                
                 upload.sources    = models(record.sources, 'source') || [ ];                
-                return me.findUser(upload.get('artist.login'));
+                return me.findUser(upload.get('artist.id'));
             }).then( function(user) {
                 upload.artist = user;
                 return upload;

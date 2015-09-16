@@ -7,7 +7,12 @@ import LicenseUtils from '../lib/licenses';
     
     For all models there are some consistent naming (if not always present - sigh):
     
-    These include: .id, .name, .url  The 'url' property always points to a page at ccMixter
+    use .name for printable name
+    use .id for Ember model identifying
+
+    This is why for Tag the .id and .name both map to tags_tag
+    
+    use 'url' for pages that point to ccMixter
     (Except Trackback - the url property points at the original website.)
     
     So all models that represent uploads/media (Upload, Remix, Trackback) have the
@@ -19,7 +24,7 @@ import LicenseUtils from '../lib/licenses';
        upload.url          -> file_page_url
        upload.artist.name  -> user_real_name
        upload.artist.url   -> artist_page_url
-       upload.artist.login -> user_name
+       upload.artist.id    -> user_name
     
     for UploadDetail there is additionally remixes and trackbacks (adding in the store)
     
@@ -29,7 +34,7 @@ import LicenseUtils from '../lib/licenses';
         upload.trackbacks[0].name
     
     The audio player will add a .media object that needs to have a .name, .artist.name and 
-    .artist.login for the player to display. These are added below in a callback from 
+    .artist.id for the player to display. These are added below in a callback from 
     the player.
     
 */
@@ -96,20 +101,20 @@ export var Upload = UploadBasic.extend({
             id: this.get('id'),
             artist: {
                     name: this.get('artist.name'),
-                    login: this.get('artist.login'),
+                    id: this.get('artist.id'),
                 },
         };
     }.property('files'),
     
     artistProperties: function() {
-        return Ember.merge( this._super(), { login: 'upload.user_name' } );
+        return Ember.merge( this._super(), { id: 'upload.user_name' } );
     },
     
 });
 
 var UserBasic = Model.extend( {
     nameBinding: 'user_real_name',
-    loginBinding: 'user_name',
+    idBinding: 'user_name',
 });
 
 var User = UserBasic.extend( {
@@ -197,6 +202,7 @@ var Detail = Upload.extend( {
 });
 
 var Tag = Model.extend( {
+    idBinding: 'tags_tag',
     nameBinding: 'tags_tag',
     countBinding: 'tags_count'
 });

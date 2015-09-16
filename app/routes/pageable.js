@@ -23,14 +23,6 @@ export default Ember.Route.extend({
         }
     },
     
-    beforeModel: function() {
-        this.controllerFor('application').set('loading',true);
-    },
-    
-    afterModel: function() {
-        this.controllerFor('application').set('loading',false);
-    },
-        
     onOptionsChanged: function() {
         this.refresh();
     },

@@ -34,8 +34,6 @@
 
 var SM2_DEFER = SM2_DEFER || (typeof window.document === 'undefined');
 
-console.log( '===> SM2_DEFER is: ' + SM2_DEFER );
-
 "use strict";
 
 if (!window || !window.document) {
