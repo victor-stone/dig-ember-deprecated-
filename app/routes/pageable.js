@@ -112,11 +112,9 @@ export default Ember.Route.extend({
 
         var qparams = this.safeMergeParameters(sysDefaults,routeParams,userOptions,dynParams,urlParams);
         
-        var store = this.store;
-        
         var retModel = {
-            playlist: store.playlist(qparams),
-            total:    store.count(qparams)
+            playlist: this.store.playlist(qparams),
+            total:    this.store.count(qparams)
         };
         
         return Ember.RSVP.hash(retModel);

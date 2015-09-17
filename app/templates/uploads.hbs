@@ -51,8 +51,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-5 col-md-offset-1 col-sm-12">
+    <div class="row used-in">
+        <div class="col-md-5 col-md-offset-1 col-sm-12 trackbacks">
             <div class="center-text">
                 <h3 class="inlined">{{t 'upload.trackbacks'}}</h3>
                 <a href="#" {{action 'doTrackbackForm'}} class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> {{t 'upload.addTrackback'}}</a>
@@ -72,9 +72,12 @@
             {{else}}
                 <li><span class="light-color">{{t 'upload.noTrackbacks'}}</span></li>
             {{/each}}
+            {{#if (is-equal model.trackbacks.length 25)}} {{! see models/uploads.js#trackbacks() }}
+                <li><span class="light-color">{{t 'upload.tooManyTBs'}}</span></li>
+            {{/if}}
             </ul>
         </div>
-        <div class="col-md-5  col-sm-12">
+        <div class="col-md-5  col-sm-12 remixes">
             <h3 class="center-text">{{t 'upload.remixes'}}</h3>
             <ul class="remix-list">
             {{#each model.remixes as |remix|}}

@@ -8,25 +8,25 @@ export default Ember.Component.extend({
     artist: '',
     embed: '',
     
-    types: [ 'video', 'podcast', 'album', 'web'],
+    types: [ 'video', 'podcast', 'album', 'soundcloud', 'website'],
     type: 'video',
     upload: 0,
     
     postData: function() {
         return {
-            trackback_link: this.link,
-            trackback_email: this.email,
-            trackback_your_name: this.youName,
-            trackback_name: this.name,
-            trackback_artist: this.artist,
-            trackback_media: this.embed            
+            trackback_link: this.get('link'),
+            trackback_email: this.get('email'),
+            trackback_your_name: this.get('youName'),
+            trackback_name: this.get('name'),
+            trackback_artist: this.get('artist'),
+            trackback_media: this.get('embed')            
         };
     }.property( 'link', 'yourName', 'name', 'artist', 'embed' ),
 
     message: '',
     messageType: '',
     
-    typeIsVideo: function() {
+    showEmbed: function() {
         return this.get('type') === 'video';
     }.property('type'),
     
@@ -36,29 +36,42 @@ export default Ember.Component.extend({
     
     actions: {
         post: function() {
-                this.showValidationMessage = false;
+                this.set('showValidationMessage',false);
                 if( !this.validate() ) {
-                    this.set('messageType','warning');
-                    this.set('message','tbForm.missingFields');
+                    this.set('showValidationMessage','tbForm.missingFields');
                     return;
                 }
+                var type = this.get('type');
+                if( type === 'soundcloud' ) {
+                    type = 'website';
+                }
                 var host = 'http://ccmixter.org';
-                var url = host + '/track/' + this.get('type') + '/' + this.get('upload.id');
+                var url = host + '/track/' + type + '/' + this.get('upload.id');
                 var args = {
                       url: url,
                       method: 'POST',
                       data: this.get('postData'),
                       dataType: 'text',
-    //                contentType: 'application/x-www-form-urlencoded',
                     };
+                this.setProperties( {
+                        messageType: 'info',
+                        message: 'tbForm.submitting',
+                        icon: true
+                    });
                 return Ember.RSVP.resolve(Ember.$.ajax(args))
                     .then( r => { 
                         if( r === 'ok' ) {
-                            this.set('messageType','success');
-                            this.set('message','tbForm.success');
+                            this.setProperties( {
+                                    messageType: 'success',
+                                    message: 'tbForm.success',
+                                    icon: false
+                                });
                         } else {
-                            this.set('messageType','danger');
-                            this.set('message','tbForm.wups');
+                            this.setProperties( {
+                                    messageType: 'danger',
+                                    message: 'tbForm.wups',
+                                    icon: false
+                                });
                         }
                         return r === 'ok';
                     });

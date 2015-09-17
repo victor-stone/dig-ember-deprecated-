@@ -22,5 +22,7 @@ export default PageableController.extend({
         return this.get('queryOptions.searchText') ? 'search' : 'music';
     }.property('queryOptions.searchText'),
     
-        
+    hasDidYouMean: function() {
+        return !!this.get('model.didYouMean').findBy('items.length');
+    }.property('model.didYouMean.@each.items'),
 });

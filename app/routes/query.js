@@ -8,4 +8,9 @@ export default PageableRoute.extend({
         digDeep: false,
     },
     
+    setupController: function() {
+        this.controllerFor('application').send('showOptions');
+        this._super.apply(this,arguments);
+    },
+    
 });

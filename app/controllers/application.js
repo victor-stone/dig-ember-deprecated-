@@ -45,19 +45,18 @@ export default Ember.Controller.extend({
     optionsOpen: Ember.computed.alias('queryOptions.userEditing'),
 
     _setupWatcher: function() {
-        this.get('queryOptions').on('onOptionBarChanged',this, this._watchForOptionBarChange);
+        this.get('queryOptions').on('optionBarChanged',this, this._watchForOptionBarChange);
     }.on('init'),
 
     _watchForOptionBarChange: function(hash) {
         if( this.get('optionsOpen') ) {
-            var me = this;
-            Ember.run.next( this, function() {
+            Ember.run.next( this, () => {
                 var css = { height: Ember.$('.inner-qo').outerHeight() };
                 var $qo = Ember.$('.query-opts');
                 $qo.css(css);
-                Ember.$('.inner-qo').slideUp(300,function() {
-                    me.set('queryOptions.hidden',hash);
-                    Ember.run.next( this, function() {
+                Ember.$('.inner-qo').slideUp(300, () => {
+                    this.set('queryOptions.hidden',hash);
+                    Ember.run.next( this, () => {
                         Ember.$('.inner-qo').slideDown(300,function() {
                             $qo.removeAttr('style');
                         });
@@ -84,9 +83,7 @@ export default Ember.Controller.extend({
     actions: {
         doDownloadPopup: function(upload) {            
             this.set('uploadForDownloadPopup', upload);
-            Ember.run.next( this, function() {
-                Ember.$('#downloadPopup').modal('show');
-            });
+            Ember.run.next( this, () => Ember.$('#downloadPopup').modal('show') );
         },
         toggleOptions: function() {
             if(  this.toggleProperty('optionsOpen') ) {
@@ -96,13 +93,17 @@ export default Ember.Controller.extend({
                 Ember.$('#query-opts').slideUp(400);
             }
         },
+        showOptions: function() {
+            if( !this.get('optionsOpen') ) {
+                Ember.run.next(this,() => Ember.$('.query-options-toggle').click());
+            }            
+        },
         goToAnchor: function(routeName,anchor) {
             if( this.get('currentPath') === routeName ) {
                 this.scrollToAnchor(anchor);
             } else {
-                var me = this;
-                this.transitionToRoute(routeName).then(function() {
-                    Ember.run.next(me,me.scrollToAnchor,anchor);
+                this.transitionToRoute(routeName).then(() => {
+                    Ember.run.next(this,this.scrollToAnchor,anchor);
                 });
             }
         },

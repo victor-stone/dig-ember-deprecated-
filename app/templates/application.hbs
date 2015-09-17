@@ -42,12 +42,12 @@
                         size="20" 
                         placeholder=(t 'navbar.searchPlaceHolder')
                     }}
-                    <button class="btn btn-xs" href='#' {{action "search"}}>
+                    <button class="btn btn-xs" href='#' {{action "search" searchCollector}}>
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-xs" {{action 'toggleOptions'}}>{{t 'navbar.options'}} 
+                    <button class="btn btn-xs query-options-toggle" {{action 'toggleOptions'}}>{{t 'navbar.options'}} 
                         <span class="glyphicon glyphicon-chevron-{{if optionsOpen 'down' 'up'}}" aria-hidden="true"></span>
                     </button>
                 </div>

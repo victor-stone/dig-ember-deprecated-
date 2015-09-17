@@ -69,13 +69,16 @@ export default {
             podcast: 'Podcast',
             album: 'Album',
             website: 'Web site',
+            soundcloud: 'SoundCloud (tm)',
             },
        embed: 'Embed code',
        submit: 'submit',
        cancel: 'cancel',
+       submitting: 'Submitting to ccMixter...',
        missingFields: 'You must fill in your email address and the link to the trackback.',
        success: 'Your trackback has been submitted. it will appear after it has been approved.',
        wups: "Wups. Something didn't work quite right.",
+       errorInForm: 'Wups',
        
     },
     pagination: {
@@ -91,6 +94,7 @@ export default {
         noRemixes: '(no remixes yet!)',
         noTrackbacks: '(no trackbacks yet - add one!)',
         featuring: 'Featuring',
+        tooManyTBs: 'Too many to show you here!',
     },
     share: {
         share: 'Share',
@@ -109,6 +113,7 @@ export default {
         didU: 'Did You Mean...',
         genre: 'Genres',
         artists: 'Artists',
+        notFound: "Not what you're looking for?",
     },
     free: {
         title: "Music Free for Commercial Use",
@@ -172,7 +177,7 @@ export default {
         freeSub: 'Thousands of hours of free music - all you have to do is give credit to the musicians.',
         gamesHead: 'Music for Video Games',
         gamesSub: 'Eclectic, eccentric, experimental genres for themes and looping backgrounds',
-        more: 'Go...',
+        more: 'Dig!',
     },
     footer: {
         here: 'Here',

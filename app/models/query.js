@@ -2,6 +2,10 @@
 import models from './models';
 
 export default Ember.Object.extend({
+    _adapter: function() {
+        return this.container.lookup('adapter:query');
+    }.property(),
+    
     find: function(name,id) {
         Ember.debug('Looking for adapter: ' + name);
         if( name === 'user' ) {
@@ -12,8 +16,7 @@ export default Ember.Object.extend({
     },
     
     fundUpload: function(id) {
-        var adapter = this.container.lookup('adapter:' + name );
-        return adapter.find(name,id);
+        return this.get('_adapter').find(name,id);
     },
     
     findUser: function(id) {
@@ -22,20 +25,17 @@ export default Ember.Object.extend({
             dataview: 'user_basic',
             f: 'json'
         };
-        var adapter = this.container.lookup('adapter:query');
-        return adapter.queryOne(qparams).then( models('user') );
+        return this.get('_adapter').queryOne(qparams).then( models('user') );
     },
 
     query: function(params) {
-        var adapter = this.container.lookup('adapter:query');
-        return adapter.query(params);
+        return this.get('_adapter').query(params);
     },
 
     count: function(qparams) {
         var countParams = Ember.merge({},qparams);
         countParams.f = 'count';
-        var adapter = this.container.lookup('adapter:query');
-        return adapter.queryOne(countParams);
+        return this.get('_adapter').queryOne(countParams);
     },
 
     playlist: function(params) {

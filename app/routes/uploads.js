@@ -7,18 +7,6 @@ export default Ember.Route.extend({
         this.get('audioPlayer').bindToNowPlaying(model);
         this._super.apply(this,arguments);
     },
-
-    beforeModel: function() {
-        //Ember.debug('set loading ON');
-        var controller = this.controllerFor('application');
-        controller.set('loading',true);        
-    },
-    
-    afterModel: function() {
-        //Ember.debug('set loading OFF');
-        var controller = this.controllerFor('application');
-        controller.set('loading',false);        
-    },
         
     model: function() {
         var me = this;

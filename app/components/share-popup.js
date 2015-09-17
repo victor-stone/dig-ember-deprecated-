@@ -4,6 +4,9 @@ import { translationMacro as t } from "ember-i18n";
 export default Ember.Component.extend({
     i18n: Ember.inject.service(),
     
+    shareSubject: t("share.subject"),
+    shareBody: t("share.body"),
+    
     uploadLink: function() {
         return 'http://dig.ccmixter.org/files/' +
                     this.get('upload.artist.id') +
@@ -22,8 +25,8 @@ export default Ember.Component.extend({
     }.property('upload'),
     
     mailLink: function() {
-        return 'mailto://?subject=' + t("share.subject") +
-                    '&body=' + t("share.body") +
+        return 'mailto://?subject=' + this.get('shareSubject') +
+                    '&body=' + this.get('shareBody') +
                     this.get('uploadLink');
     }.property('upload'),
 });

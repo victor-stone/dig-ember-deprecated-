@@ -89,15 +89,31 @@ var optionsMeta = [
     For routes that want to own the options call 'setBatch()' which
     returns a Query API ready hash 
     
-    Routes hide certain options they want to keep fixed - like 'free'
-    wants 'licenseScheme' to be 'open' - so those options are 
-    hidden from the user.    
 */
 export default Ember.Service.extend(Ember.Evented, {
 
     userEditing: false,
     hidden: { },
 
+    /**
+        This method is a little swiss-army-knife-ish.
+        
+        Call from route:model to:
+        
+            - alert the system what query options this route
+              wants to own and therefore hide from the user
+              
+            - get back a Query API hash of options
+            
+        Also:
+            - Triggers a 'optionBarChange' event with
+              a hash of what to hide and what to show.
+              
+        In Addition:
+            - bwahahahaha
+            - I'm so proud
+        
+    */
     setBatch: function(routeName,  routeValues) {
 
         var props = Ember.merge({},routeValues);
@@ -122,7 +138,7 @@ export default Ember.Service.extend(Ember.Evented, {
             }
         }
         if( optionsBarHasChanged ) {
-            this.trigger('onOptionBarChanged',hidden);
+            this.trigger('optionBarChanged',hidden);
         }
         
         this._prevRouteName = routeName;

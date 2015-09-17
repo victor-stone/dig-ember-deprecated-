@@ -27,7 +27,7 @@ import models from './models';
 */
 export default Query.extend({
     query: function(params) {
-        var adapter = this.container.lookup('adapter:query');
+        var adapter = this.get('_adapter');
         if( params.category ) {
             var q = {   f: 'json', 
                         category: params.category,

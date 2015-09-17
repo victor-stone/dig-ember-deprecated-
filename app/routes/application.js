@@ -14,7 +14,6 @@ export default Ember.Route.extend({
         
     actions: {
         search: function(text) {
-            this.controllerFor('application').set('searchCollector', text);
             this.set('queryOptions.searchText', text);
             this.transitionTo('dig');
         },
