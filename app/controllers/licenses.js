@@ -18,12 +18,12 @@ export default Ember.Controller.extend({
     
     licenseInfo: function() {
         return {
-                byLogoUrl:   LicenseUtils.logoUrlFormAbbr('by-3','big'),
-                byncLogoUrl: LicenseUtils.logoUrlFormAbbr('by-nc-3','big'),
-                ccplusLogoUrl: LicenseUtils.logoUrlFormAbbr('ccplus'),
-                ccplusUrl: 'http://tunetrack.net/license/ccmixter.org/files/djlang59/37792',
-                byUrl: 'http://creativecommons.org/licenses/by/3.0/',
-                byncUrl: 'http://creativecommons.org/licenses/by-nc/3.0/',
+                byLogoURL:   LicenseUtils.logoURLFromAbbr('by-3','big'),
+                byncLogoURL: LicenseUtils.logoURLFromAbbr('by-nc-3','big'),
+                ccplusLogoURL: LicenseUtils.logoURLFromAbbr('ccplus'),
+                ccplusURL: 'http://tunetrack.net/license/ccmixter.org/files/djlang59/37792',
+                byURL: 'http://creativecommons.org/licenses/by/3.0/',
+                byncURL: 'http://creativecommons.org/licenses/by-nc/3.0/',
                 title: this.get('_title'),
                 byDesc: this.get('_byDesc'), 
                 byncDesc: this.get('_byncDesc'), 

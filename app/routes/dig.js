@@ -62,6 +62,8 @@ export default PageableRoute.extend({
     },
 
     model: function(params, transition) {
+        this.setTrackerURL(params,transition);
+        
         var q = {
             main: this._model(params,transition),
             didYouMean: this.didYouMean()

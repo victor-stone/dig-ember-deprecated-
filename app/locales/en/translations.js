@@ -1,4 +1,7 @@
 export default {
+    app: {
+        pageTitle: 'Free Music For Film and Video Makers',
+    },
     queryOptions: {
             instrumental: 'instrumentals only',
             limit: 'results',
@@ -37,8 +40,8 @@ export default {
         plainText: 'Plain Text',
         HTML: 'HTML',
         downloadButtonText: "Download",
-        licenseTextPlain: "\"{{songTitle}}\" by {{artistName}} (c) {{year}} Licensed under a Creative Commons {{licenseName}} license. {{filePageUrl}}",
-        licenseTextHTML: "<div class=\"attribution-block\">\"<a href=\"{{filePageUrl}}\">{{songTitle}}</a>\" by {{artistName}} (c) {{year}} Licensed under a Creative Commons <a href=\" {{licenseUrl}}\">{{licenseName}}</a> license.</div>",
+        licenseTextPlain: "\"{{songTitle}}\" by {{artistName}} (c) {{year}} Licensed under a Creative Commons {{licenseName}} license. {{filePageURL}}",
+        licenseTextHTML: "<div class=\"attribution-block\">\"<a href=\"{{filePageURL}}\">{{songTitle}}</a>\" by {{artistName}} (c) {{year}} Licensed under a Creative Commons <a href=\" {{licenseURL}}\">{{licenseName}}</a> license.</div>",
         copyToClip: 'Copy to clipboard',
         featuring: 'Ft: {{ft}} ',
         featuringHTML: '<div class=\"attribution-ft-block\"> Ft: {{ft}} </div>',
@@ -59,7 +62,7 @@ export default {
        tellUs: 'let us know who you are',
        youEmail: 'Your email',
        weMayCon: 'We may contact you here',
-       URL: 'URL',
+       URL: 'Web Address',
        exURL: 'http://website/with/media',
        artist: 'Artist Name',
        medType: 'Media type',
@@ -95,6 +98,7 @@ export default {
         noTrackbacks: '(no trackbacks yet - add one!)',
         featuring: 'Featuring',
         tooManyTBs: 'Too many to show you here!',
+        pageTitle: '{{name}} by {{artist}}',
     },
     share: {
         share: 'Share',

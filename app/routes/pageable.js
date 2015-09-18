@@ -53,10 +53,6 @@ export default Ember.Route.extend({
             return true;
         },
         
-        loading: function() {
-            // kill this event here
-        },
-
         doDownloadPopup: function(upload) {
             var store = this.container.lookup('store:uploads');
             store.info(upload.get('id'))
@@ -69,7 +65,7 @@ export default Ember.Route.extend({
     setupController: function(controller,model) {
         Ember.assert('The model passed to setupController is not the playlist:' + model,model.playlist);
         this.get('audioPlayer').bindToNowPlaying(model.playlist);
-        this._super.apply(this,arguments);
+        this._super(...arguments);
     },
 
     sysDefaultQueryArgs: function() {
@@ -93,6 +89,7 @@ export default Ember.Route.extend({
     // _super is broken for async calls (was fixed, borked again, etc.)
     // use this call from .then() functions in derivations
     _model: function(params,transition) {  
+        this.setTrackerURL(params,transition);
 
         // app defaults
         var sysDefaults = this.get('sysDefaultQueryArgs');

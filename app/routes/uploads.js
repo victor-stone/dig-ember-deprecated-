@@ -5,12 +5,13 @@ export default Ember.Route.extend({
 
     setupController: function(controller,model) {
         this.get('audioPlayer').bindToNowPlaying(model);
-        this._super.apply(this,arguments);
+        this._super(...arguments);
     },
         
-    model: function() {
+    model: function(params,transition) {
+        this.setTrackerURL(params,transition);
         var me = this;
-        return this._super.apply(this,arguments).catch(function(){
+        return this._super(...arguments).catch(function(){
             me.transitionTo('unknown-upload');
         });
     }

@@ -8,10 +8,11 @@ export default PageableRoute.extend({
         matchAnyTags: false,
     },
     
-    model: function() {
+    model: function(params,transition) {
+        this.setTrackerURL(params,transition);
         var playlist = this.get('audioPlayer.playlist');
         return {
-                playlist: playlist,
+                playlist: playlist || [ ],
                 total: playlist && playlist.length
             };
     }

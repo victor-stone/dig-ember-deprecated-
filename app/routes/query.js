@@ -10,7 +10,7 @@ export default PageableRoute.extend({
     
     setupController: function() {
         this.controllerFor('application').send('showOptions');
-        this._super.apply(this,arguments);
+        this._super(...arguments);
     },
     
 });

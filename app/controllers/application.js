@@ -1,9 +1,10 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
 export default Ember.Controller.extend({
 
-    audioPlayer: Ember.inject.service(),
-    
+    i18n:         Ember.inject.service(),
+    audioPlayer:  Ember.inject.service(),    
     queryOptions: Ember.inject.service(),
 
     licenseInfo: function() {
@@ -12,7 +13,7 @@ export default Ember.Controller.extend({
     }.property(),
         
     // UI model
-    app_title: 'dig -> ccMixter',
+
     menu: [
             { name: 'navbar.links.free',
               linkto:  'free',
@@ -40,14 +41,31 @@ export default Ember.Controller.extend({
     limits: [ 10, 20, 50, 100 ],
     
     searchCollector: '',
+
+    titlePrefix: 'dig: ',
+    title:  t('app.pageTitle'),
+    pageTitle: function() {
+        var forRoute = this.get('currentPath');
+        Ember.debug('Trying to find controller for: ' + forRoute);
+        var title = this.get('title');
+        var c = this.container.lookup('controller:' + forRoute);
+        if( c && c.get('title') ) {
+            title = c.get('title');
+        }
+        return this.titlePrefix + title;    
+    }.property('currentPath'),
+    
+    setPageTitle: function() {
+        this.container.lookup('application:main').setPageTitle( this.get('pageTitle'), this );
+    }.observes('currentPath'),
     
     // UI state
     optionsOpen: Ember.computed.alias('queryOptions.userEditing'),
 
-    _setupWatcher: function() {
+    _init: function() {
         this.get('queryOptions').on('optionBarChanged',this, this._watchForOptionBarChange);
     }.on('init'),
-
+    
     _watchForOptionBarChange: function(hash) {
         if( this.get('optionsOpen') ) {
             Ember.run.next( this, () => {

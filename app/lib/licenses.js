@@ -12,7 +12,7 @@ sampling.png
 */
 // 
 
-var logoUrlBase = "https://licensebuttons.net/l/";
+var logoURLBase = "https://licensebuttons.net/l/";
 
 var logoSize = {
     small: '80x15',
@@ -38,17 +38,17 @@ var LicenseUtils = Ember.Object.extend({
 
 LicenseUtils.reopenClass({
 
-    logoUrlFromName: function(name, size) {
-        return LicenseUtils.logoUrlFormAbbr( licNameMap[ name.dasherize() ], size );
+    logoURLFromName: function(name, size) {
+        return LicenseUtils.logoURLFromAbbr( licNameMap[ name.dasherize() ], size );
     },
     
-    logoUrlFormAbbr: function( abbr, size ) {
+    logoURLFromAbbr: function( abbr, size ) {
         if( abbr === 'ccplus' ) {
             return '/dig-images/cc-plus-tunetrack.png';
         }
         var version = abbr.match(/-3/) ? '3.0' : '1.0';
         size = logoSize[ size || 'big' ];        
-        return logoUrlBase + abbr.replace(/-3/,'') + '/' + version + '/' + size + '.png';
+        return logoURLBase + abbr.replace(/-3/,'') + '/' + version + '/' + size + '.png';
     }
 });
 

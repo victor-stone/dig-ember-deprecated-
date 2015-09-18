@@ -1,8 +1,15 @@
 import Ember from 'ember';
 
+
 export default Ember.Controller.extend({
     queryOptions: Ember.inject.service(),
+    application: Ember.inject.controller(),
+    
     poolItemForTrackbackPopup: { },
+
+    title: function() {
+        return this.get('model.name');
+    }.property('model'),
     
     actions: {
 

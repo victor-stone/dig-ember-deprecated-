@@ -52,7 +52,7 @@ var TagUtils = Ember.Object.extend({
     separator: ',',
     
     init: function() {
-        this._super.apply(this,arguments);
+        this._super(...arguments);
         var src = this.get('source');
         var arr = [ ];
         if( src ) {

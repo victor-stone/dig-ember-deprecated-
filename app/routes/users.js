@@ -12,6 +12,7 @@ export default PageableRoute.extend({
 
 
     model: function(params,transition) {
+        this.setTrackerURL(params,transition);
         var retModel = { };
         var store = this.store;
         

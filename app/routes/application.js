@@ -1,17 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    audioPlayer: Ember.inject.service(),
+    audioPlayer:  Ember.inject.service(),
     queryOptions: Ember.inject.service(),
     
-    beforeModel: function() {
-        this.controllerFor('application').set('loading',true);
-    },
-    
-    afterModel: function() {
-        this.controllerFor('application').set('loading',false);
-    },
-        
     actions: {
         search: function(text) {
             this.set('queryOptions.searchText', text);

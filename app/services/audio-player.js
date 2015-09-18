@@ -179,7 +179,7 @@ export default Ember.Service.extend({
             if( !Ember.isArray(model) ) {
                 model = [ model ];
             }
-            model = model.findBy('mediaUrl',this.get('nowPlaying.url'));
+            model = model.findBy('mediaURL',this.get('nowPlaying.url'));
             if( model ) {
                 model.set('media', np );
             }
@@ -195,7 +195,9 @@ export default Ember.Service.extend({
     
     _updatePlaylist: function() {
         if( this.get('nowPlaying') && this.get('playlist') ) {
-            if( !this.get('playlist').findBy('mediaUrl',this.get('nowPlaying.url') ) ) {
+            if( !this.get('playlist').findBy('mediaURL',this.get('nowPlaying.url') ) ) {
+                // user hit 'play' on a song not in this playlist
+                // nuke it
                 this.set('playlist',null);
             }
         }
@@ -209,7 +211,7 @@ export default Ember.Service.extend({
         var index = -1;
         var pl = this.get('playlist');
         if( pl && this.get('nowPlaying') ) {
-            index = pl.indexOf( pl.findBy('mediaUrl',this.get('nowPlaying.url')) );
+            index = pl.indexOf( pl.findBy('mediaURL',this.get('nowPlaying.url')) );
         }
         return index;
     }.property('playlist','nowPlaying'),
@@ -225,7 +227,9 @@ export default Ember.Service.extend({
     
     _onFinish: function(media) {
         media.stop();
-        this.playNext();
+        if( this.get('hasNext') ) {
+            this.playNext();
+        }
     },
 
     _mediaCache: function() {
@@ -241,8 +245,8 @@ export default Ember.Service.extend({
         }
         var media = playable.get('media');
         if( !media ) {
-            Ember.assert('Object '+playable+' is not playable without a "mediaUrl" property', playable.get('mediaUrl'));
-            var url = playable.get('mediaUrl');
+            Ember.assert('Object '+playable+' is not playable without a "mediaURL" property', playable.get('mediaURL'));
+            var url = playable.get('mediaURL');
             var cache = this.get('_mediaCache');
             if (cache[url]) {
                 media = cache[url];

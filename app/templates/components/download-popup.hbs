@@ -16,7 +16,7 @@
                                 <li role="presentation" class="{{if plainSelected 'active'}}"><a href="#" {{action 'selectFormat' 'plain'}}>{{t 'dlPopup.plainText'}}</a></li>
                                 <li role="presentation" class="{{unless plainSelected 'active'}}"><a href="#" {{action 'selectFormat' 'html'}}>{{t 'dlPopup.HTML'}}</a></li>
                             </ul>
-                            <textarea id="attributionText" readonly="1" cols="30" rows="2">{{#if plainSelected}}{{t 'dlPopup.licenseTextPlain' songTitle=upload.name artistName=upload.artist.name year=upload.licenseYear licenseName=upload.license_name filePageUrl=upload.url}}{{else}}{{{t 'dlPopup.licenseTextHTML' songTitle=upload.name artistName=upload.artist.name year=upload.licenseYear licenseName=upload.license_name filePageUrl=upload.url licenseUrl=upload.licenseUrl}}}{{/if}}{{#if upload.featuring}} {{#if plainSelected}}{{t 'dlPopup.featuring' ft=upload.featuring}}{{else}}{{{t 'dlPopup.featuringHTML' ft=upload.featuring}}}{{/if}}{{/if}}</textarea>
+                            <textarea id="attributionText" readonly="1" cols="30" rows="2">{{#if plainSelected}}{{t 'dlPopup.licenseTextPlain' songTitle=upload.name artistName=upload.artist.name year=upload.licenseYear licenseName=upload.license_name filePageURL=upload.url}}{{else}}{{{t 'dlPopup.licenseTextHTML' songTitle=upload.name artistName=upload.artist.name year=upload.licenseYear licenseName=upload.license_name filePageURL=upload.url licenseURL=upload.licenseURL}}}{{/if}}{{#if upload.featuring}} {{#if plainSelected}}{{t 'dlPopup.featuring' ft=upload.featuring}}{{else}}{{{t 'dlPopup.featuringHTML' ft=upload.featuring}}}{{/if}}{{/if}}</textarea>
                             <div class="text-center">
                                 <button class="btn btn-sm btn-info" {{action 'copyToClip'}}><i class="fa fa-files-o"></i> {{t 'dlPopup.copyToClip'}}</button>
                             </div>
@@ -27,15 +27,15 @@
                 <div class="col-md-6">
                     <ul class="actions actions-centered">
                         <li>
-                            <a class="btn btn-success btn-lg" href="{{upload.mediaUrl}}" download><i class="fa fa-2x fa-cloud-download pull-left"></i> {{t 'dlPopup.downloadButtonText'}} <small>{{downloadSize}}</small></a>
+                            <a class="btn btn-success btn-lg" href="{{upload.mediaURL}}" download><i class="fa fa-2x fa-cloud-download pull-left"></i> {{t 'dlPopup.downloadButtonText'}} <small>{{downloadSize}}</small></a>
                         </li>
                         <li class="license-badge">
-                            <a href="{{upload.licenseUrl}}"><img src="{{upload.licenseLogoUrl}}" /></a>                    
+                            <a href="{{upload.licenseURL}}"><img src="{{upload.licenseLogoURL}}" /></a>                    
                             <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
                         </li>
-                        {{#if upload.purchaseLogoUrl}}
+                        {{#if upload.purchaseLogoURL}}
                             <li class="license-badge">
-                                <a href="{{upload.purchaseLicenseUrl}}"><img src="{{upload.purchaseLogoUrl}}" /></a>
+                                <a href="{{upload.purchaseLicenseURL}}"><img src="{{upload.purchaseLogoURL}}" /></a>
                                 <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
                             </li>
                         {{/if}}
@@ -55,7 +55,7 @@
                     <div class="col-xs-12 text-center padded10">
                         <ul class="actions actions-centered">
                             <li>
-                                <a href='{{upload.purchaseLicenseUrl}}' class="btn btn-success"><i class="fa fa-usd"></i> {{t 'dlPopup.buyALicense1'}}</a>
+                                <a href='{{upload.purchaseLicenseURL}}' class="btn btn-success"><i class="fa fa-usd"></i> {{t 'dlPopup.buyALicense1'}}</a>
                             </li>
                             <li>
                                 <p>{{t 'dlPopup.buyALicense2'}}</p>

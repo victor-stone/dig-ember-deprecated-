@@ -16,6 +16,7 @@ export default PageableRoute.extend({
 
     
     model: function(params,transition) {
+        this.setTrackerURL(params,transition);
         
         var uploadStore = this.container.lookup('store:uploads');
         var id = params.upload_id;

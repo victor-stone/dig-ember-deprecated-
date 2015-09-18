@@ -10,7 +10,7 @@ export default PageableRoute.extend({
     
     setupController(controller) {
         controller.set('tags', this.get('tags').tagize(true));
-        this._super.apply(this,arguments);
+        this._super(...arguments);
     },
     
     translateDynamicParamsToQuery: function( params ) { 

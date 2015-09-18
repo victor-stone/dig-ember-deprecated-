@@ -1,6 +1,7 @@
 {{trackback-popup upload=model trackback=poolItemForTrackbackPopup}}
 {{trackback-form upload=model}}    
 {{share-popup upload=model}}    
+{{page-title model.name}}
 <div class="page-header">
     <h1 class="center-text">{{model.name}}</h1>
 </div>
@@ -13,7 +14,7 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     {{#link-to 'users' model.artist.id}}
-                                            <img class="img-circle" src="{{model.artist.avatarUrl}}" />
+                                            <img class="img-circle" src="{{model.artist.avatarURL}}" />
                                             {{model.artist.name}}
                     {{/link-to}}
 
@@ -24,12 +25,12 @@
                 <div class="col-md-6 col-sm-6">
                     <ul class="actions">
                         <li class="license-badge">
-                            <a href="{{model.license_url}}"><img class="download-license" src="{{model.licenseLogoUrl}}" /></a>    
+                            <a href="{{model.license_url}}"><img class="download-license" src="{{model.licenseLogoURL}}" /></a>    
                             <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
                         </li>
-                        {{#if model.purchaseLogoUrl}}
+                        {{#if model.purchaseLogoURL}}
                             <li class="license-badge">
-                                <a href="{{model.purchaseLicenseUrl}}"><img src="{{model.purchaseLogoUrl}}" /></a>
+                                <a href="{{model.purchaseLicenseURL}}"><img src="{{model.purchaseLogoURL}}" /></a>
                             <a {{action "doLicensePopup"}}><i class="fa fa-question-circle"></i></a>
                             </li>
                         {{/if}}

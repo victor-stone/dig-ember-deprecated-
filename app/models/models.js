@@ -47,7 +47,7 @@ var UploadBasic = Model.extend( {
     urlBinding:  'file_page_url',
     idBinding: 'upload_id',
     
-    artistProperties: function() {
+    _artistProperties: function() {
         return {
                 upload: this,
                 name: 'upload.user_real_name',
@@ -55,7 +55,7 @@ var UploadBasic = Model.extend( {
     },
     
     _setupArtist: function() {
-        this.set( 'artist', reBind( this.artistProperties() ) );
+        this.set( 'artist', reBind( this._artistProperties() ) );
     }.on('init'),
     
 });
@@ -64,7 +64,14 @@ var Remix  = UploadBasic.extend();
 var Source = UploadBasic.extend();
 
 var Trackback = Model.extend( {
-    nameBinding: 'pool_item_name',
+    name: function() {
+        var name = this.get('pool_item_name');
+        if( name.match(/^watch\?/) !== null ) {
+            name = 'You Tube Video';
+        }
+        return name;
+    }.property('pool_item_name'),
+    
     urlBinding: 'pool_item_url',
     
     embedBinding: 'pool_item_extra.embed',
@@ -91,7 +98,7 @@ export var Upload = UploadBasic.extend({
         }
     }.property('files'),
 
-    mediaUrl: function() {
+    mediaURL: function() {
         return this.get('fplay_url') || this.get('download_url') || this.get('fileInfo.download_url');
     }.property('files'),
     
@@ -106,7 +113,7 @@ export var Upload = UploadBasic.extend({
         };
     }.property('files'),
     
-    artistProperties: function() {
+    _artistProperties: function() {
         return Ember.merge( this._super(), { id: 'upload.user_name' } );
     },
     
@@ -118,7 +125,7 @@ var UserBasic = Model.extend( {
 });
 
 var User = UserBasic.extend( {
-    avatarUrlBinding: 'user_avatar_url',
+    avatarURLBinding: 'user_avatar_url',
 
     url: function() {
         return this.get('artist_page_url') + '/profile';
@@ -165,7 +172,7 @@ var Detail = Upload.extend( {
     // License stuff 
     
     licenseNameBinding: 'license_name',
-    licenseUrlBinding: 'license_url',
+    licenseURLBinding: 'license_url',
     
     isCCPlus: function() {
         return this.hasTag('ccplus');
@@ -175,29 +182,29 @@ var Detail = Upload.extend( {
         return this.hasTag('attribution,cczero');
     }.property('upload_tags'),
     
-    licenseLogoUrl: function() {
-        return LicenseUtils.logoUrlFromName( this.get('license_name') );
+    licenseLogoURL: function() {
+        return LicenseUtils.logoURLFromName( this.get('license_name') );
     }.property('license_name'),
     
     licenseYear: function() {
         return this.get('year') || (this.get('upload_date') || this.get('upload_date_format')).match(/(19|20)[0-9]{2}/)[0];
     }.property(),
     
-    purchaseLicenseUrl: function() {
+    purchaseLicenseURL: function() {
         if( this.get('isCCPlus') ) {
-            var baseUrl = 'http://tunetrack.net/license/';
-            return baseUrl + this.get('file_page_url').replace('http://', '');
+            var baseURL = 'http://tunetrack.net/license/';
+            return baseURL + this.get('file_page_url').replace('http://', '');
         }
     }.property('file_page_url','isCCPlus'),
 
-    purchaseLogoUrl: function() {
+    purchaseLogoURL: function() {
         if( this.get('isCCPlus') ) {
-            return LicenseUtils.logoUrlFormAbbr( 'ccplus' );
+            return LicenseUtils.logoURLFromAbbr( 'ccplus' );
         }
     }.property('isCCPlus'),
     
-    artistProperties: function() {
-        return Ember.merge( this._super(), { avatarUrl: 'upload.user_avatar_url' } );
+    _artistProperties: function() {
+        return Ember.merge( this._super(), { avatarURL: 'upload.user_avatar_url' } );
     },
 });
 
